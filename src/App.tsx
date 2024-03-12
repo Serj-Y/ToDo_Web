@@ -1,8 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Login} from "./services/api/auth/login";
 
 function App() {
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const [userData, setUserData] = useState<any>()
+  const [token, setToken] = useState<any>()
+  console.log(token)
+  console.log(isAuth)
+  console.log(userData)
+  useEffect(() => {
+    if(!isAuth){
+      Login().then((data: any) => {
+        setUserData(data)
+          setIsAuth(true)
+          setToken(data)
+        console.log(data)
+      } )
+    }
+
+    console.log(userData)
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
