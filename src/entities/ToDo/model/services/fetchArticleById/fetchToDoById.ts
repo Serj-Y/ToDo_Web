@@ -7,7 +7,7 @@ export const fetchToDoById = createAsyncThunk<ToDo, string, ThunkConfig<string>>
     async (articleId, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI;
         try {
-            const response = await extra.api.get<ToDo>('/todo/', {
+            const response = await extra.api.get<ToDo>('/todo', {
                 params: {
                     _expand: 'user',
                 },

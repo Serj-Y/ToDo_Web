@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { User, userActions } from '../../../../../entities/User';
 import { ThunkConfig } from '../../../../../app/providers/StoreProvider';
-import { USER_LOCAL_STORAGE_KEY } from '../../../../../shared/const/localstorage';
+import { USER_LOCAL_STORAGE_KEY } from '../../../../../shared/consts/localStorage';
+import { baseApi } from '../../../../../shared/api/api';
 
 interface SignUpByEmailProps {
     name: string
@@ -18,8 +19,7 @@ export const signUpByEmail = createAsyncThunk<
     async (authData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         try {
-            const response = await extra.api.post<User>('auth/register', authData);
-            console.log(response);
+            const response = await baseApi.post<User>('auth/register', authData);
             if (!response.data) {
                 throw new Error();
             }

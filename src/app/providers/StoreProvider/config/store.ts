@@ -5,7 +5,7 @@ import { userReducer } from '../../../../entities/User';
 import { StateSchema, ThunkExtraArg } from './StateSchema';
 import { createReducerManager } from './reducerManager';
 import { scrollSaveReducer } from '../../../../widgets/ScrollSave';
-import { $api } from '../../../../shared/api/api';
+import { $api, baseApi } from '../../../../shared/api/api';
 
 export function createReduxStore(
     initialState?: StateSchema,

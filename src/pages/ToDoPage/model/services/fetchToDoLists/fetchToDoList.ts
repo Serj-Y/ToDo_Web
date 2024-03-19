@@ -7,7 +7,7 @@ interface FetchArticlesListProps {
 }
 
 export const fetchToDoList = createAsyncThunk<ToDo[], FetchArticlesListProps, ThunkConfig<string>>(
-    'articlesPage/fetchToDoLists',
+    'toDoPage/fetchToDoLists',
     async (args, thunkAPI) => {
         const {
             extra,
