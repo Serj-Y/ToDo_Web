@@ -1,0 +1,23 @@
+{
+"Profile Card": "Profile Card",
+"Profile Page": "Profile Page",
+"Edit": "Edit",
+"Your name": "Your name",
+"Your lastname": "Your lastname",
+"Your age": "Your age",
+"Your city": "Your city",
+"Your country": "Your country",
+"Your currency": "Your currency",
+"Your username": "Your username",
+"Your avatar": "Your avatar",
+"There was an error loading profile": "There was an error loading profile",
+"Try refreshing the page": "Try refreshing the page",
+"Cancel": "Cancel",
+"Save Changes": "Save Changes",
+"Server error": "Server error",
+"Incorrect age": "Incorrect age",
+"Incorrect country": "Incorrect country",
+"Incorrect user data": "Incorrect user data",
+"No data": "No data"
+
+}
