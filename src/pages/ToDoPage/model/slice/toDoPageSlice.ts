@@ -3,6 +3,8 @@ import { ToDo } from 'entities/ToDo';
 import { ToDoSchema } from '../types/toDoSchema';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { StateSchema } from '../../../../app/providers/StoreProvider';
+import { createToDoList } from '../../../../feautures/CreateToDoList/model/services/createToDoList';
+import { deleteToDoListById } from '../../../../feautures/DeleteToDoListById/model/services/deleteToDoListById';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -22,12 +24,6 @@ const toDoPageSlice = createSlice({
         ids: [],
     }),
     reducers: {
-        addToDo: (state, action: PayloadAction<ToDo>) => {
-            toDoAdapter.addOne(state, action.payload);
-        },
-        deleteToDo: (state, action: PayloadAction<string>) => {
-            toDoAdapter.removeOne(state, action.payload);
-        },
         initState: (state) => {
             state._inited = true;
         },
@@ -50,6 +46,14 @@ const toDoPageSlice = createSlice({
                 } else {
                     toDoAdapter.addMany(state, action.payload);
                 }
+            })
+            .addCase(createToDoList.fulfilled, (state, action) => {
+                state.isLoading = false;
+                toDoAdapter.addOne(state, action.payload);
+            })
+            .addCase(deleteToDoListById.fulfilled, (state, action) => {
+                state.isLoading = false;
+                toDoAdapter.removeOne(state, action.payload._id);
             })
             .addCase(fetchToDoList.rejected, (state, action) => {
                 state.isLoading = false;

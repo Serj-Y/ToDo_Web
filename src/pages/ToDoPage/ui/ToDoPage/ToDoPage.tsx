@@ -12,7 +12,7 @@ import { getToDoPageError, getToDoPageIsLoading } from '../../model/selectors/to
 import { getToDo, todosPageReducer } from '../../model/slice/toDoPageSlice';
 import cls from './ToDoPage.module.scss';
 import { initToDoPage } from '../../model/services/initToDoPage/initToDoPage';
-import { CreateToDoList } from '../CreateToDoList/CreateToDoList';
+import { CreateToDoList } from '../../../../feautures/CreateToDoList/ui/CreateToDoList';
 
 interface ArticlesPageProps {
     className?: string;

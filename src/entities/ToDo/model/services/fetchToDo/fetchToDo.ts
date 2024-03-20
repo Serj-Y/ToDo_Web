@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ToDo } from '../../types/toDo';
-import { ThunkConfig } from '../../../../../app/providers/StoreProvider';
 
-export const fetchToDoById = createAsyncThunk<ToDo, void, ThunkConfig<string>>(
-    'articleDetails/fetchToDoById',
+export const fetchToDo = createAsyncThunk<ToDo, void, ThunkConfig<string>>(
+    'articleDetails/fetchToDo',
     async (_, thunkAPI) => {
         const { extra, rejectWithValue } = thunkAPI;
         try {

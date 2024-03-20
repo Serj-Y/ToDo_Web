@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ToDo } from '../types/toDo';
 import {
-    fetchToDoById,
-} from '../services/fetchToDoById/fetchToDoById';
+    fetchToDo,
+} from '../services/fetchToDo/fetchToDo';
 import { ToDoDetailsSchema } from '../types/toDoDetailsSchema';
 
 const initialState: ToDoDetailsSchema = {
@@ -17,15 +17,15 @@ export const toDoSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchToDoById.pending, (state) => {
+            .addCase(fetchToDo.pending, (state) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(fetchToDoById.fulfilled, (state, action: PayloadAction<ToDo>) => {
+            .addCase(fetchToDo.fulfilled, (state, action: PayloadAction<ToDo>) => {
                 state.isLoading = false;
                 state.data = action.payload;
             })
-            .addCase(fetchToDoById.rejected, (state, action) => {
+            .addCase(fetchToDo.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

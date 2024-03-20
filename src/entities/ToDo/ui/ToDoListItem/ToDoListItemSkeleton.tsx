@@ -15,7 +15,7 @@ export const ToDoListItemSkeleton = memo(({
     const { t } = useTranslation();
 
     return (
-        <div className={classNames(cls.ArticleListItem, {}, [className])}>
+        <div className={classNames('', {}, [className])}>
             <Card className={cls.card}>
                 <div className={cls.header}>
                     <Skeleton border="50%" width={30} height={30} />
