@@ -1,20 +1,20 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { memo, useCallback } from 'react';
-import { getSignUpPassword } from '../../model/selectors/getSignUpPassword/getSignUpPassword';
-import { getSignUpIsLoading } from '../../model/selectors/getSignUpIsLoading/getSignUpIsLoading';
-import { getSignUpError } from '../../model/selectors/getSignUpError/getSignUpError';
-import { signUpByEmail } from '../../model/services/signUpByEmail/signUpByEmail';
-import cls from './SignUpForm.module.scss';
 import {
     DynamicModuleLoader,
     ReducersList,
-} from '../../../../shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { classNames } from '../../../../shared/lib/classNames/classNames';
-import { Text, TextTheme } from '../../../../shared/ui/Text/Text';
-import { Input } from '../../../../shared/ui/Input/Input';
-import { Button, ButtonTheme } from '../../../../shared/ui/Button/Button';
-import { useAppDispatch } from '../../../../shared/lib/hooks/useAppDispatch/useAppDispatch';
+} from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { classNames } from 'shared/lib/classNames/classNames';
+import { Text, TextTheme } from 'shared/ui/Text/Text';
+import Input from 'shared/ui/Input/Input';
+import { Button, ButtonTheme } from 'shared/ui/Button/Button';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import cls from './SignUpForm.module.scss';
+import { signUpByEmail } from '../../model/services/signUpByEmail/signUpByEmail';
+import { getSignUpError } from '../../model/selectors/getSignUpError/getSignUpError';
+import { getSignUpIsLoading } from '../../model/selectors/getSignUpIsLoading/getSignUpIsLoading';
+import { getSignUpPassword } from '../../model/selectors/getSignUpPassword/getSignUpPassword';
 import { getSignUpEmail } from '../../model/selectors/getSignUpEmail/getSignUpEmail';
 import { getSignUpName } from '../../model/selectors/getSignUpName/getSignUpName';
 import { signUpActions, signUpReducer } from '../../model/slice/signUpSlice';

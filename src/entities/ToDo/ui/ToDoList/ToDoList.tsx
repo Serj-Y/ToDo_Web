@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
+import { Text, TextAlign, TextSize } from 'shared/ui/Text/Text';
+import { classNames } from 'shared/lib/classNames/classNames';
 import { ToDoListItemSkeleton } from '../ToDoListItem/ToDoListItemSkeleton';
 import cls from './ToDoList.module.scss';
 import { ToDo } from '../../model/types/toDo';
 import { ToDoListItem } from '../ToDoListItem/ToDoListItem';
-import { Text, TextAlign, TextSize } from '../../../../shared/ui/Text/Text';
-import { classNames } from '../../../../shared/lib/classNames/classNames';
 
-interface ArticleListProps {
+interface ToDoListProps {
     className?: string;
     toDo: ToDo[];
     isLoading?: boolean;
@@ -24,14 +24,14 @@ export const ToDoList = ({
     className,
     toDo,
     isLoading,
-}: ArticleListProps) => {
+}: ToDoListProps) => {
     const { t } = useTranslation();
     const renderToDo = (toDo: ToDo) => (
         <ToDoListItem toDo={toDo} className={cls.card} key={toDo._id} />
     );
     if (!isLoading && !toDo.length) {
         return (
-            <div className={classNames(cls.ArticleList, {}, [className, cls.CARD])}>
+            <div className={classNames('', {}, [className, cls.CARD])}>
                 <Text
                     size={TextSize.L}
                     align={TextAlign.CENTER}

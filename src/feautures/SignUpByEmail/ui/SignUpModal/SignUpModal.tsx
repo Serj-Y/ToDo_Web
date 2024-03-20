@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import { Modal } from '../../../../shared/ui/Modal/Modal';
-import { classNames } from '../../../../shared/lib/classNames/classNames';
-import { Loader } from '../../../../shared/ui/Loader/Loader';
+import { Modal } from 'shared/ui/Modal/Modal';
+import { classNames } from 'shared/lib/classNames/classNames';
+import { Loader } from 'shared/ui/Loader/Loader';
 import { SignUpFormAsync } from '../SignUpForm/SignUpForm.async';
 
 interface SignUpModalProps {

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ToDo } from '../types/toDo';
 import {
     fetchToDoById,
-} from '../services/fetchArticleById/fetchToDoById';
+} from '../services/fetchToDoById/fetchToDoById';
 import { ToDoDetailsSchema } from '../types/toDoDetailsSchema';
 
 const initialState: ToDoDetailsSchema = {
@@ -11,8 +11,8 @@ const initialState: ToDoDetailsSchema = {
     data: undefined,
 
 };
-export const toDoDetailsSlice = createSlice({
-    name: 'toDoDetailsSlice',
+export const toDoSlice = createSlice({
+    name: 'toDoSlice',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -32,5 +32,5 @@ export const toDoDetailsSlice = createSlice({
     },
 });
 
-export const { actions: articleDetailsActions } = toDoDetailsSlice;
-export const { reducer: articleDetailsReducer } = toDoDetailsSlice;
+export const { actions: articleDetailsActions } = toDoSlice;
+export const { reducer: articleDetailsReducer } = toDoSlice;

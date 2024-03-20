@@ -3,13 +3,13 @@ import {
 } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import cls from './PageWrapper.module.scss';
-import { StateSchema } from '../../app/providers/StoreProvider';
+import { useInfiniteScroll } from 'shared/lib/hooks/useInfiniteScroll/useInfiniteScroll';
+import { useThrottle } from 'shared/lib/hooks/useThrottle/useThrottle';
+import { classNames } from 'shared/lib/classNames/classNames';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { getScrollSaveByPath, scrollSaveActions } from '../ScrollSave';
-import { useInfiniteScroll } from '../../shared/lib/hooks/useInfiniteScroll/useInfiniteScroll';
-import { useThrottle } from '../../shared/lib/hooks/useThrottle/useThrottle';
-import { classNames } from '../../shared/lib/classNames/classNames';
-import { useAppDispatch } from '../../shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { StateSchema } from '../../app/providers/StoreProvider';
+import cls from './PageWrapper.module.scss';
 
 interface PageWrapperProps {
     className?: string;

@@ -1,15 +1,15 @@
-import React, { Suspense, useEffect, useState } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import React, { Suspense, useEffect } from 'react';
+import { useSelector, useStore } from 'react-redux';
+import { classNames } from 'shared/lib/classNames/classNames';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Navbar } from '../widgets/Navbar';
-import { classNames } from '../shared/lib/classNames/classNames';
 import { useTheme } from './providers/ThemeProvider';
 import { getUserInited, userActions } from '../entities/User';
-import { Text } from '../shared/ui/Text/Text';
 import { ToDoPage } from '../pages/ToDoPage';
 
 function App() {
     const { theme } = useTheme();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const inited = useSelector(getUserInited);
     const state = useStore();
 
@@ -25,8 +25,6 @@ function App() {
                     {inited
                       && (
                           <div>
-
-                              <Text title={state.getState().name} />
                               <ToDoPage />
                           </div>
                       )}

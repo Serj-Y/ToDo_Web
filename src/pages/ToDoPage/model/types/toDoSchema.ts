@@ -1,8 +1,9 @@
 import { EntityState } from '@reduxjs/toolkit';
 import { ToDo } from '../../../../entities/ToDo';
 
-export interface ToDoPageSchema extends EntityState<ToDo> {
+export interface ToDoSchema extends EntityState<ToDo> {
+    _inited: boolean;
     isLoading?: boolean,
     error?: string,
-    _inited: boolean
+    data?: ToDo
 }

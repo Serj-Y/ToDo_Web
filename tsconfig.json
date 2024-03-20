@@ -1,5 +1,14 @@
 {
+//  "compilerOptions": {
+//    "baseUrl": "src",
+//    "paths": {
+//      "@components/*": ["components/*"], // Define aliases for directories
+//      "@pages/*": ["pages/*"],
+//      "@utils/*": ["utils/*"]
+//    }
+//  },
   "compilerOptions": {
+    "baseUrl": "src",
     "target": "es5",
     "lib": [
       "dom",

@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ToDo } from '../../../../../entities/ToDo';
+import { ToDo } from 'entities/ToDo';
 import { ThunkConfig } from '../../../../../app/providers/StoreProvider';
 
-interface FetchArticlesListProps {
+interface FetchToDoListProps {
     replace?: boolean
 }
 
-export const fetchToDoList = createAsyncThunk<ToDo[], FetchArticlesListProps, ThunkConfig<string>>(
+export const fetchToDoList = createAsyncThunk<ToDo[], FetchToDoListProps, ThunkConfig<string>>(
     'toDoPage/fetchToDoLists',
     async (args, thunkAPI) => {
         const {
@@ -15,11 +15,7 @@ export const fetchToDoList = createAsyncThunk<ToDo[], FetchArticlesListProps, Th
             getState,
         } = thunkAPI;
         try {
-            const response = await extra.api.get<ToDo[]>('todo/', {
-                params: {
-
-                },
-            });
+            const response = await extra.api.get<ToDo[]>('todo/');
             if (!response.data) {
                 throw new Error();
             }

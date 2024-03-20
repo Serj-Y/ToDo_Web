@@ -7,7 +7,7 @@ import { UserSchema } from '../../../../entities/User';
 import { ScrollSaveSchema } from '../../../../widgets/ScrollSave';
 import { LoginSchema } from '../../../../feautures/AuthByEmail';
 import { SignUpSchema } from '../../../../feautures/SignUpByEmail';
-import { ToDoPageSchema } from '../../../../pages/ToDoPage/model/types/toDoPageSchema';
+import { ToDoSchema } from '../../../../pages/ToDoPage/model/types/toDoSchema';
 
 export interface StateSchema {
     user: UserSchema;
@@ -15,7 +15,7 @@ export interface StateSchema {
     // async reducers
     loginForm?: LoginSchema;
     signUpForm?: SignUpSchema;
-    toDo?: ToDoPageSchema;
+    toDo?: ToDoSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ToDoPageSchema } from '../types/toDoPageSchema';
+import { ToDo } from 'entities/ToDo';
+import { ToDoSchema } from '../types/toDoSchema';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
-import { ToDo } from '../../../../entities/ToDo';
 import { StateSchema } from '../../../../app/providers/StoreProvider';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
@@ -14,14 +14,20 @@ export const getToDo = toDoAdapter.getSelectors<StateSchema>(
 
 const toDoPageSlice = createSlice({
     name: 'toDoPageSlice',
-    initialState: toDoAdapter.getInitialState<ToDoPageSchema>({
+    initialState: toDoAdapter.getInitialState<ToDoSchema>({
         isLoading: false,
         error: undefined,
-        ids: [],
-        entities: {},
         _inited: false,
+        entities: {},
+        ids: [],
     }),
     reducers: {
+        addToDo: (state, action: PayloadAction<ToDo>) => {
+            toDoAdapter.addOne(state, action.payload);
+        },
+        deleteToDo: (state, action: PayloadAction<string>) => {
+            toDoAdapter.removeOne(state, action.payload);
+        },
         initState: (state) => {
             state._inited = true;
         },

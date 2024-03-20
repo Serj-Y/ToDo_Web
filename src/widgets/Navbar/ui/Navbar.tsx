@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserAuthData, userActions } from '../../../entities/User';
+import { getUserAuthData, userActions } from 'entities/User';
+import { classNames } from 'shared/lib/classNames/classNames';
+import { Text, TextSize, TextTheme } from 'shared/ui/Text/Text';
+import { Button, ButtonTheme } from 'shared/ui/Button/Button';
+import { LoginModal } from 'feautures/AuthByEmail';
+import { SignUpModal } from 'feautures/SignUpByEmail';
 import cls from './Navbar.module.scss';
-import { classNames } from '../../../shared/lib/classNames/classNames';
-import { Text, TextSize, TextTheme } from '../../../shared/ui/Text/Text';
-import { Button, ButtonTheme } from '../../../shared/ui/Button/Button';
-import { LoginModal } from '../../../feautures/AuthByEmail';
-import { SignUpModal } from '../../../feautures/SignUpByEmail';
 
 interface NavbarProps {
     className?: string;
