@@ -25,7 +25,6 @@ export const ToDoListItem = memo(({
                 <TaskStatusSelect value={task.status} />
                 <DeleteTaskById taskIdForDelete={task._id} toDoListId={toDo._id} />
             </div>
-
         </div>
     );
     return (

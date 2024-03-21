@@ -11,6 +11,7 @@ interface InputProps extends HtmlInputProps {
     onChange?: (value: string) => void
     autofocus?: boolean
     readonly?: boolean
+    customPlaceholder?: string
 }
 
 const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, ref) => {
@@ -19,6 +20,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
         value,
         onChange,
         type = 'text',
+        customPlaceholder,
         placeholder,
         autofocus,
         readonly,
@@ -56,31 +58,30 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
 
     return (
         <div className={classNames(cls.InputWrapper, mods, [className])}>
-            {placeholder && (
+            {customPlaceholder && (
                 <div className={cls.placeholder}>
-                    {`${placeholder}`}
+                    {`${customPlaceholder}`}
                 </div>
             ) }
-            <div className={cls.caretWrapper}>
-                <input
-                    ref={ref}
-                    type={type}
-                    value={value}
-                    onChange={onChangeHandler}
-                    className={cls.input}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                    onSelect={onSelect}
-                    readOnly={readonly}
-                    {...otherProps}
+            <input
+                ref={ref}
+                type={type}
+                value={value}
+                onChange={onChangeHandler}
+                className={cls.input}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                placeholder={placeholder}
+                onSelect={onSelect}
+                readOnly={readonly}
+                {...otherProps}
+            />
+            {isFocused && !readonly && (
+                <span
+                    className={cls.caret}
+                    style={{ left: `${caretPosition * 7}px` }}
                 />
-                {isFocused && !readonly && (
-                    <span
-                        className={cls.caret}
-                        style={{ left: `${caretPosition * 6.5}px` }}
-                    />
-                )}
-            </div>
+            )}
         </div>
     );
 };

@@ -24,9 +24,7 @@ function App() {
                 <div className="content-page">
                     {inited
                       && (
-                          <div>
-                              <ToDoPage />
-                          </div>
+                          <ToDoPage />
                       )}
 
                 </div>

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import React, { useCallback } from 'react';
-import { Button, ButtonTheme } from 'shared/ui/Button/Button';
+import { Button, ButtonSize, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { deleteToDoListById } from '../model/services/deleteToDoListById';
 
@@ -17,6 +17,6 @@ export const DeleteToDoListById = ({ toDoListIdForDelete }: DeleteToDoListProps)
     }, [dispatch, toDoListIdForDelete]);
 
     return (
-        <Button theme={ButtonTheme.OUTLINE_RED} onClick={onDeleteToDoListItem}>{t('X')}</Button>
+        <Button theme={ButtonTheme.OUTLINE_RED} onClick={onDeleteToDoListItem} size={ButtonSize.M}>{t('X')}</Button>
     );
 };

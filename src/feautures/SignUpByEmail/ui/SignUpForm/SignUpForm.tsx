@@ -1,12 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { memo, useCallback } from 'react';
-import {
-    DynamicModuleLoader,
-    ReducersList,
-} from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import { classNames } from 'shared/lib/classNames/classNames';
-import { Text, TextTheme } from 'shared/ui/Text/Text';
+import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -56,8 +53,8 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
     }, [dispatch, password, userName, email, onSuccess]);
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
-            <div className={classNames(cls.LoginForm, {}, [className])}>
-                <Text title={t('Sign up')} />
+            <div className={classNames(cls.SignUpForm, {}, [className])}>
+                <Text title={t('Sign up')} align={TextAlign.CENTER} />
                 {error && (
                     <Text text={t('Incorrect password or username')} theme={TextTheme.ERROR} />
 
@@ -65,7 +62,7 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
                 <Input
                     type="text"
                     className={cls.input}
-                    placeholder={t('Name')}
+                    customPlaceholder={t('Name')}
                     autoFocus
                     onChange={onChangeUsername}
                     value={userName}
@@ -73,7 +70,7 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
                 <Input
                     type="text"
                     className={cls.input}
-                    placeholder={t('Email')}
+                    customPlaceholder={t('Email')}
                     autoFocus
                     onChange={onChangeEmail}
                     value={email}
@@ -81,7 +78,7 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
                 <Input
                     type="text"
                     className={cls.input}
-                    placeholder={t('Password')}
+                    customPlaceholder={t('Password')}
                     onChange={onChangePassword}
                     value={password}
                 />

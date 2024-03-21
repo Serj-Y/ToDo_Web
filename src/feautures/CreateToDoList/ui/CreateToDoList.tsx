@@ -33,7 +33,7 @@ export const CreateToDoList = ({ className }: CreateToDoListProps) => {
                 render={({ field }) => (
                     <Input
                         {...field}
-                        placeholder={t('Enter to-do lis name')}
+                        placeholder={t('Enter ToDo list name...')}
                         onChange={(value) => field.onChange(value)}
                     />
                 )}

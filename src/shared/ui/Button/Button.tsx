@@ -4,6 +4,7 @@ import { classNames, Mods } from '../../lib/classNames/classNames';
 
 export enum ButtonTheme {
     CLEAR = 'clear',
+    CLEAR_RED = 'clearRed',
     CLEAR_INVERTED = 'clearInverted',
     OUTLINE = 'outline',
     OUTLINE_RED = 'outlineRed',
@@ -12,6 +13,7 @@ export enum ButtonTheme {
 }
 
 export enum ButtonSize {
+    S = 'size_s',
     M = 'size_m',
     L = 'size_l',
     XL = 'size_xl',
