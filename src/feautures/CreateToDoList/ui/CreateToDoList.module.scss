@@ -1,10 +1,7 @@
-
 .CreateToDoList {
   display: flex;
-  flex-direction: column;
-  width: 400px;
-}
+  align-items: center;
+  min-width: 100%;
+  justify-content: center;
 
-.input {
-  margin-top: 10px;
 }

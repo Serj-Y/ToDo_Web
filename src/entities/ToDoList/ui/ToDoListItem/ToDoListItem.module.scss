@@ -1,0 +1,27 @@
+.ToDoItemWrapper{
+  margin-top: 30px;
+  .TaskWrapper{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .taskStatusAnDelete{
+      display: flex;
+      gap: 20px;
+    }
+  }
+
+  .toDoNameAndDelete{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+}
+
+

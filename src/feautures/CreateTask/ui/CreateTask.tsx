@@ -5,41 +5,43 @@ import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Button } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import cls from './CreateToDoList.module.scss';
-import { createToDoList } from '../model/services/createToDoList';
+import cls from './CreateTask.module.scss';
+import { createTask } from '../model/services/createTask';
 
-type CreateToDoListProps = {
+type CreateTaskProps = {
+    toDoListId: string
     className?: string
 }
 interface FormData {
-    name: string;
+    taskName: string
 }
-export const CreateToDoList = ({ className }: CreateToDoListProps) => {
+
+export const CreateTask = ({ className, toDoListId }: CreateTaskProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit } = useForm<FormData>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback(async (data: FormData) => {
-        await dispatch(createToDoList(data));
-    }, [dispatch]);
+        await dispatch(createTask({ taskName: data.taskName, toDoListId }));
+    }, [dispatch, toDoListId]);
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={classNames(cls.CreateToDoList, {}, [className])}>
+        <form onSubmit={handleSubmit(onSubmit)} className={classNames(cls.CreateTask, {}, [className])}>
             <Controller
-                name="name"
+                name="taskName"
                 control={control}
                 defaultValue=""
                 rules={{ minLength: 2, maxLength: 50 }}
                 render={({ field }) => (
                     <Input
                         {...field}
-                        placeholder={t('Enter to-do lis name')}
+                        placeholder={t('Enter task name')}
                         onChange={(value) => field.onChange(value)}
                     />
                 )}
             />
             <Button type="submit" disabled={isLoading}>
-                {t('Create To-Do')}
+                {t('Create Task')}
             </Button>
         </form>
     );

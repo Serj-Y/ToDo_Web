@@ -3,11 +3,11 @@ import {
 } from '@reduxjs/toolkit';
 import { CombinedState } from 'redux';
 import { AxiosInstance } from 'axios';
-import { UserSchema } from '../../../../entities/User';
-import { ScrollSaveSchema } from '../../../../widgets/ScrollSave';
-import { LoginSchema } from '../../../../feautures/AuthByEmail';
-import { SignUpSchema } from '../../../../feautures/SignUpByEmail';
-import { ToDoSchema } from '../../../../pages/ToDoPage/model/types/toDoSchema';
+import { UserSchema } from 'entities/User';
+import { ScrollSaveSchema } from 'widgets/ScrollSave';
+import { LoginSchema } from 'feautures/AuthByEmail';
+import { SignUpSchema } from 'feautures/SignUpByEmail';
+import { ToDoSchema } from 'entities/ToDoList';
 
 export interface StateSchema {
     user: UserSchema;
@@ -15,7 +15,7 @@ export interface StateSchema {
     // async reducers
     loginForm?: LoginSchema;
     signUpForm?: SignUpSchema;
-    toDo?: ToDoSchema;
+    toDoList?: ToDoSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

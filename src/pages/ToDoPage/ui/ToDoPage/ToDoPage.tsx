@@ -5,21 +5,21 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { ToDoList } from 'entities/ToDo';
+import { ToDoList } from 'entities/ToDoList';
 import { PageWrapper } from 'widgets/PageWrapper/PageWrapper';
 import { classNames } from 'shared/lib/classNames/classNames';
-import { getToDoPageError, getToDoPageIsLoading } from '../../model/selectors/toDoPageSelectors';
-import { getToDo, todosPageReducer } from '../../model/slice/toDoPageSlice';
+import { CreateToDoList } from 'feautures/CreateToDoList/ui/CreateToDoList';
+import { getToDo, todosPageReducer } from 'entities/ToDoList/model/slice/toDoListSlice';
+import { getToDoPageError, getToDoPageIsLoading } from 'entities/ToDoList/model/selectors/toDoPageSelectors';
 import cls from './ToDoPage.module.scss';
 import { initToDoPage } from '../../model/services/initToDoPage/initToDoPage';
-import { CreateToDoList } from '../../../../feautures/CreateToDoList/ui/CreateToDoList';
 
 interface ArticlesPageProps {
     className?: string;
 }
 
 const reducers: ReducersList = {
-    toDo: todosPageReducer,
+    toDoList: todosPageReducer,
 };
 
 const ToDoPage = ({ className }: ArticlesPageProps) => {
@@ -34,7 +34,7 @@ const ToDoPage = ({ className }: ArticlesPageProps) => {
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <PageWrapper
-                className={classNames(cls.ArticlesPage, {}, [className])}
+                className={classNames(cls.ToDoPage, {}, [className])}
             >
                 <CreateToDoList />
                 <ToDoList

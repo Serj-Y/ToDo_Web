@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { ToDo } from 'entities/ToDo';
+import { ToDo } from 'entities/ToDoList';
 
 interface CreateToDoListProps {
     name: string

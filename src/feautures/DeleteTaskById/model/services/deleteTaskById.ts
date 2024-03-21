@@ -1,26 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { ToDo } from 'entities/ToDoList';
+import { Task } from '../../../../entities/ToDoList/model/types/toDo';
+import { todosPageActions } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
 
 interface DeleteToDoListByIdProps {
     toDoId: string
+    taskId: string
     replace?: boolean;
 }
 
-export const deleteToDoListById = createAsyncThunk<
-    ToDo,
+export const deleteTaskById = createAsyncThunk<
+    Task,
     DeleteToDoListByIdProps,
     ThunkConfig<string>
 >(
-    'todo/deleteTodo',
-    async (toDoListIdForDelete, thunkAPI) => {
+    'todo/deleteTask',
+    async (taskIdForDelete, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
-        const forDeleteData = { todoId: toDoListIdForDelete.toDoId };
+        const forDeleteData = { taskId: taskIdForDelete.taskId, todoId: taskIdForDelete.toDoId };
         try {
-            const response = await extra.api.delete<ToDo>('todo/', { data: forDeleteData });
+            const response = await extra.api.delete<Task>('task/', { data: forDeleteData });
             if (!response.data) {
                 rejectWithValue(response.statusText);
             }
+            dispatch(todosPageActions.deleteTask(forDeleteData));
             return response.data;
         } catch (e) {
             console.log(e);

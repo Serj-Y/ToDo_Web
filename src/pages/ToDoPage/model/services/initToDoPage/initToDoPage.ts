@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
     getToDoPageHasInited,
-} from '../../selectors/toDoPageSelectors';
-import { todosPageActions } from '../../slice/toDoPageSlice';
+} from '../../../../../entities/ToDoList/model/selectors/toDoPageSelectors';
+import { todosPageActions } from '../../../../../entities/ToDoList/model/slice/toDoListSlice';
 import {
     fetchToDoList,
-} from '../fetchToDoLists/fetchToDoList';
+} from '../../../../../entities/ToDoList/model/services/fetchToDoLists/fetchToDoList';
 import { ThunkConfig } from '../../../../../app/providers/StoreProvider';
 
 export const initToDoPage = createAsyncThunk<void, void, ThunkConfig<string>>(
@@ -19,7 +19,6 @@ export const initToDoPage = createAsyncThunk<void, void, ThunkConfig<string>>(
         const inited = getToDoPageHasInited(getState());
         if (!inited) {
             dispatch(todosPageActions.initState());
-
             dispatch(fetchToDoList({}));
         }
     },
