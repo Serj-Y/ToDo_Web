@@ -68,7 +68,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
                 type={type}
                 value={value}
                 onChange={onChangeHandler}
-                className={cls.input}
+                className={classNames(cls.input, undefined, [className])}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 placeholder={placeholder}
@@ -76,12 +76,6 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
                 readOnly={readonly}
                 {...otherProps}
             />
-            {isFocused && !readonly && (
-                <span
-                    className={cls.caret}
-                    style={{ left: `${caretPosition * 7}px` }}
-                />
-            )}
         </div>
     );
 };

@@ -1,0 +1,14 @@
+.UpdateTask {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .taskStatusAnDelete{
+      display: flex;
+      gap: 20px;
+    }
+  .input{
+    width: 95%;
+  }
+}
+

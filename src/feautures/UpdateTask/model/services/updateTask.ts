@@ -3,15 +3,18 @@ import { ThunkConfig } from 'app/providers/StoreProvider';
 
 import { todosPageActions } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
 import { Task } from '../../../../entities/ToDoList/model/types/toDo';
+import { TaskStatus } from '../../../../entities/TaskStatus';
 
-interface CreateTaskProps {
+interface UpdateTaskProps {
     taskName: string
-    toDoListId: string
+    taskId: string
+    taskStatus: TaskStatus
+    toDoId: string
 }
 
-export const createTask = createAsyncThunk<
+export const updateTask = createAsyncThunk<
     Task,
-    CreateTaskProps,
+    UpdateTaskProps,
     ThunkConfig<string>
 >(
     'todo/updateTask',
@@ -19,14 +22,19 @@ export const createTask = createAsyncThunk<
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         const newTask = {
             name: newTaskData.taskName,
-            todoId: newTaskData.toDoListId,
+            taskId: newTaskData.taskId,
+            status: newTaskData.taskStatus,
         };
         try {
-            const response = await extra.api.post<Task>('task/', newTask);
+            const response = await extra.api.patch<Task>('task/', newTask);
             if (!response.data) {
                 rejectWithValue(response.statusText);
             }
-            dispatch(todosPageActions.createTask({ todoId: newTaskData.toDoListId, task: response.data }));
+            dispatch(todosPageActions.updateTask({
+                updatedTask: response.data,
+                todoId: newTaskData.toDoId,
+                taskId: newTaskData.taskId,
+            }));
             return response.data;
         } catch (e) {
             console.log(e);

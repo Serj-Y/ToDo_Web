@@ -23,12 +23,13 @@ export const TaskStatusSelect = memo(({
     const { t } = useTranslation();
 
     const onChangeHandler = useCallback((value: string) => onChange?.(value as TaskStatus), [onChange]);
+
     return (
         <Select
             options={options}
             className={classNames('', {}, [className])}
             value={value}
-            onChange={onChangeHandler}
+            onChange={onChange}
             readonly={readonly}
         />
     );

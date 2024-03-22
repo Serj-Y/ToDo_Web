@@ -46,5 +46,11 @@
   "Add new": "Add new",
   "Add": "Add",
   "Add Task": "Add Task",
-  "Enter ToDo list name": "Enter ToDo list name"
+  "Enter ToDo list name": "Enter ToDo list name",
+  "Update": "Update",
+  "Update name": "Update name",
+  "Chang name": "Chang name",
+  "Update Task": "Update Task",
+  "Change name": "Change name",
+  "✓": "✓"
 }

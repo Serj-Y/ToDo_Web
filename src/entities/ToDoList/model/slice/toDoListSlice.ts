@@ -2,10 +2,11 @@ import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolki
 import { StateSchema } from 'app/providers/StoreProvider';
 import { createToDoList } from 'feautures/CreateToDoList/model/services/createToDoList';
 import { deleteToDoListById } from 'feautures/DeleteToDoListById/model/services/deleteToDoListById';
-import { createTask } from 'feautures/CreateTask/model/services/createTask';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { Task, ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
+import { updateToDoList } from '../../../../feautures/UpdateToDoList/model/services/updateToDoList';
+import { updateTask } from '../../../../feautures/UpdateTask/model/services/updateTask';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -80,18 +81,11 @@ const toDoListSlice = createSlice({
                 state.isLoading = false;
                 toDoAdapter.removeOne(state, action.payload._id);
             })
-            // .addCase(createTask.fulfilled, (state, action) => {
-            //     const { todo } = action.payload;
-            //     const task = action.payload;
-            //     const toDoList = state.entities[todo];
-            //     if (toDoList) {
-            //         const updatedToDoList = {
-            //             ...toDoList,
-            //             tasks: [...toDoList.tasks, task],
-            //         };
-            //         state.entities[todo] = updatedToDoList;
-            //     }
-            // })
+            .addCase(updateToDoList.fulfilled, (state, action) => {
+                state.isLoading = false;
+                const { _id, name } = action.payload;
+                toDoAdapter.updateOne(state, { id: _id, changes: { name } });
+            })
             .addCase(fetchToDoList.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
