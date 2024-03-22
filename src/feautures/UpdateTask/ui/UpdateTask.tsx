@@ -2,10 +2,9 @@ import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
-import { classNames } from 'shared/lib/classNames/classNames';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { TaskStatus, TaskStatusSelect } from 'entities/TaskStatus';
+import { TaskStatus, TaskStatusSelect } from 'entities/Task';
 import cls from './UpdateTask.module.scss';
 import { updateTask } from '../model/services/updateTask';
 
@@ -55,19 +54,19 @@ export const UpdateTask = ({
                     />
                 )}
             />
-            <div className={cls.taskStatusAnDelete}>
-                <Controller
-                    name="taskStatus"
-                    control={control}
-                    defaultValue={taskStatus}
-                    render={({ field }) => (
-                        <TaskStatusSelect {...field} value={field.value} onChange={(value) => field.onChange(value)} />
-                    )}
-                />
-                <Button type="submit" disabled={isLoading} size={ButtonSize.M}>
-                    {t('✓')}
-                </Button>
-            </div>
+            <Controller
+                name="taskStatus"
+                control={control}
+                defaultValue={taskStatus}
+                render={({ field }) => (
+                    <div className={cls.taskStatusAnDelete}>
+                        <TaskStatusSelect value={field.value} onChange={field.onChange} />
+                        <Button type="submit" disabled={isLoading} size={ButtonSize.M}>
+                            {t('✓')}
+                        </Button>
+                    </div>
+                )}
+            />
         </form>
     );
 };

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { Task } from '../../../../entities/ToDoList/model/types/toDo';
 import { todosPageActions } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
+import { Task } from '../../../../entities/Task/module/types/task';
 
 interface DeleteToDoListByIdProps {
     toDoId: string

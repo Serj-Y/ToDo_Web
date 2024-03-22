@@ -1,9 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-
-import { todosPageActions } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
-import { Task } from '../../../../entities/ToDoList/model/types/toDo';
-import { TaskStatus } from '../../../../entities/TaskStatus';
+import { Task, TaskStatus } from 'entities/Task';
+import { todosPageActions } from 'entities/ToDoList/model/slice/toDoListSlice';
 
 interface UpdateTaskProps {
     taskName: string

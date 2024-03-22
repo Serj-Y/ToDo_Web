@@ -3,10 +3,11 @@ import { StateSchema } from 'app/providers/StoreProvider';
 import { createToDoList } from 'feautures/CreateToDoList/model/services/createToDoList';
 import { deleteToDoListById } from 'feautures/DeleteToDoListById/model/services/deleteToDoListById';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
-import { Task, ToDo } from '../types/toDo';
+import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
 import { updateToDoList } from '../../../../feautures/UpdateToDoList/model/services/updateToDoList';
 import { updateTask } from '../../../../feautures/UpdateTask/model/services/updateTask';
+import { Task } from '../../../Task/module/types/task';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,

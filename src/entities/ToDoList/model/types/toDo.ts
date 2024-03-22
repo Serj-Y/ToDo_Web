@@ -1,14 +1,4 @@
-import { TaskStatus } from '../../../TaskStatus';
-
-export interface Task {
-    _id: string
-    name: string
-    status: TaskStatus
-    todo: string
-    order: number
-    createdAt: string
-    updatedAt: string
-}
+import { Task } from '../../../Task';
 
 export interface ToDo {
     _id: string

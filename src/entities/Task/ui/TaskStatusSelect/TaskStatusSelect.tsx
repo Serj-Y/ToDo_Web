@@ -2,7 +2,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import { Select } from 'shared/ui/Select/Select';
 import { useTranslation } from 'react-i18next';
 import { memo, useCallback } from 'react';
-import { TaskStatus } from '../../model/types/taskStatus';
+import { TaskStatus } from '../../module/types/taskStatus';
 
 interface currencySelectProps {
   className?: string;
