@@ -1,13 +1,14 @@
-import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { StateSchema } from 'app/providers/StoreProvider';
 import { createToDoList } from 'feautures/CreateToDoList/model/services/createToDoList';
 import { deleteToDoListById } from 'feautures/DeleteToDoListById/model/services/deleteToDoListById';
+import { updateToDoList } from 'feautures/UpdateToDoList/model/services/updateToDoList';
+import { createTask } from 'feautures/CreateTask/model/services/createTask';
+import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
+import { deleteTaskById } from 'feautures/DeleteTaskById/model/services/deleteTaskById';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
-import { updateToDoList } from '../../../../feautures/UpdateToDoList/model/services/updateToDoList';
-import { updateTask } from '../../../../feautures/UpdateTask/model/services/updateTask';
-import { Task } from '../../../Task/module/types/task';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -30,30 +31,6 @@ const toDoListSlice = createSlice({
         initState: (state) => {
             state._inited = true;
         },
-        createTask: (state, action: PayloadAction<{ todoId: string, task: Task }>) => {
-            const { todoId, task } = action.payload;
-            const toDoList = state.entities[todoId];
-            if (toDoList) {
-                const updatedTasks = [...toDoList.tasks, task];
-                state.entities[todoId] = { ...toDoList, tasks: updatedTasks };
-            }
-        },
-        deleteTask: (state, action: PayloadAction<{ todoId: string, taskId: string }>) => {
-            const { todoId, taskId } = action.payload;
-            const toDoList = state.entities[todoId];
-            if (toDoList) {
-                const updatedTasks = toDoList.tasks.filter((task) => task._id !== taskId);
-                state.entities[todoId] = { ...toDoList, tasks: updatedTasks };
-            }
-        },
-        updateTask: (state, action: PayloadAction<{ todoId: string, taskId: string, updatedTask: Task }>) => {
-            const { todoId, taskId, updatedTask } = action.payload;
-            const toDoList = state.entities[todoId];
-            if (toDoList) {
-                const updatedTasks = toDoList.tasks.map((task) => (task._id === taskId ? updatedTask : task));
-                state.entities[todoId] = { ...toDoList, tasks: updatedTasks };
-            }
-        },
     },
     extraReducers: (builder) => {
         builder
@@ -74,20 +51,118 @@ const toDoListSlice = createSlice({
                     toDoAdapter.addMany(state, action.payload);
                 }
             })
-            .addCase(createToDoList.fulfilled, (state, action) => {
+            .addCase(fetchToDoList.rejected, (state, action) => {
                 state.isLoading = false;
-                toDoAdapter.addOne(state, action.payload);
+                state.error = action.payload;
+            })
+
+            .addCase(deleteToDoListById.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+
+                if (action.meta.arg.replace) {
+                    toDoAdapter.removeAll(state);
+                }
             })
             .addCase(deleteToDoListById.fulfilled, (state, action) => {
                 state.isLoading = false;
                 toDoAdapter.removeOne(state, action.payload._id);
+            })
+            .addCase(deleteToDoListById.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(updateToDoList.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+
+                if (action.meta.arg.replace) {
+                    toDoAdapter.removeAll(state);
+                }
             })
             .addCase(updateToDoList.fulfilled, (state, action) => {
                 state.isLoading = false;
                 const { _id, name } = action.payload;
                 toDoAdapter.updateOne(state, { id: _id, changes: { name } });
             })
-            .addCase(fetchToDoList.rejected, (state, action) => {
+            .addCase(updateToDoList.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(createToDoList.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+
+                if (action.meta.arg.replace) {
+                    toDoAdapter.removeAll(state);
+                }
+            })
+            .addCase(createToDoList.fulfilled, (state, action) => {
+                state.isLoading = false;
+                toDoAdapter.addOne(state, action.payload);
+            })
+            .addCase(createToDoList.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(createTask.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(createTask.fulfilled, (state, action) => {
+                state.isLoading = false;
+                const { toDoId, task } = action.payload;
+                const todo = state.entities[toDoId];
+                if (todo) {
+                    const updatedTodo = {
+                        ...todo,
+                        tasks: [...todo.tasks, task],
+                    };
+                    toDoAdapter.updateOne(state, { id: toDoId, changes: updatedTodo });
+                }
+            })
+            .addCase(createTask.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(updateTask.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(updateTask.fulfilled, (state, action) => {
+                state.isLoading = false;
+                const { toDoId, taskId, updatedTask } = action.payload;
+                const todo = state.entities[toDoId];
+                if (todo) {
+                    const updatedTasks = todo.tasks.map((task) => (task._id === taskId ? updatedTask : task));
+                    const updatedTodo = { ...todo, tasks: updatedTasks };
+                    toDoAdapter.updateOne(state, { id: toDoId, changes: updatedTodo });
+                }
+            })
+            .addCase(updateTask.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(deleteTaskById.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(deleteTaskById.fulfilled, (state, action) => {
+                state.isLoading = false;
+                const { toDoId, taskId } = action.payload;
+                const todo = state.entities[toDoId];
+                if (todo) {
+                    const updatedTasks = todo.tasks.filter((task) => task._id !== taskId);
+                    const updatedTodo = { ...todo, tasks: updatedTasks };
+                    toDoAdapter.updateOne(state, { id: toDoId, changes: updatedTodo });
+                }
+            })
+            .addCase(deleteTaskById.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

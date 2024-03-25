@@ -1,21 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-
-import { todosPageActions } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
-
-import { Task } from '../../../../entities/Task/module/types/task';
+import { Task } from 'entities/Task/module/types/task';
 
 interface CreateTaskProps {
     taskName: string
     toDoListId: string
 }
 
+type TaskResponse ={
+   task:Task,
+    toDoId: string
+}
+
 export const createTask = createAsyncThunk<
-    Task,
+    TaskResponse,
     CreateTaskProps,
     ThunkConfig<string>
 >(
-    'todo/updateTask',
+    'todo/createTask',
     async (newTaskData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         const newTask = {
@@ -27,8 +29,7 @@ export const createTask = createAsyncThunk<
             if (!response.data) {
                 rejectWithValue(response.statusText);
             }
-            dispatch(todosPageActions.createTask({ todoId: newTaskData.toDoListId, task: response.data }));
-            return response.data;
+            return { task: response.data, toDoId: newTaskData.toDoListId };
         } catch (e) {
             console.log(e);
             return rejectWithValue('error');
