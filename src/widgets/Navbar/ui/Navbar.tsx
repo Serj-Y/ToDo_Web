@@ -8,6 +8,8 @@ import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { LoginModal } from 'feautures/AuthByEmail';
 import { SignUpModal } from 'feautures/SignUpByEmail';
 import cls from './Navbar.module.scss';
+import { useAppDispatch } from '../../../shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { EditUserModal } from '../../../feautures/EditUser';
 
 interface NavbarProps {
     className?: string;
@@ -22,8 +24,9 @@ export const Navbar = memo(({ className }: NavbarProps) => {
     const { t } = useTranslation();
     const [isAuthModal, setIsAuthModal] = useState(false);
     const [isSignUpModal, setIsSignUpModal] = useState(false);
+    const [isEditUserModal, setIsEditUserModal] = useState(false);
     const authData = useSelector(getUserAuthData);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const onCloseModal = useCallback(() => {
         setIsSignUpModal(false);
@@ -57,12 +60,22 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                 >
                     {t('Sign Out')}
                 </Button>
-                <Text
-                    title={authData.user.name}
-                    className={cls.AuthUserName}
-                    theme={TextTheme.SECONDARY}
-                    size={TextSize.S}
-                />
+                <Button onDoubleClick={() => setIsEditUserModal((prev) => !prev)}>
+                    <Text
+                        title={authData.user?.name}
+                        className={cls.AuthUserName}
+                        theme={TextTheme.SECONDARY}
+                        size={TextSize.S}
+                    />
+                </Button>
+                {isEditUserModal && (
+                    <EditUserModal
+                        isOpen={isEditUserModal}
+                        onClose={() => setIsEditUserModal((prev) => !prev)}
+                        currentName={authData.user?.name}
+                    />
+                ) }
+
             </div>
         );
     }

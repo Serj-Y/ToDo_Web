@@ -1,4 +1,4 @@
-import { StateSchema } from '../../../../app/providers/StoreProvider';
+import { StateSchema } from 'app/providers/StoreProvider';
 
 export const getToDoPageIsLoading = (state: StateSchema) => state.toDoList?.isLoading || false;
 export const getToDoPageError = (state: StateSchema) => state.toDoList?.error;

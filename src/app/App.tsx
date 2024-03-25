@@ -6,6 +6,8 @@ import { Navbar } from '../widgets/Navbar';
 import { useTheme } from './providers/ThemeProvider';
 import { getUserInited, userActions } from '../entities/User';
 import { ToDoPage } from '../pages/ToDoPage';
+import { getToDo, todosPageActions } from '../entities/ToDoList/model/slice/toDoListSlice';
+import { initToDoPage } from '../pages/ToDoPage/model/services/initToDoPage/initToDoPage';
 
 function App() {
     const { theme } = useTheme();
@@ -15,7 +17,7 @@ function App() {
 
     useEffect(() => {
         dispatch(userActions.initAuthData());
-    }, [dispatch]);
+    });
 
     return (
         <div className={classNames('app', {}, [theme])}>
@@ -26,7 +28,6 @@ function App() {
                       && (
                           <ToDoPage />
                       )}
-
                 </div>
             </Suspense>
         </div>

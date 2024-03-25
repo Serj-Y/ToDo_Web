@@ -17,7 +17,6 @@ interface FormData {
 export const CreateToDoList = ({ className }: CreateToDoListProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit } = useForm<FormData>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback(async (data: FormData) => {
@@ -33,12 +32,13 @@ export const CreateToDoList = ({ className }: CreateToDoListProps) => {
                 render={({ field }) => (
                     <Input
                         {...field}
-                        placeholder={t('Enter ToDo list name...')}
+                        placeholder={t('Enter ToDo list name')}
                         onChange={(value) => field.onChange(value)}
+                        className={cls.input}
                     />
                 )}
             />
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit">
                 {t('Create To-Do')}
             </Button>
         </form>

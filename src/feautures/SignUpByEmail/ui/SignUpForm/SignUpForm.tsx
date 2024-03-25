@@ -63,22 +63,24 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
                     type="text"
                     className={cls.input}
                     customPlaceholder={t('Name')}
+                    placeholder={t('Name')}
                     autoFocus
                     onChange={onChangeUsername}
                     value={userName}
                 />
                 <Input
-                    type="text"
+                    type="email"
                     className={cls.input}
                     customPlaceholder={t('Email')}
-                    autoFocus
+                    placeholder={t('Email')}
                     onChange={onChangeEmail}
                     value={email}
                 />
                 <Input
-                    type="text"
+                    type="password"
                     className={cls.input}
                     customPlaceholder={t('Password')}
+                    placeholder={t('Password')}
                     onChange={onChangePassword}
                     value={password}
                 />
@@ -88,7 +90,7 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
                     className={cls.loginBtn}
                     onClick={onLoginClick}
                 >
-                    {t('Sign in')}
+                    {t('Sign up')}
                 </Button>
             </div>
         </DynamicModuleLoader>

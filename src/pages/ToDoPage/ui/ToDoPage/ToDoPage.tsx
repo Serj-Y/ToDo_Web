@@ -14,7 +14,7 @@ import { getToDoPageError, getToDoPageIsLoading } from 'entities/ToDoList/model/
 import cls from './ToDoPage.module.scss';
 import { initToDoPage } from '../../model/services/initToDoPage/initToDoPage';
 
-interface ArticlesPageProps {
+interface ToDoPageProps {
     className?: string;
 }
 
@@ -22,7 +22,7 @@ const reducers: ReducersList = {
     toDoList: todosPageReducer,
 };
 
-const ToDoPage = ({ className }: ArticlesPageProps) => {
+const ToDoPage = ({ className }: ToDoPageProps) => {
     const dispatch = useAppDispatch();
     const isLoading = useSelector(getToDoPageIsLoading);
     const error = useSelector(getToDoPageError);

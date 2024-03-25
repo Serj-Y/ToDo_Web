@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { User, userActions } from 'entities/User';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { ACCESS_TOKEN, REFRESH_TOKEN, USER_LOCAL_STORAGE_KEY } from 'shared/consts/localStorage';
+import { ACCESS_TOKEN, REFRESH_TOKEN, USER_AUTH_DATA } from 'shared/consts/localStorage';
 import { baseApi } from 'shared/api/api';
 
 interface LoginByUsernameProps {
@@ -14,7 +14,7 @@ export const loginByEmail = createAsyncThunk<
     LoginByUsernameProps,
     ThunkConfig<string>
 >(
-    'login/signUpByEmail',
+    'login/changeUserName',
     async (authData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         try {
@@ -25,7 +25,7 @@ export const loginByEmail = createAsyncThunk<
             }
             localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
             localStorage.setItem(REFRESH_TOKEN, response.data.refreshToken);
-            localStorage.setItem(USER_LOCAL_STORAGE_KEY, JSON.stringify(response.data));
+            localStorage.setItem(USER_AUTH_DATA, JSON.stringify(response.data));
             dispatch(userActions.setAuthData(response.data));
             return response.data;
         } catch (e) {

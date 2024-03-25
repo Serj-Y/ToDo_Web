@@ -37,7 +37,7 @@ export const CreateTask = ({ className, toDoListId }: CreateTaskProps) => {
                 render={({ field }) => (
                     <Input
                         {...field}
-                        placeholder={t('Enter task name...')}
+                        placeholder={t('Enter task name')}
                         onChange={(value) => field.onChange(value)}
                     />
                 )}
