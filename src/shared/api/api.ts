@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BaseUrl } from '../consts/baseUrl';
-import { ACCESS_TOKEN, REFRESH_TOKEN, USER_AUTH_DATA } from '../consts/localStorage';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../consts/localStorage';
 
 export const baseApi = axios.create({
     baseURL: BaseUrl,
@@ -73,7 +73,6 @@ $api.interceptors.response.use(
                 return $api.request(originalRequest);
             } catch (err: any) {
                 if (errorCatch(err) === 'jwt expired') {
-                    localStorage.removeItem(USER_AUTH_DATA);
                     localStorage.removeItem(ACCESS_TOKEN);
                     localStorage.removeItem(REFRESH_TOKEN);
                 }

@@ -62,7 +62,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                 </Button>
                 <Button onDoubleClick={() => setIsEditUserModal((prev) => !prev)}>
                     <Text
-                        title={authData.user?.name}
+                        title={authData?.name}
                         className={cls.AuthUserName}
                         theme={TextTheme.SECONDARY}
                         size={TextSize.S}
@@ -72,7 +72,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                     <EditUserModal
                         isOpen={isEditUserModal}
                         onClose={() => setIsEditUserModal((prev) => !prev)}
-                        currentName={authData.user?.name}
+                        currentName={authData?.name}
                     />
                 ) }
 

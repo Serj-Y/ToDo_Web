@@ -1,27 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { User, userActions } from 'entities/User';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { User } from '../../../../../entities/User';
 
-interface ChangePasswordProps {
-    password: string,
-        newPassword: string,
-        repeatPassword: string
-}
-
-export const changePassword = createAsyncThunk<
+export const authUserData = createAsyncThunk<
     User,
-    ChangePasswordProps,
+    void,
     ThunkConfig<string>
 >(
-    'user/changePassword',
-    async (changePasswordData, thunkAPI) => {
+    'user',
+    async (_, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         try {
-            const response = await extra.api.post<User>('user/change-password', changePasswordData);
+            const response = await extra.api.get<User>('user/');
             if (!response.data) {
                 throw new Error();
             }
-            console.log(response.data);
+            dispatch(userActions.setAuthData(response.data));
             return response.data;
         } catch (e) {
             console.log(e);

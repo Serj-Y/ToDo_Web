@@ -40,5 +40,6 @@
   "Change password": "Змінити пароль",
   "Enter confirm new password": "Підтвердіть новий пароль",
   "Enter new password": "Введіть новий пароль",
-  "Enter current password": "Введіть поточний пароль"
+  "Enter current password": "Введіть поточний пароль",
+  "ToDoList not found": "ToDoList not found"
 }

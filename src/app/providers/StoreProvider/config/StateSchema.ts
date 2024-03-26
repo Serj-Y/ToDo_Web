@@ -10,9 +10,9 @@ import { SignUpSchema } from 'feautures/SignUpByEmail';
 import { ToDoSchema } from 'entities/ToDoList';
 
 export interface StateSchema {
-    user: UserSchema;
     scrollSave: ScrollSaveSchema
     // async reducers
+    user?: UserSchema;
     loginForm?: LoginSchema;
     signUpForm?: SignUpSchema;
     toDoList?: ToDoSchema;

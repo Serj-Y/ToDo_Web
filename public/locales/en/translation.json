@@ -39,5 +39,6 @@
   "Change password": "Change password",
   "Enter confirm new password": "Enter confirm new password",
   "Enter new password": "Enter new password",
-  "Enter current password": "Enter current password"
+  "Enter current password": "Enter current password",
+  "ToDoList not found": "ToDoList not found"
 }

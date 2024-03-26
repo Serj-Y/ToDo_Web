@@ -6,17 +6,17 @@ import { Navbar } from '../widgets/Navbar';
 import { useTheme } from './providers/ThemeProvider';
 import { getUserInited, userActions } from '../entities/User';
 import { ToDoPage } from '../pages/ToDoPage';
-import { getToDo, todosPageActions } from '../entities/ToDoList/model/slice/toDoListSlice';
-import { initToDoPage } from '../pages/ToDoPage/model/services/initToDoPage/initToDoPage';
+import { initUser } from '../entities/User/model/services/initUser';
+import { authUserData } from '../entities/User/model/services/authUserData';
 
 function App() {
     const { theme } = useTheme();
     const dispatch = useAppDispatch();
     const inited = useSelector(getUserInited);
     const state = useStore();
-
+    console.log(inited);
     useEffect(() => {
-        dispatch(userActions.initAuthData());
+        dispatch(authUserData());
     });
 
     return (
@@ -24,10 +24,9 @@ function App() {
             <Suspense fallback="">
                 <Navbar />
                 <div className="content-page">
-                    {inited
-                      && (
-                          <ToDoPage />
-                      )}
+
+                    <ToDoPage />
+
                 </div>
             </Suspense>
         </div>

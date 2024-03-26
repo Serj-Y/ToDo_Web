@@ -1,17 +1,20 @@
 export interface User{
-    user:{
         _id: string
         name: string
         email: string
         emailActivate: boolean
         updatedAt: string
-    },
+}
+
+export type UserResponse = {
+    user: User
     refreshToken: string
     accessToken: string
-
 }
 
 export interface UserSchema {
-    authData?:User;
     _inited: boolean;
+    authData?:User;
+    error?: string
+    isLoading?: boolean;
 }
