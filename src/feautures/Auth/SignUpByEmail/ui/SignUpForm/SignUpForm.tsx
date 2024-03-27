@@ -7,6 +7,7 @@ import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { userReducer } from 'entities/User';
 import cls from './SignUpForm.module.scss';
 import { signUpByEmail } from '../../model/services/signUpByEmail/signUpByEmail';
 import { getSignUpError } from '../../model/selectors/getSignUpError/getSignUpError';
@@ -23,6 +24,7 @@ export interface SignUpFormProps {
 
 const initialReducers: ReducersList = {
     signUpForm: signUpReducer,
+    user: userReducer,
 };
 const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
     const { t } = useTranslation();

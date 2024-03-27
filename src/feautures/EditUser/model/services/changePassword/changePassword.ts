@@ -4,7 +4,7 @@ import { User } from '../../../../../entities/User';
 import { UserResponse } from '../../../../../entities/User/model/types/user';
 
 interface ChangePasswordProps {
-    password: string,
+        password: string,
         newPassword: string,
         repeatPassword: string
 }
@@ -22,7 +22,7 @@ export const changePassword = createAsyncThunk<
             if (!response.data) {
                 throw new Error();
             }
-            console.log(response.data);
+            console.log(changePasswordData);
             return response.data;
         } catch (e) {
             console.log(e);

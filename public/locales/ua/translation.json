@@ -46,5 +46,8 @@
   "Change user name": "Змінити ім'я користувача",
   "Sign in form": "Форма входу",
   "Sign up form": "Форма реєстрації",
-  "Show password": "Показати пароль"
+  "Show password": "Показати пароль",
+  "done": "Виконано",
+  "not done": "Не виконано",
+  "in progress": "У процесі"
 }

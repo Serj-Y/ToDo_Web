@@ -18,6 +18,6 @@ export const DeleteTaskById = ({ taskIdForDelete, toDoListId }: DeleteTaskProps)
     }, [dispatch, taskIdForDelete, toDoListId]);
 
     return (
-        <Button theme={ButtonTheme.OUTLINE_RED} onClick={onDeleteTask} size={ButtonSize.M}>{t('X')}</Button>
+        <Button theme={ButtonTheme.OUTLINE_RED} onClick={onDeleteTask} size={ButtonSize.S}>{t('X')}</Button>
     );
 };

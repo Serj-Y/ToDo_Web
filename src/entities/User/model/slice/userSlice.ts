@@ -6,6 +6,7 @@ import { UserSchema } from '../types/user';
 import { fetchUserData } from '../services/fetchUserData';
 import { changePassword } from '../../../../feautures/EditUser/model/services/changePassword/changePassword';
 import { changeUserName } from '../../../../feautures/EditUser/model/services/changeUserName/changeUserName';
+import { initUser } from '../services/initUser';
 
 const initialState: UserSchema = {
     error: '',

@@ -45,5 +45,9 @@
   "Change user name": "Change user name",
   "Sign in form": "Sign in form",
   "Sign up form": "Sign up form",
-  "Show password": "Show password"
+  "Show password": "Show password",
+  "done": "Done",
+  "not done": "Not done",
+  "in progress": "In progress"
+
 }

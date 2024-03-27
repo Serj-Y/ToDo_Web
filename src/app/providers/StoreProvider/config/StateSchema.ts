@@ -13,7 +13,7 @@ export interface StateSchema {
     scrollSave: ScrollSaveSchema
     // async reducers
     user?: UserSchema;
-    loginForm?: SignInSchema;
+    signInForm?: SignInSchema;
     signUpForm?: SignUpSchema;
     toDoList?: ToDoSchema;
 }

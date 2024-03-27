@@ -1,4 +1,14 @@
-
-.Task {
-
+ .TaskWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .taskStatusAnDelete{
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-left: 5px;
+    }
 }
+

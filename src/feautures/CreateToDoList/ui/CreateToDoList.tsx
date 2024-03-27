@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';

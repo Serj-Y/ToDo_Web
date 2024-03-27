@@ -11,18 +11,15 @@ interface currencySelectProps {
   readonly?: boolean
 }
 
-const options = [
-    { value: TaskStatus.NOT_DONE, content: TaskStatus.NOT_DONE },
-    { value: TaskStatus.DONE, content: TaskStatus.DONE },
-    { value: TaskStatus.IN_PROGRESS, content: TaskStatus.IN_PROGRESS },
-];
-
 export const TaskStatusSelect = memo(({
     className, value, onChange, readonly,
 }: currencySelectProps) => {
     const { t } = useTranslation();
-
-    const onChangeHandler = useCallback((value: string) => onChange?.(value as TaskStatus), [onChange]);
+    const options = [
+        { value: TaskStatus.NOT_DONE, content: t(TaskStatus.NOT_DONE) },
+        { value: TaskStatus.DONE, content: t(TaskStatus.DONE) },
+        { value: TaskStatus.IN_PROGRESS, content: t(TaskStatus.IN_PROGRESS) },
+    ];
 
     return (
         <Select

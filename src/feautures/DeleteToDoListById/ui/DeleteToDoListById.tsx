@@ -12,8 +12,8 @@ export const DeleteToDoListById = ({ toDoListIdForDelete }: DeleteToDoListProps)
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
 
-    const onDeleteToDoListItem = useCallback(async () => {
-        await dispatch(deleteToDoListById({ toDoId: toDoListIdForDelete }));
+    const onDeleteToDoListItem = useCallback(() => {
+        dispatch(deleteToDoListById({ toDoId: toDoListIdForDelete }));
     }, [dispatch, toDoListIdForDelete]);
 
     return (

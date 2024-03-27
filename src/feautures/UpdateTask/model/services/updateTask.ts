@@ -3,10 +3,10 @@ import { ThunkConfig } from 'app/providers/StoreProvider';
 import { Task, TaskStatus } from 'entities/Task';
 
 interface UpdateTaskProps {
-    taskName: string
     taskId: string
     taskStatus: TaskStatus
     toDoId: string
+    taskName?: string
 }
 
 type UpdatedTask = {
@@ -33,7 +33,7 @@ export const updateTask = createAsyncThunk<
             if (!response.data) {
                 rejectWithValue(response.statusText);
             }
-
+            console.log('taskupdate');
             return { toDoId: newTaskData.toDoId, taskId: newTaskData.taskId, updatedTask: response.data };
         } catch (e) {
             console.log(e);

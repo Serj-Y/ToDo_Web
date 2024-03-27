@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Text, TextAlign, TextSize } from 'shared/ui/Text/Text';
 import { classNames } from 'shared/lib/classNames/classNames';
+import Draggable, { DraggableCore } from 'react-draggable';
 import { ToDoListItemSkeleton } from '../ToDoListItem/ToDoListItemSkeleton';
 import cls from './ToDoList.module.scss';
 import { ToDo } from '../../model/types/toDo';
@@ -26,6 +27,7 @@ export const ToDoList = ({
     isLoading,
 }: ToDoListProps) => {
     const { t } = useTranslation();
+
     const renderToDo = (toDo: ToDo) => (
         <ToDoListItem toDo={toDo} key={toDo._id} />
     );

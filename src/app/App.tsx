@@ -22,7 +22,9 @@ function App() {
                 <Navbar />
                 <div className="content-page">
                     {inited
-                        && <ToDoPage />}
+                        && (
+                            <ToDoPage />
+                        )}
                 </div>
             </Suspense>
         </div>

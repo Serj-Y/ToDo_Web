@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
@@ -26,18 +26,13 @@ export const UpdateTask = ({
 }: CreateTaskProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit } = useForm<FormData>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const dispatch = useAppDispatch();
 
-    const onSubmit = useCallback(async (data: FormData) => {
-        setIsLoading(true);
-        await dispatch(updateTask({
+    const onSubmit = useCallback((data: FormData) => {
+        dispatch(updateTask({
             taskStatus: data.taskStatus, taskName: data.taskName, taskId, toDoId,
-        }))
-            .then(() => {
-                setIsEditTask(false);
-                setIsLoading(false);
-            });
+        }));
+        setIsEditTask(false);
     }, [dispatch, setIsEditTask, taskId, toDoId]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={cls.UpdateTask}>
@@ -61,7 +56,7 @@ export const UpdateTask = ({
                 render={({ field }) => (
                     <div className={cls.taskStatusAnDelete}>
                         <TaskStatusSelect value={field.value} onChange={field.onChange} />
-                        <Button type="submit" disabled={isLoading} size={ButtonSize.M}>
+                        <Button type="submit" size={ButtonSize.S}>
                             {t('✓')}
                         </Button>
                     </div>

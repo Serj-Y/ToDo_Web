@@ -7,6 +7,8 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { initUser } from 'entities/User/model/services/initUser';
+import { userReducer } from 'entities/User';
 import { getLoginPassword } from '../../model/selectors/getLoginPassword/getLoginPassword';
 import { getLoginIsLoading } from '../../model/selectors/getLoginIsLoading/getLoginIsLoading';
 import { getLoginError } from '../../model/selectors/getLoginError/getLoginError';
@@ -21,7 +23,8 @@ export interface SignInFormProps {
 }
 
 const initialReducers: ReducersList = {
-    loginForm: signInReducer,
+    signInForm: signInReducer,
+    user: userReducer,
 };
 const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
     const { t } = useTranslation();
@@ -44,6 +47,7 @@ const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
         if (result.meta.requestStatus === 'fulfilled') {
             onSuccess();
         }
+        dispatch(initUser());
     }, [dispatch, password, email, onSuccess]);
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
@@ -51,7 +55,6 @@ const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
                 <Text title={t('Sign in form')} align={TextAlign.CENTER} />
                 {error && (
                     <Text text={t('Incorrect password or username')} theme={TextTheme.ERROR} />
-
                 )}
                 <Input
                     type="email"
