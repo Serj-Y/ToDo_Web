@@ -1,16 +1,16 @@
 import { useTranslation } from 'react-i18next';
-import React, { memo, useCallback } from 'react';
+import React, {
+    Dispatch, memo, SetStateAction, useCallback, useState,
+} from 'react';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TextAlign } from 'shared/ui/Text/Text';
 import cls from './ChangeUserPasswordForm.module.scss';
-import { changeUserName } from '../../model/services/changeUserName/changeUserName';
 import { changePassword } from '../../model/services/changePassword/changePassword';
 
 export interface ChangeUserPasswordFormProps {
-    currentName: string
     className?: string;
 }
 
@@ -20,21 +20,30 @@ interface FormData {
     repeatPassword: string
 }
 
-const ChangeUserPasswordForm = memo(({ className, currentName }: ChangeUserPasswordFormProps) => {
+enum InputType {
+    PASSWORD = 'password',
+    TEXT = 'text'
+}
+
+const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps) => {
     const { t } = useTranslation();
-    const { control, handleSubmit } = useForm<FormData>();
+    const { control, handleSubmit, reset } = useForm<FormData>();
+    const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
+    const [isDisableShowPasswordBtn, setIsDisableShowPasswordBtn] = useState<boolean>(false);
     const dispatch = useAppDispatch();
+
+    const onPasswordShow = useCallback(() => {
+        setInputType(InputType.TEXT);
+        setIsDisableShowPasswordBtn(true);
+    }, []);
 
     const onSubmit = useCallback((data: FormData) => {
         dispatch(changePassword(data));
-    }, [dispatch]);
+        reset();
+    }, [dispatch, reset]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={cls.ChangeUserPasswordForm}>
             <Text title={t('Change password')} align={TextAlign.CENTER} />
-            <div className={cls.currentName}>
-                <Text text={t('Current user name')} />
-                <Text text={currentName} />
-            </div>
             <Controller
                 name="password"
                 control={control}
@@ -47,7 +56,7 @@ const ChangeUserPasswordForm = memo(({ className, currentName }: ChangeUserPassw
                         placeholder={t('Enter current password')}
                         onChange={(value) => field.onChange(value)}
                         className={cls.input}
-                        type="password"
+                        type={inputType}
                     />
                 )}
             />
@@ -63,7 +72,7 @@ const ChangeUserPasswordForm = memo(({ className, currentName }: ChangeUserPassw
                         placeholder={t('Enter new password')}
                         onChange={(value) => field.onChange(value)}
                         className={cls.input}
-                        type="password"
+                        type={inputType}
                     />
                 )}
             />
@@ -79,10 +88,16 @@ const ChangeUserPasswordForm = memo(({ className, currentName }: ChangeUserPassw
                         placeholder={t('Enter confirm new password')}
                         onChange={(value) => field.onChange(value)}
                         className={cls.input}
-                        type="password"
+                        type={inputType}
                     />
                 )}
             />
+            {!isDisableShowPasswordBtn && (
+                <Button size={ButtonSize.M} onClick={() => onPasswordShow()} disabled={isDisableShowPasswordBtn}>
+                    {t('Show password')}
+                </Button>
+            )}
+
             <Button type="submit" size={ButtonSize.M}>
                 {t('Save changes')}
             </Button>

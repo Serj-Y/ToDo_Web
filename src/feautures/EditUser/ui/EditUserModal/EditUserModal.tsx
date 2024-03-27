@@ -22,7 +22,7 @@ export const EditUserModal = ({
     >
         <Suspense fallback={<Loader />}>
             <ChangeUserNameFormAsync currentName={currentName} />
-            <ChangePasswordFormAsync currentName={currentName} />
+            <ChangePasswordFormAsync />
         </Suspense>
     </Modal>
 );

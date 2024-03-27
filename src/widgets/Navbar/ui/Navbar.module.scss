@@ -5,6 +5,11 @@
     display: flex;
     align-items: center;
     padding: 20px;
+    justify-content: space-between;
+    .buttonsWrapper {
+        display: flex;
+        gap: 20px;
+    }
 }
 
 .links {
@@ -13,9 +18,5 @@
 
 .appName {
     width: var(--sidebar-width);
-    margin-left: 15px;
-}
-
-.AuthUserName  {
     margin-left: 15px;
 }

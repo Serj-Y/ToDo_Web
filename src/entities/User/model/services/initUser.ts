@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { getUserInited } from '../selectors/getUserInited/getUserInited';
-import { authUserData } from './authUserData';
+import { fetchUserData } from './fetchUserData';
 import { userActions } from '../slice/userSlice';
 
 export const initUser = createAsyncThunk<void, void, ThunkConfig<string>>(
@@ -15,7 +15,8 @@ export const initUser = createAsyncThunk<void, void, ThunkConfig<string>>(
         const inited = getUserInited(getState());
 
         if (!inited) {
-            dispatch(authUserData());
+            dispatch(userActions.initState());
+            dispatch(fetchUserData());
         }
     },
 );

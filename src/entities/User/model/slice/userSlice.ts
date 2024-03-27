@@ -1,63 +1,25 @@
-import { createSlice, createEntityAdapter, PayloadAction } from '@reduxjs/toolkit';
-import { loginByEmail } from 'feautures/AuthByEmail/model/services/loginByEmail/loginByEmail';
-import { signUpByEmail } from 'feautures/SignUpByEmail/model/services/signUpByEmail/signUpByEmail';
+import { createSlice } from '@reduxjs/toolkit';
+import { signInByEmail } from 'feautures/Auth/SignInByEmail/model/services/signInByEmail/signInByEmail';
+import { signUpByEmail } from 'feautures/Auth/SignUpByEmail/model/services/signUpByEmail/signUpByEmail';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from 'shared/consts/localStorage';
-import { User, UserSchema } from '../types/user';
-import { authUserData } from '../services/authUserData';
+import { UserSchema } from '../types/user';
+import { fetchUserData } from '../services/fetchUserData';
+import { changePassword } from '../../../../feautures/EditUser/model/services/changePassword/changePassword';
+import { changeUserName } from '../../../../feautures/EditUser/model/services/changeUserName/changeUserName';
 
-// const initialState:UserSchema = {
-//     _inited: false,
-// };
-// export const userSlice = createSlice({
-//     name: 'user',
-//     initialState,
-//     reducers: {
-//         setAuthData: (state, action: PayloadAction<User>) => {
-//             state.authData = action.payload;
-//         },
-//         initAuthData: (state) => {
-//             const accessToken = localStorage.getItem(ACCESS_TOKEN);
-//             const user = localStorage.getItem(USER_AUTH_DATA);
-//
-//             if (accessToken && user) {
-//                 state.authData = JSON.parse(user);
-//                 state._inited = true;
-//             } else {
-//                 state.authData = undefined;
-//                 state._inited = false;
-//                 localStorage.removeItem(USER_AUTH_DATA);
-//             }
-//         },
-//         logout: (state) => {
-//             state.authData = undefined;
-//             state._inited = false;
-//             localStorage.removeItem(USER_AUTH_DATA);
-//             localStorage.removeItem(ACCESS_TOKEN);
-//             localStorage.removeItem(REFRESH_TOKEN);
-//         },
-//     },
-// });
-
-const userAdapter = createEntityAdapter<User>({
-    selectId: (user) => user._id,
-});
+const initialState: UserSchema = {
+    error: '',
+    isLoading: false,
+    authData: undefined,
+    _inited: false,
+};
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: userAdapter.getInitialState<UserSchema>({
-        error: '',
-        isLoading: false,
-        authData: undefined,
-        _inited: false,
-    }),
+    initialState,
     reducers: {
         initState: (state) => {
             state._inited = true;
-        },
-        setAuthData: (state, action) => {
-            state._inited = true;
-            console.log(state);
-            state.authData = action.payload;
         },
         logout: (state) => {
             state.authData = undefined;
@@ -69,32 +31,29 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(authUserData.pending, (state, action) => {
+            .addCase(fetchUserData.pending, (state, action) => {
                 state.error = undefined;
                 state.isLoading = true;
-                console.log('panding');
             })
-            .addCase(authUserData.fulfilled, (state, action) => {
+            .addCase(fetchUserData.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state._inited = true;
-                userAdapter.setOne(state, action.payload);
-                console.log(action.payload);
+                state.authData = action.payload;
             })
-            .addCase(authUserData.rejected, (state, action) => {
+            .addCase(fetchUserData.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })
-            .addCase(loginByEmail.pending, (state, action) => {
+            .addCase(signInByEmail.pending, (state, action) => {
                 state.error = undefined;
                 state.isLoading = true;
-                userAdapter.removeAll(state);
             })
-            .addCase(loginByEmail.fulfilled, (state, action) => {
+            .addCase(signInByEmail.fulfilled, (state, action) => {
                 state.isLoading = false;
-                userAdapter.setOne(state, action.payload.user);
-                console.log(action.payload.user);
+                state._inited = true;
+                state.authData = action.payload.user;
             })
-            .addCase(loginByEmail.rejected, (state, action) => {
+            .addCase(signInByEmail.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })
@@ -104,9 +63,38 @@ const userSlice = createSlice({
             })
             .addCase(signUpByEmail.fulfilled, (state, action) => {
                 state.isLoading = false;
-                userAdapter.setOne(state, action.payload.user);
+                state._inited = true;
+                state.authData = action.payload.user;
             })
             .addCase(signUpByEmail.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(changePassword.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(changePassword.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state._inited = true;
+                state.authData = action.payload.user;
+                localStorage.setItem(ACCESS_TOKEN, action.payload.accessToken);
+                localStorage.setItem(REFRESH_TOKEN, action.payload.refreshToken);
+            })
+            .addCase(changePassword.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+            .addCase(changeUserName.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(changeUserName.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state._inited = true;
+                state.authData = action.payload;
+            })
+            .addCase(changeUserName.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

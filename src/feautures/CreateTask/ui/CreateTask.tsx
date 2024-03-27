@@ -19,16 +19,18 @@ interface FormData {
 
 export const CreateTask = ({ className, toDoListId }: CreateTaskProps) => {
     const { t } = useTranslation();
-    const { control, handleSubmit } = useForm<FormData>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { control, handleSubmit, reset } = useForm<FormData>();
     const dispatch = useAppDispatch();
 
-    const onSubmit = useCallback(async (data: FormData) => {
-        setIsLoading(true);
-        await dispatch(createTask({ taskName: data.taskName, toDoListId })).then(() => setIsLoading(false));
-    }, [dispatch, toDoListId]);
+    const onSubmit = useCallback((data: FormData) => {
+        dispatch(createTask({ taskName: data.taskName, toDoListId }));
+        reset();
+    }, [dispatch, reset, toDoListId]);
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={classNames(cls.CreateTask, {}, [className])}>
+        <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={classNames(cls.CreateTask, {}, [className])}
+        >
             <Controller
                 name="taskName"
                 control={control}
@@ -42,7 +44,7 @@ export const CreateTask = ({ className, toDoListId }: CreateTaskProps) => {
                     />
                 )}
             />
-            <Button type="submit" disabled={isLoading} size={ButtonSize.M}>
+            <Button type="submit" size={ButtonSize.M}>
                 {t('Add Task')}
             </Button>
         </form>

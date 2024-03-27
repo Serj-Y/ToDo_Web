@@ -19,15 +19,16 @@ interface FormData {
 
 const ChangeUserNameForm = memo(({ className, currentName }: ChangeUserNameFormProps) => {
     const { t } = useTranslation();
-    const { control, handleSubmit } = useForm<FormData>();
+    const { control, handleSubmit, reset } = useForm<FormData>();
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback((data: FormData) => {
         dispatch(changeUserName({ name: data.userName }));
-    }, [dispatch]);
+        reset();
+    }, [dispatch, reset]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={cls.ChangeUserNameForm}>
-            <Text title={t('Change user name form')} align={TextAlign.CENTER} />
+            <Text title={t('Change user name')} align={TextAlign.CENTER} />
             <div className={cls.currentName}>
                 <Text text={t('Current user name')} />
                 <Text text={currentName} />

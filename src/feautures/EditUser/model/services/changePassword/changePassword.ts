@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { User } from '../../../../../entities/User';
+import { UserResponse } from '../../../../../entities/User/model/types/user';
 
 interface ChangePasswordProps {
     password: string,
@@ -9,7 +10,7 @@ interface ChangePasswordProps {
 }
 
 export const changePassword = createAsyncThunk<
-    User,
+    UserResponse,
     ChangePasswordProps,
     ThunkConfig<string>
 >(
@@ -17,7 +18,7 @@ export const changePassword = createAsyncThunk<
     async (changePasswordData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         try {
-            const response = await extra.api.post<User>('user/change-password', changePasswordData);
+            const response = await extra.api.post<UserResponse>('user/change-password', changePasswordData);
             if (!response.data) {
                 throw new Error();
             }

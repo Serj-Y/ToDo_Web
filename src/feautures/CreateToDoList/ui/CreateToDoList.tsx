@@ -16,12 +16,13 @@ interface FormData {
 }
 export const CreateToDoList = ({ className }: CreateToDoListProps) => {
     const { t } = useTranslation();
-    const { control, handleSubmit } = useForm<FormData>();
+    const { control, handleSubmit, reset } = useForm<FormData>();
     const dispatch = useAppDispatch();
 
-    const onSubmit = useCallback(async (data: FormData) => {
-        await dispatch(createToDoList(data));
-    }, [dispatch]);
+    const onSubmit = useCallback((data: FormData) => {
+        dispatch(createToDoList(data));
+        reset();
+    }, [dispatch, reset]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={classNames(cls.CreateToDoList, {}, [className])}>
             <Controller

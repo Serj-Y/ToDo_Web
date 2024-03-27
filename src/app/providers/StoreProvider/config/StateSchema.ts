@@ -5,15 +5,15 @@ import { CombinedState } from 'redux';
 import { AxiosInstance } from 'axios';
 import { UserSchema } from 'entities/User';
 import { ScrollSaveSchema } from 'widgets/ScrollSave';
-import { LoginSchema } from 'feautures/AuthByEmail';
-import { SignUpSchema } from 'feautures/SignUpByEmail';
+import { SignInSchema } from 'feautures/Auth/SignInByEmail';
+import { SignUpSchema } from 'feautures/Auth/SignUpByEmail';
 import { ToDoSchema } from 'entities/ToDoList';
 
 export interface StateSchema {
     scrollSave: ScrollSaveSchema
     // async reducers
     user?: UserSchema;
-    loginForm?: LoginSchema;
+    loginForm?: SignInSchema;
     signUpForm?: SignUpSchema;
     toDoList?: ToDoSchema;
 }

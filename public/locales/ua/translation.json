@@ -41,5 +41,10 @@
   "Enter confirm new password": "Підтвердіть новий пароль",
   "Enter new password": "Введіть новий пароль",
   "Enter current password": "Введіть поточний пароль",
-  "ToDoList not found": "ToDoList not found"
+  "ToDoList not found": "Список завдань не знайдено",
+  "Todo": "Todo",
+  "Change user name": "Змінити ім'я користувача",
+  "Sign in form": "Форма входу",
+  "Sign up form": "Форма реєстрації",
+  "Show password": "Показати пароль"
 }
