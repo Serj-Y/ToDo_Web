@@ -27,7 +27,10 @@ export const ToDoListItem = memo(({
     return (
         <div className={classNames(cls.ToDoItemWrapper)}>
             <Card>
-                <div className={classNames(cls.toDoNameAndDelete)} onDoubleClick={setEditToDoListHandler}>
+                <div
+                    className={classNames(cls.toDoNameAndDelete)}
+                    onDoubleClick={setEditToDoListHandler}
+                >
                     {isEditToDoList ? (
                         <UpdateToDoList
                             setIsEditToDoList={setIsEditToDoList}

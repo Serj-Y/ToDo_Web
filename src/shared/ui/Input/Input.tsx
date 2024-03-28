@@ -1,8 +1,16 @@
 import React, {
-    forwardRef, ForwardRefRenderFunction, InputHTMLAttributes, memo, useEffect, useRef, useState,
+    forwardRef,
+    ForwardRefRenderFunction,
+    HTMLInputTypeAttribute,
+    InputHTMLAttributes,
+    useCallback,
+    useEffect,
+    useState,
 } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import cls from './Input.module.scss';
 import { classNames, Mods } from '../../lib/classNames/classNames';
+import { Button, ButtonTheme } from '../Button/Button';
 
 type HtmlInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'readOnly'>
 interface InputProps extends HtmlInputProps {
@@ -12,6 +20,11 @@ interface InputProps extends HtmlInputProps {
     autofocus?: boolean
     readonly?: boolean
     customPlaceholder?: string
+}
+
+enum InputType {
+    PASSWORD = 'password',
+    TEXT = 'text'
 }
 
 const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, ref) => {
@@ -28,6 +41,8 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
     } = props;
     const [isFocused, setIsFocused] = useState(false);
     const [caretPosition, setCaretPosition] = useState(0);
+    const [inputType, setInputType] = useState < InputType | HTMLInputTypeAttribute>(InputType.PASSWORD);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(type === 'text');
 
     useEffect(() => {
         if (autofocus) {
@@ -56,8 +71,21 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
         [cls.readonly]: readonly,
     };
 
+    const onPasswordShow = useCallback(() => {
+        if (inputType === InputType.PASSWORD) {
+            setInputType(InputType.TEXT);
+            setIsPasswordVisible(true);
+        } else if (inputType === InputType.TEXT) {
+            setInputType(InputType.PASSWORD);
+            setIsPasswordVisible(false);
+        }
+    }, [inputType]);
+
     return (
-        <div className={classNames(cls.InputWrapper, mods, [className])}>
+        <div
+            className={classNames(cls.InputWrapper, mods, [className])}
+            onDoubleClick={() => onPasswordShow()}
+        >
             {customPlaceholder && (
                 <div className={cls.placeholder}>
                     {`${customPlaceholder}`}
@@ -65,7 +93,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
             ) }
             <input
                 ref={ref}
-                type={type}
+                type={type === InputType.PASSWORD ? inputType : type}
                 value={value}
                 onChange={onChangeHandler}
                 className={classNames(cls.input, undefined, [className])}
@@ -76,6 +104,20 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
                 readOnly={readonly}
                 {...otherProps}
             />
+            {type === 'password' && (
+                <Button
+                    className={cls.passwordToggle}
+                    onClick={onPasswordShow}
+                    theme={ButtonTheme.CLEAR}
+                >
+                    {isPasswordVisible ? (
+                        <FaEyeSlash />
+                    ) : (
+                        <FaEye />
+                    )}
+                </Button>
+
+            )}
         </div>
     );
 };

@@ -1,6 +1,11 @@
 .InputWrapper {
     display: flex;
     align-items: center;
+
+    .passwordToggle {
+        position: absolute;
+        right: 14px;
+    }
 }
 
 .input {

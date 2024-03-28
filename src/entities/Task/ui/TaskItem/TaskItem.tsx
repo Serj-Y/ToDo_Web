@@ -32,7 +32,7 @@ export const TaskItem = ({ task, toDo }: TaskProps) => {
     return (
         <div onDoubleClick={setEditTaskHandler}>
             <div key={task._id} className={cls.TaskWrapper}>
-                { !isEditTask && <Text text={task.name} size={TextSize.M} />}
+                { !isEditTask && <Text text={task.name} />}
                 <div className={cls.taskStatusAnDelete}>
                     { isEditTask ? (
                         <UpdateTask

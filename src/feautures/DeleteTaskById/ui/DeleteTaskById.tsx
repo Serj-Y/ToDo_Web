@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useCallback } from 'react';
 import { Button, ButtonSize, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { FaTrash } from 'react-icons/fa';
 import { deleteTaskById } from '../model/services/deleteTaskById';
 
 type DeleteTaskProps = {
@@ -18,6 +19,6 @@ export const DeleteTaskById = ({ taskIdForDelete, toDoListId }: DeleteTaskProps)
     }, [dispatch, taskIdForDelete, toDoListId]);
 
     return (
-        <Button theme={ButtonTheme.OUTLINE_RED} onClick={onDeleteTask} size={ButtonSize.S}>{t('X')}</Button>
+        <Button theme={ButtonTheme.CLEAR_RED} onClick={onDeleteTask} size={ButtonSize.M}><FaTrash /></Button>
     );
 };

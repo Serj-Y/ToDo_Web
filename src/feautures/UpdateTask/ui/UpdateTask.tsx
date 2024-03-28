@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next';
 import React, { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
-import { Button, ButtonSize } from 'shared/ui/Button/Button';
+import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { TaskStatus, TaskStatusSelect } from 'entities/Task';
+import { FaCheck } from 'react-icons/fa';
 import cls from './UpdateTask.module.scss';
 import { updateTask } from '../model/services/updateTask';
 
@@ -49,19 +50,20 @@ export const UpdateTask = ({
                     />
                 )}
             />
-            <Controller
-                name="taskStatus"
-                control={control}
-                defaultValue={taskStatus}
-                render={({ field }) => (
-                    <div className={cls.taskStatusAnDelete}>
+            <div className={cls.taskStatusAndDelete}>
+                <Controller
+                    name="taskStatus"
+                    control={control}
+                    defaultValue={taskStatus}
+                    render={({ field }) => (
                         <TaskStatusSelect value={field.value} onChange={field.onChange} />
-                        <Button type="submit" size={ButtonSize.S}>
-                            {t('✓')}
-                        </Button>
-                    </div>
-                )}
-            />
+                    )}
+                />
+                <Button type="submit" theme={ButtonTheme.CLEAR}>
+                    <FaCheck />
+                </Button>
+            </div>
+
         </form>
     );
 };

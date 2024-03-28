@@ -20,22 +20,25 @@ interface FormData {
     repeatPassword: string
 }
 
-enum InputType {
-    PASSWORD = 'password',
-    TEXT = 'text'
-}
+// enum InputType {
+//     PASSWORD = 'password',
+//     TEXT = 'text'
+// }
 
 const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit, reset } = useForm<FormData>();
-    const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
+    // const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
     const [isDisableShowPasswordBtn, setIsDisableShowPasswordBtn] = useState<boolean>(false);
     const dispatch = useAppDispatch();
 
-    const onPasswordShow = useCallback(() => {
-        setInputType(InputType.TEXT);
-        setIsDisableShowPasswordBtn(true);
-    }, []);
+    // const onPasswordShow = useCallback(() => {
+    //     if (inputType === InputType.PASSWORD) {
+    //         setInputType(InputType.TEXT);
+    //     } else {
+    //         setInputType(InputType.PASSWORD);
+    //     }
+    // }, [inputType]);
 
     const onSubmit = useCallback((data: FormData) => {
         dispatch(changePassword(data));
@@ -56,7 +59,7 @@ const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps)
                         placeholder={t('Enter current password')}
                         onChange={(value) => field.onChange(value)}
                         className={cls.input}
-                        type={inputType}
+                        type="password"
                     />
                 )}
             />
@@ -72,7 +75,7 @@ const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps)
                         placeholder={t('Enter new password')}
                         onChange={(value) => field.onChange(value)}
                         className={cls.input}
-                        type={inputType}
+                        type="password"
                     />
                 )}
             />
@@ -88,15 +91,15 @@ const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps)
                         placeholder={t('Enter confirm new password')}
                         onChange={(value) => field.onChange(value)}
                         className={cls.input}
-                        type={inputType}
+                        type="password"
                     />
                 )}
             />
-            {!isDisableShowPasswordBtn && (
-                <Button size={ButtonSize.M} onClick={() => onPasswordShow()} disabled={isDisableShowPasswordBtn}>
-                    {t('Show password')}
-                </Button>
-            )}
+            {/* {!isDisableShowPasswordBtn && ( */}
+            {/*    <Button size={ButtonSize.M} onClick={() => onPasswordShow()} disabled={isDisableShowPasswordBtn}> */}
+            {/*        {t('Show password')} */}
+            {/*    </Button> */}
+            {/* )} */}
 
             <Button type="submit" size={ButtonSize.M}>
                 {t('Save changes')}
