@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Text, TextAlign, TextSize } from 'shared/ui/Text/Text';
 import { classNames } from 'shared/lib/classNames/classNames';
 import React from 'react';
-import { classicSort } from 'shared/lib/classicSort/classicSort';
+import { sortByOrder } from 'shared/lib/sortByOrder/sortByOrder';
 import { ToDoListItemSkeleton } from '../ToDoListItem/ToDoListItemSkeleton';
 import cls from './ToDoList.module.scss';
 import { ToDo } from '../../model/types/toDo';
@@ -37,6 +37,8 @@ export const ToDoList = ({
     const renderToDo = (toDo: ToDo) => (
         <ToDoListItem toDo={toDo} key={toDo._id} />
     );
+
+    const sortedTodos = [...toDos].sort(sortByOrder);
     if (!isLoading && !toDos.length) {
         return (
             <div className={classNames('', {}, [className, cls.CARD])}>
@@ -50,7 +52,7 @@ export const ToDoList = ({
     }
     return (
         <div className={classNames(cls.ToDoList, {}, [className, cls.CARD])}>
-            {toDos.length > 0 ? toDos.sort(classicSort).map(renderToDo) : null}
+            {sortedTodos.length > 0 ? sortedTodos.map(renderToDo) : null}
             {isLoading && getSkeletons()}
         </div>
     );

@@ -12,6 +12,7 @@ import { updateToDoOrder } from 'feautures/UpdateToDoList/model/services/updateT
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
+import { updateTaskOrder } from '../../../../feautures/UpdateTask/model/services/updateTaskOrder';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -169,6 +170,34 @@ const toDoListSlice = createSlice({
                 }
             })
             .addCase(updateTask.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(updateTaskOrder.pending, (state) => {
+                state.isLoading = true;
+                state.error = undefined;
+            })
+            .addCase(updateTaskOrder.fulfilled, (state, action) => {
+                state.isLoading = false;
+                const updates = action.payload.map((task) => {
+                    const todoId = task.todo;
+                    const todo = state.entities[todoId];
+                    if (todo) {
+                        return {
+                            id: todoId,
+                            changes: {
+                                ...todo,
+                                tasks: todo.tasks.map((t) => (t._id === task._id ? task : t)),
+                            },
+                        };
+                    }
+                    return null;
+                }).filter((update) => update !== null) as Update<ToDo>[];
+                toDoAdapter.updateMany(state, updates);
+            })
+
+            .addCase(updateTaskOrder.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })

@@ -7,6 +7,7 @@ import { CreateTask } from 'feautures/CreateTask';
 import { UpdateToDoList } from 'feautures/UpdateToDoList';
 import { updateToDoOrder } from 'feautures/UpdateToDoList/model/services/updateToDoOrder';
 import { DraggableWrapper } from 'widgets/DraggableWrapper';
+import { sortByOrder } from 'shared/lib/sortByOrder/sortByOrder';
 import cls from './ToDoListItem.module.scss';
 import { ToDo } from '../../model/types/toDo';
 import { Task, TaskItem } from '../../../Task';
@@ -26,6 +27,7 @@ export const ToDoListItem = memo(({
     const renderTask = (task: Task) => (
         <TaskItem task={task} toDo={toDo} key={task._id} />
     );
+    const sortedTasks = [...toDo.tasks].sort(sortByOrder);
     return (
         <DraggableWrapper draggableElementId={toDo._id} updateRequest={updateToDoOrder}>
             <div className={classNames(cls.ToDoItemWrapper)}>
@@ -48,13 +50,10 @@ export const ToDoListItem = memo(({
                         )}
 
                     </div>
-                    {toDo.tasks ? toDo.tasks.map(renderTask) : null}
+                    {sortedTasks.length > 0 ? sortedTasks.map(renderTask) : null}
                     <CreateTask toDoListId={toDo._id} />
                 </Card>
-
             </div>
-
         </DraggableWrapper>
-
     );
 });

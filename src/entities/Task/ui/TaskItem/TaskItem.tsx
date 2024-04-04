@@ -1,10 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { Text } from 'shared/ui/Text/Text';
 import { UpdateTask } from 'feautures/UpdateTask';
 import { DeleteTaskById } from 'feautures/DeleteTaskById';
 import { Controller, useForm } from 'react-hook-form';
 import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { DraggableWrapper } from 'widgets/DraggableWrapper';
+import { updateTaskOrder } from 'feautures/UpdateTask/model/services/updateTaskOrder';
 import cls from './TaskItem.module.scss';
 import { ToDo } from '../../../ToDoList';
 import { TaskStatusSelect } from '../TaskStatusSelect/TaskStatusSelect';
@@ -18,7 +20,7 @@ type TaskProps = {
 interface FormData {
     taskStatus: TaskStatus
 }
-export const TaskItem = ({ task, toDo }: TaskProps) => {
+export const TaskItem = memo(({ task, toDo }: TaskProps) => {
     const [isEditTask, setIsEditTask] = useState<boolean>(false);
     const setEditTaskHandler = () => setIsEditTask((prev) => !prev);
     const { control, handleSubmit } = useForm<FormData>();
@@ -30,8 +32,16 @@ export const TaskItem = ({ task, toDo }: TaskProps) => {
         }));
     }, [dispatch, task._id, toDo._id]);
     return (
-        <div onDoubleClick={setEditTaskHandler}>
-            <div key={task._id} className={cls.TaskWrapper}>
+        <DraggableWrapper
+            draggableElementId={task._id}
+            updateRequest={updateTaskOrder}
+            key={task._id}
+        >
+            <div
+                className={cls.TaskWrapper}
+                key={task._id}
+                onDoubleClick={setEditTaskHandler}
+            >
                 { !isEditTask && <Text text={task.name} />}
                 <div className={cls.taskStatusAnDelete}>
                     { isEditTask ? (
@@ -62,6 +72,6 @@ export const TaskItem = ({ task, toDo }: TaskProps) => {
                         )}
                 </div>
             </div>
-        </div>
+        </DraggableWrapper>
     );
-};
+});
