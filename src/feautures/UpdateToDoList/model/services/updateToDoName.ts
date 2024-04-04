@@ -2,18 +2,19 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ToDo } from 'entities/ToDoList';
 
-interface UpdateToDoListProps {
-    name: string
+interface UpdateToDoListNameProps {
     todoId: string
+    name?: string
+    order?: number
     replace?: boolean;
 }
 
-export const updateToDoList = createAsyncThunk<
+export const updateToDoName = createAsyncThunk<
     ToDo,
-    UpdateToDoListProps,
+    UpdateToDoListNameProps,
     ThunkConfig<string>
 >(
-    'todo/updateToDo',
+    'todo/updateToDoName',
     async (toDoName, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         try {

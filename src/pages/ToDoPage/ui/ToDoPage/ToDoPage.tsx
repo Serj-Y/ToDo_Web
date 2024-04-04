@@ -50,7 +50,7 @@ const ToDoPage = ({ className }: ToDoPageProps) => {
                             <ToDoList
                                 isLoading={isLoading}
                                 className={cls.list}
-                                toDo={toDo}
+                                toDos={toDo}
                             />
                         </>
                     )}

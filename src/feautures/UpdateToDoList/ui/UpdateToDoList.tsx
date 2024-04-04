@@ -6,7 +6,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import { Button } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import cls from './UpdateToDoList.module.scss';
-import { updateToDoList } from '../model/services/updateToDoList';
+import { updateToDoName } from '../model/services/updateToDoName';
 
 type CreateToDoListProps = {
     setIsEditToDoList: React.Dispatch<React.SetStateAction<boolean>>
@@ -25,7 +25,7 @@ export const UpdateToDoList = ({
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback((data: FormData) => {
-        dispatch(updateToDoList({ name: data.name, todoId: toDoId }));
+        dispatch(updateToDoName({ name: data.name, todoId: toDoId }));
         setIsEditToDoList(false);
     }, [dispatch, setIsEditToDoList, toDoId]);
     return (
