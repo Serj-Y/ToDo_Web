@@ -5,6 +5,8 @@ import { Card } from 'shared/ui/Card/Card';
 import { DeleteToDoListById } from 'feautures/DeleteToDoListById';
 import { CreateTask } from 'feautures/CreateTask';
 import { UpdateToDoList } from 'feautures/UpdateToDoList';
+import { updateToDoOrder } from 'feautures/UpdateToDoList/model/services/updateToDoOrder';
+import { DraggableWrapper } from 'widgets/DraggableWrapper';
 import cls from './ToDoListItem.module.scss';
 import { ToDo } from '../../model/types/toDo';
 import { Task, TaskItem } from '../../../Task';
@@ -25,31 +27,34 @@ export const ToDoListItem = memo(({
         <TaskItem task={task} toDo={toDo} key={task._id} />
     );
     return (
-        <div className={classNames(cls.ToDoItemWrapper)}>
-            <Card>
-                <div
-                    className={classNames(cls.toDoNameAndDelete)}
-                    onDoubleClick={setEditToDoListHandler}
-                >
-                    {isEditToDoList ? (
-                        <UpdateToDoList
-                            setIsEditToDoList={setIsEditToDoList}
-                            toDoId={toDo._id}
-                            currentToDoName={toDo.name}
-                        />
-                    ) : (
-                        <>
-                            <Text title={toDo.name} size={TextSize.M} />
-                            <DeleteToDoListById toDoListIdForDelete={toDo._id} />
-                        </>
-                    )}
+        <DraggableWrapper draggableElementId={toDo._id} updateRequest={updateToDoOrder}>
+            <div className={classNames(cls.ToDoItemWrapper)}>
+                <Card>
+                    <div
+                        className={classNames(cls.toDoNameAndDelete)}
+                        onDoubleClick={setEditToDoListHandler}
+                    >
+                        {isEditToDoList ? (
+                            <UpdateToDoList
+                                setIsEditToDoList={setIsEditToDoList}
+                                toDoId={toDo._id}
+                                currentToDoName={toDo.name}
+                            />
+                        ) : (
+                            <>
+                                <Text title={toDo.name} size={TextSize.M} />
+                                <DeleteToDoListById toDoListIdForDelete={toDo._id} />
+                            </>
+                        )}
 
-                </div>
-                {toDo.tasks ? toDo.tasks.map(renderTask) : null}
-                <CreateTask toDoListId={toDo._id} />
-            </Card>
+                    </div>
+                    {toDo.tasks ? toDo.tasks.map(renderTask) : null}
+                    <CreateTask toDoListId={toDo._id} />
+                </Card>
 
-        </div>
+            </div>
+
+        </DraggableWrapper>
 
     );
 });

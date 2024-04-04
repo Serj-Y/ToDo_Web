@@ -1,5 +1,5 @@
 import {
-    createEntityAdapter, createSlice, PayloadAction, Update,
+    createEntityAdapter, createSlice, Update,
 } from '@reduxjs/toolkit';
 import { StateSchema } from 'app/providers/StoreProvider';
 import { createToDoList } from 'feautures/CreateToDoList/model/services/createToDoList';
@@ -8,10 +8,10 @@ import { updateToDoName } from 'feautures/UpdateToDoList/model/services/updateTo
 import { createTask } from 'feautures/CreateTask/model/services/createTask';
 import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
 import { deleteTaskById } from 'feautures/DeleteTaskById/model/services/deleteTaskById';
+import { updateToDoOrder } from 'feautures/UpdateToDoList/model/services/updateToDoOrder';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
-import { updateToDoOrder } from '../../../../feautures/UpdateToDoList/model/services/updateToDoOrder';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,

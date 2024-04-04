@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Text, TextSize } from 'shared/ui/Text/Text';
+import { Text } from 'shared/ui/Text/Text';
 import { UpdateTask } from 'feautures/UpdateTask';
 import { DeleteTaskById } from 'feautures/DeleteTaskById';
 import { Controller, useForm } from 'react-hook-form';

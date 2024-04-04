@@ -3,8 +3,8 @@ import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ToDo } from 'entities/ToDoList';
 
 interface UpdateToDoOrderProps {
-    firstTodoId: string
-    secondTodoId: string
+    firstId: string
+    secondId: string
     replace?: boolean;
 }
 
@@ -16,8 +16,12 @@ export const updateToDoOrder = createAsyncThunk<
     'todo/updateToDoOrder',
     async (toDoSwap, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
+        const forSwap = {
+            firstTodoId: toDoSwap.firstId,
+            secondTodoId: toDoSwap.secondId,
+        };
         try {
-            const response = await extra.api.put<ToDo>('todo/swap-orders', toDoSwap);
+            const response = await extra.api.put<ToDo>('todo/swap-orders', forSwap);
             if (!response.data) {
                 rejectWithValue(response.statusText);
             }
