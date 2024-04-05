@@ -13,6 +13,7 @@ import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { EditUserModal } from 'feautures/EditUser';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import cls from './Navbar.module.scss';
+import { emailActivate } from '../../../feautures/Auth/EmailActivate/model/services/emailActivate';
 
 interface NavbarProps {
     className?: string;
@@ -52,6 +53,13 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                         <Button onDoubleClick={() => openCloseModalHandler(setIsEditUserModal)}>
                             <Text
                                 title={authData.name}
+                                theme={TextTheme.SECONDARY}
+                                size={TextSize.S}
+                            />
+                        </Button>
+                        <Button onClick={() => { dispatch(emailActivate()); }}>
+                            <Text
+                                title={t('activeEmail')}
                                 theme={TextTheme.SECONDARY}
                                 size={TextSize.S}
                             />
