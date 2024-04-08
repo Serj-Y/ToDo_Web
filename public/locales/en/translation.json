@@ -48,6 +48,9 @@
   "Show password": "Show password",
   "done": "Done",
   "not done": "Not done",
-  "in progress": "In progress"
-
+  "in progress": "In progress",
+  "Send activate code to email": "Send activate code to email",
+  "Send confirm code": "Send confirm code",
+  "Enter code from email": "Enter code from email",
+  "Active email": "Active email"
 }

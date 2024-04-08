@@ -1,9 +1,13 @@
-.ChangeUserNameForm {
+.EnterConfirmCodeForm {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 350px;
-    margin-top: 15px;
+
+    .currentName{
+        display: flex;
+        gap: 20px;
+    }
 
     .input {
         margin-top: 5px;

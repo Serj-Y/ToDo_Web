@@ -20,25 +20,10 @@ interface FormData {
     repeatPassword: string
 }
 
-// enum InputType {
-//     PASSWORD = 'password',
-//     TEXT = 'text'
-// }
-
 const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit, reset } = useForm<FormData>();
-    // const [inputType, setInputType] = useState<InputType>(InputType.PASSWORD);
-    const [isDisableShowPasswordBtn, setIsDisableShowPasswordBtn] = useState<boolean>(false);
     const dispatch = useAppDispatch();
-
-    // const onPasswordShow = useCallback(() => {
-    //     if (inputType === InputType.PASSWORD) {
-    //         setInputType(InputType.TEXT);
-    //     } else {
-    //         setInputType(InputType.PASSWORD);
-    //     }
-    // }, [inputType]);
 
     const onSubmit = useCallback((data: FormData) => {
         dispatch(changePassword(data));
@@ -95,12 +80,6 @@ const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps)
                     />
                 )}
             />
-            {/* {!isDisableShowPasswordBtn && ( */}
-            {/*    <Button size={ButtonSize.M} onClick={() => onPasswordShow()} disabled={isDisableShowPasswordBtn}> */}
-            {/*        {t('Show password')} */}
-            {/*    </Button> */}
-            {/* )} */}
-
             <Button type="submit" size={ButtonSize.M}>
                 {t('Save changes')}
             </Button>

@@ -49,5 +49,9 @@
   "Show password": "Показати пароль",
   "done": "Виконано",
   "not done": "Не виконано",
-  "in progress": "У процесі"
+  "in progress": "У процесі",
+  "Send activate code to email": "Відправити код активації на електронну пошту",
+  "Send confirm code": "Надіслати підтверджуючий код",
+  "Enter code from email": "Введіть код з електронної пошти",
+  "Active email": "Активувати електронну пошту"
 }
