@@ -13,6 +13,7 @@ import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { EditUserModal } from 'feautures/EditUser';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import cls from './Navbar.module.scss';
+import { ActivateEmailModal } from '../../../feautures/ActiveEmail';
 
 interface NavbarProps {
     className?: string;
@@ -25,6 +26,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
     const [isAuthModal, setIsAuthModal] = useState(false);
     const [isSignUpModal, setIsSignUpModal] = useState(false);
     const [isEditUserModal, setIsEditUserModal] = useState(false);
+    const [isActivateEmailModal, setIsActivateEmailModal] = useState(false);
     const authData = useSelector(getUserAuthData);
     const dispatch = useAppDispatch();
 
@@ -49,6 +51,16 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                         >
                             {t('Sign Out')}
                         </Button>
+                        { !authData.emailActivate
+                            && (
+                                <Button
+                                    theme={ButtonTheme.CLEAR_INVERTED}
+                                    className={cls.links}
+                                    onClick={() => openCloseModalHandler(setIsActivateEmailModal)}
+                                >
+                                    {t('Active email')}
+                                </Button>
+                            )}
                         <Button onDoubleClick={() => openCloseModalHandler(setIsEditUserModal)}>
                             <Text
                                 title={authData.name}
@@ -57,15 +69,19 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                             />
                         </Button>
                     </div>
-
                     {isEditUserModal && (
                         <EditUserModal
                             isOpen={isEditUserModal}
                             onClose={() => openCloseModalHandler(setIsEditUserModal)}
                             currentName={authData.name}
-                            isActiveEmail={authData.emailActivate}
                         />
                     ) }
+                    {isActivateEmailModal && (
+                        <ActivateEmailModal
+                            isOpen={isActivateEmailModal && !authData.emailActivate}
+                            onClose={() => openCloseModalHandler(setIsActivateEmailModal)}
+                        />
+                    )}
                 </DynamicModuleLoader>
             </div>
         );

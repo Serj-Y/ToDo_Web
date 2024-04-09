@@ -1,0 +1,35 @@
+.EnterConfirmCodeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+
+    .currentName{
+        display: flex;
+        gap: 20px;
+    }
+
+    .authCodeContainer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    .authCodeInput{
+      width: var(--font-line-m);
+      text-align: center;
+      color: var(--primary-color);
+      background: none;
+      backdrop-filter: blur(0.5);
+      border: 1px solid var(--primary-color) ;
+      outline: none;
+
+    }
+
+    .loginBtn {
+        margin-top: 15px;
+        margin-left: auto;
+    }
+
+}
+

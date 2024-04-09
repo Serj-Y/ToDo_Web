@@ -93,7 +93,9 @@ const userSlice = createSlice({
             .addCase(changeUserName.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state._inited = true;
-                state.authData = action.payload;
+                if (state.authData) {
+                    state.authData.name = action.payload.name;
+                }
             })
             .addCase(changeUserName.rejected, (state, action) => {
                 state.isLoading = false;

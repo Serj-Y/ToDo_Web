@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import React, { memo, useCallback, useState } from 'react';
-import Input from 'shared/ui/Input/Input';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TextAlign } from 'shared/ui/Text/Text';
-import cls from './ActiveEmailForm.module.scss';
-import { sendActiveEmailToken } from '../../model/services/sendActiveEmailToken/sendActiveEmailToken';
-import { emailActivate } from '../../model/services/activeEmail/emailActivate';
+import AuthCode from 'react-auth-code-input';
+import cls from './ActivateEmailForm.module.scss';
+import { emailActivate } from '../../module/services/activeEmail/emailActivate';
+import { sendActiveEmailToken } from '../../module/services/sendActiveEmailToken/sendActiveEmailToken';
 
 export interface ChangeUserNameFormProps {
     className?: string;
@@ -17,7 +17,7 @@ interface FormData {
     emailToken: string
 }
 
-const ActiveEmailForm = memo(({ className }: ChangeUserNameFormProps) => {
+const ActivateEmailForm = memo(({ className }: ChangeUserNameFormProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit, reset } = useForm<FormData>();
     const dispatch = useAppDispatch();
@@ -49,34 +49,35 @@ const ActiveEmailForm = memo(({ className }: ChangeUserNameFormProps) => {
                         {t('Send activate code to email')}
                     </Button>
                 </div>
-
             )}
-
             {isEnterCode
                 && (
                     <form onSubmit={handleSubmit(onSubmit)} className={cls.EnterConfirmCodeForm}>
                         <Text title={t('Active email')} align={TextAlign.CENTER} />
+                        <Text text={t('Check spam mailbox')} align={TextAlign.CENTER} />
                         <Controller
                             name="emailToken"
                             control={control}
                             defaultValue=""
                             render={({ field }) => (
-                                <Input
-                                    {...field}
-                                    customPlaceholder={t('Enter code from email')}
-                                    placeholder={t('Enter code from email')}
-                                    onChange={(value) => field.onChange(value)}
-                                    className={cls.input}
-                                    type="text"
-                                />
+                                <div className={cls.authCodeContainer}>
+                                    <Text text={t('Enter code from email')} />
+                                    <AuthCode
+                                        {...field}
+                                        length={5}
+                                        containerClassName={cls.authCodeContainer}
+                                        inputClassName={cls.authCodeInput}
+                                        allowedCharacters="numeric"
+                                        onChange={(value) => field.onChange(value)}
+                                    />
+                                </div>
                             )}
                         />
                         { !isResendTimeout && (
                             <Button onClick={activeEmailHandler} size={ButtonSize.M}>
-                                {t('Send active code to email')}
+                                {t('Send activate code to email')}
                             </Button>
                         ) }
-
                         <Button type="submit" size={ButtonSize.M}>
                             {t('Send confirm code')}
                         </Button>
@@ -86,4 +87,4 @@ const ActiveEmailForm = memo(({ className }: ChangeUserNameFormProps) => {
 
     );
 });
-export default ActiveEmailForm;
+export default ActivateEmailForm;

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from '../../../../../app/providers/StoreProvider';
+import { fetchUserData } from '../../../../../entities/User/model/services/fetchUserData';
 
 interface EditUserNameProps {
     name: string
@@ -24,7 +25,6 @@ export const changeUserName = createAsyncThunk<
             if (!response.data) {
                 throw new Error();
             }
-            console.log(response.data);
             return response.data;
         } catch (e) {
             console.log(e);

@@ -2,17 +2,15 @@ import React, { Suspense } from 'react';
 import { Modal } from 'shared/ui/Modal/Modal';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Loader } from 'shared/ui/Loader/Loader';
-import { ChangeUserNameFormAsync } from '../ChangeUserNameForm/ChangeUserNameForm.async';
-import { ChangePasswordFormAsync } from '../ChangeUserPasswordForm/ChangePasswordForm.async';
+import { ActivateEmailFormAsync } from '../ActivateEmailForm/ActivateEmailForm.async';
 
 interface EditUserNameModalProps {
-    currentName: string
     isOpen: boolean;
     onClose: () => void;
     className?: string;
 }
-export const EditUserModal = ({
-    className, onClose, isOpen, currentName,
+export const ActivateEmailModal = ({
+    className, onClose, isOpen,
 }: EditUserNameModalProps) => (
     <Modal
         className={classNames('', {}, [className])}
@@ -21,8 +19,7 @@ export const EditUserModal = ({
         lazy
     >
         <Suspense fallback={<Loader />}>
-            <ChangeUserNameFormAsync currentName={currentName} />
-            <ChangePasswordFormAsync />
+            <ActivateEmailFormAsync />
         </Suspense>
     </Modal>
 );
