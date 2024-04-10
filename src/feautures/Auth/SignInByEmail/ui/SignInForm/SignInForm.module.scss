@@ -11,8 +11,11 @@
     display: flex;
     justify-content: space-between;
 }
-
-.signInBtn {
-    margin-top: 15px;
-    margin-left: auto;
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    .signInBtn {
+        margin-top: 15px;
+    }
 }
+
