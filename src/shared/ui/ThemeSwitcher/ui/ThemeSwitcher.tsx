@@ -1,7 +1,6 @@
-import LightIcon from 'shared/assets/icons/theme-light.svg';
-import DarkIcon from 'shared/assets/icons/theme-dark.svg';
 import { memo } from 'react';
-import { Theme, useTheme } from '../../../../app/providers/ThemeProvider';
+import { FaRegMoon, FaSun } from 'react-icons/fa';
+import { Theme, useTheme } from 'app/providers/ThemeProvider';
 import { Button, ButtonTheme } from '../../Button/Button';
 import { classNames } from '../../../lib/classNames/classNames';
 
@@ -18,7 +17,7 @@ export const ThemeSwitcher = memo(({ className }: ThemeSwitcherProps) => {
             className={classNames('', {}, [className])}
             onClick={toggleTheme}
         >
-            {theme === Theme.DARK ? <DarkIcon /> : <LightIcon />}
+            {theme === Theme.DARK ? <FaRegMoon /> : <FaSun />}
         </Button>
     );
 });

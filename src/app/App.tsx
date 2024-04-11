@@ -7,6 +7,7 @@ import { useTheme } from './providers/ThemeProvider';
 import { getUserInited } from '../entities/User';
 import { ToDoPage } from '../pages/ToDoPage';
 import { initUser } from '../entities/User/model/services/initUser';
+import { Footer } from '../widgets/Footer';
 
 function App() {
     const { theme } = useTheme();
@@ -26,6 +27,7 @@ function App() {
                             <ToDoPage />
                         )}
                 </div>
+                <Footer />
             </Suspense>
         </div>
     );

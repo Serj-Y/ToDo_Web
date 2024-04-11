@@ -108,7 +108,7 @@ const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (props, re
                 <Button
                     className={cls.passwordToggle}
                     onClick={onPasswordShow}
-                    theme={ButtonTheme.CLEAR}
+                    theme={ButtonTheme.BACKGROUND}
                 >
                     {isPasswordVisible ? (
                         <FaEyeSlash />

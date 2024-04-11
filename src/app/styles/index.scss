@@ -2,7 +2,6 @@
 @import "variables/global";
 @import "themes/normal";
 @import "themes/dark";
-@import "themes/pineGreen";
 
 .app,
 .app_modal {
@@ -18,4 +17,5 @@
 .content-page {
     display: flex;
     width: 100%;
+    height: calc(100vh - var(--navbar-height) * 2);;
 }

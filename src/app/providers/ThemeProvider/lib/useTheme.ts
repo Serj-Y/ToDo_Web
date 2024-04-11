@@ -16,13 +16,10 @@ export function useTheme(): UseThemeResult {
             newTheme = Theme.LIGHT;
             break;
         case Theme.LIGHT:
-            newTheme = Theme.PINEGREEN;
-            break;
-        case Theme.PINEGREEN:
             newTheme = Theme.DARK;
             break;
         default:
-            newTheme = Theme.PINEGREEN;
+            newTheme = Theme.DARK;
         }
         setTheme?.(newTheme);
         document.body.className = newTheme;

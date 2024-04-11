@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, {
-    Dispatch, memo, SetStateAction, useCallback, useState,
-} from 'react';
+import React, { memo, useCallback } from 'react';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
