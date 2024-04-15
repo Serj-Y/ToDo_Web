@@ -55,8 +55,12 @@
   "Enter code from email": "Введіть код з електронної пошти",
   "Active email": "Активувати електронну пошту",
   "Check spam mailbox": "Перевірте поштову скриньку зі спамом",
-  "Reset password": "Reset password",
-  "Enter current email": "Enter current email",
+  "Reset password": "Скинути пароль",
+  "Enter current email": "Введіть поточну електронну адресу",
   "Forgot password": "Забули пароль?",
-  "Send code to email": "Send code to email"
+  "Send code to email": "Надіслати код на електронну адресу",
+  "All field is required": "All field is required",
+  "Minimum 3 symbols": "Minimum 3 symbols",
+  "Maximum 15 symbols": "Maximum 15 symbols",
+  "This field is required": "This field is required"
 }
