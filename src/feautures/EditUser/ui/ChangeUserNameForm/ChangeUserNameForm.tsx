@@ -54,7 +54,6 @@ const ChangeUserNameForm = memo(({ className, currentName }: ChangeUserNameFormP
                 render={({ field }) => (
                     <Input
                         {...field}
-                        {...register('userName')}
                         customPlaceholder={t('Enter new user name')}
                         placeholder={t('Enter new user name')}
                         onChange={(value) => field.onChange(value)}

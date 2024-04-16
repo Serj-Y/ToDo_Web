@@ -59,8 +59,10 @@
   "Enter current email": "Введіть поточну електронну адресу",
   "Forgot password": "Забули пароль?",
   "Send code to email": "Надіслати код на електронну адресу",
-  "All field is required": "All field is required",
-  "Minimum 3 symbols": "Minimum 3 symbols",
-  "Maximum 15 symbols": "Maximum 15 symbols",
-  "This field is required": "This field is required"
+  "All field is required": "Усі поля обов'язкові",
+  "Minimum 3 symbols": "Мінімум 3 символи",
+  "Maximum 15 symbols": "Максимум 15 символів",
+  "This field is required": "Це поле є обов'язковим",
+  "Minimum 8 symbols": "Мінімум 8 символів",
+  "Confirm password field does not match with new password": "Поле підтвердження пароля не збігається з новим паролем"
 }

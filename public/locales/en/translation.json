@@ -61,5 +61,7 @@
   "All field is required": "All field is required",
   "Minimum 3 symbols": "Minimum 3 symbols",
   "Maximum 15 symbols": "Maximum 15 symbols",
-  "This field is required": "This field is required"
+  "This field is required": "This field is required",
+  "Minimum 8 symbols": "Minimum 8 symbols",
+  "Confirm password field does not match with new password": "Confirm password field does not match with new password"
 }

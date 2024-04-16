@@ -22,7 +22,6 @@ export const changePassword = createAsyncThunk<
             if (!response.data) {
                 throw new Error();
             }
-            console.log(changePasswordData);
             return response.data;
         } catch (e) {
             console.log(e);
