@@ -103,7 +103,7 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
                                 placeholder={t('Email')}
                                 onChange={(value) => field.onChange(value)}
                                 className={cls.input}
-                                type="text"
+                                type="email"
                             />
                         </>
                     )}

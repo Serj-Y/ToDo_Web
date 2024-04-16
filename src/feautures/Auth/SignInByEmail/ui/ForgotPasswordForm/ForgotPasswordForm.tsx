@@ -7,8 +7,12 @@ import Input from 'shared/ui/Input/Input';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { Controller, useForm } from 'react-hook-form';
-import { Text, TextAlign } from 'shared/ui/Text/Text';
+import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
 import AuthCode from 'react-auth-code-input';
+import * as yup from 'yup';
+import {
+    useYupValidationResolver,
+} from 'shared/lib/hooks/useYupValidationResolver/useYupValidationResolver';
 import cls from './ForgotPasswordForm.module.scss';
 import { forgotPasswordByEmail } from '../../model/services/forgotPaswordByEmail/forgotPasswordByEmail';
 import { sendForgotPasswordToken } from '../../model/services/sendForgotPasswordToken/sendForgotPasswordToken';
@@ -28,9 +32,21 @@ interface FormData {
 
 const ForgotPasswordForm = memo(({ className, setIsForgotPassword, email }: ForgotPasswordFormProps) => {
     const { t } = useTranslation();
-    const { control, handleSubmit, reset } = useForm<FormData>();
     const dispatch = useAppDispatch();
     const [isSendCode, setIsSendCode] = useState<boolean>(false);
+
+    const validationSchema = yup.object({
+        newPassword: yup.string()
+            .min(8, t('Minimum 8 symbols')),
+        emailCode: yup.string()
+            .min(5, t('This field is required')),
+    });
+
+    const {
+        register, control, handleSubmit, formState: { errors }, reset,
+    } = useForm<FormData>({
+        resolver: useYupValidationResolver(validationSchema),
+    });
 
     const onSubmit = useCallback((data: FormData) => {
         if (data.email && !data.emailCode) {
@@ -52,15 +68,18 @@ const ForgotPasswordForm = memo(({ className, setIsForgotPassword, email }: Forg
                     control={control}
                     defaultValue={email || ''}
                     render={({ field }) => (
-                        <Input
-                            {...field}
-                            customPlaceholder={t('Enter current email')}
-                            placeholder={t('Enter current email')}
-                            disabled={isSendCode}
-                            onChange={(value) => field.onChange(value)}
-                            className={cls.input}
-                            type="email"
-                        />
+                        <>
+                            <Text text={errors.email?.message} theme={TextTheme.ERROR} align={TextAlign.CENTER} />
+                            <Input
+                                {...field}
+                                customPlaceholder={t('Enter current email')}
+                                placeholder={t('Enter current email')}
+                                disabled={isSendCode}
+                                onChange={(value) => field.onChange(value)}
+                                className={cls.input}
+                                type="email"
+                            />
+                        </>
                     )}
                 />
             )}
@@ -72,17 +91,25 @@ const ForgotPasswordForm = memo(({ className, setIsForgotPassword, email }: Forg
                         control={control}
                         defaultValue=""
                         render={({ field }) => (
-                            <div className={cls.authCodeContainer}>
-                                <Text text={t('Enter code from email')} />
-                                <AuthCode
-                                    {...field}
-                                    length={5}
-                                    containerClassName={cls.authCodeContainer}
-                                    inputClassName={cls.authCodeInput}
-                                    allowedCharacters="numeric"
-                                    onChange={(value) => field.onChange(value)}
+                            <>
+                                <Text
+                                    text={errors.emailCode?.message}
+                                    theme={TextTheme.ERROR}
+                                    align={TextAlign.CENTER}
                                 />
-                            </div>
+                                <div className={cls.authCodeContainer}>
+                                    <Text text={t('Enter code from email')} />
+                                    <AuthCode
+                                        {...field}
+                                        length={5}
+                                        containerClassName={cls.authCodeContainer}
+                                        inputClassName={cls.authCodeInput}
+                                        allowedCharacters="numeric"
+                                        onChange={(value) => field.onChange(value)}
+                                    />
+                                </div>
+                            </>
+
                         )}
                     />
                     <Controller
@@ -90,14 +117,22 @@ const ForgotPasswordForm = memo(({ className, setIsForgotPassword, email }: Forg
                         control={control}
                         defaultValue=""
                         render={({ field }) => (
-                            <Input
-                                {...field}
-                                customPlaceholder={t('Enter new password')}
-                                placeholder={t('Enter new password')}
-                                onChange={(value) => field.onChange(value)}
-                                className={cls.input}
-                                type="password"
-                            />
+                            <>
+                                <Text
+                                    text={errors.newPassword?.message}
+                                    theme={TextTheme.ERROR}
+                                    align={TextAlign.CENTER}
+                                />
+                                <Input
+                                    {...field}
+                                    customPlaceholder={t('Enter new password')}
+                                    placeholder={t('Enter new password')}
+                                    onChange={(value) => field.onChange(value)}
+                                    className={cls.input}
+                                    type="password"
+                                />
+                            </>
+
                         )}
                     />
                 </>
