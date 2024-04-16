@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { memo, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Text, TextAlign, TextTheme } from 'shared/ui/Text/Text';
@@ -8,14 +8,16 @@ import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { userReducer } from 'entities/User';
+import * as yup from 'yup';
+import { Controller, useForm } from 'react-hook-form';
+import {
+    useYupValidationResolver,
+} from 'shared/lib/hooks/useYupValidationResolver/useYupValidationResolver';
 import cls from './SignUpForm.module.scss';
 import { signUpByEmail } from '../../model/services/signUpByEmail/signUpByEmail';
 import { getSignUpError } from '../../model/selectors/getSignUpError/getSignUpError';
 import { getSignUpIsLoading } from '../../model/selectors/getSignUpIsLoading/getSignUpIsLoading';
-import { getSignUpPassword } from '../../model/selectors/getSignUpPassword/getSignUpPassword';
-import { getSignUpEmail } from '../../model/selectors/getSignUpEmail/getSignUpEmail';
-import { getSignUpName } from '../../model/selectors/getSignUpName/getSignUpName';
-import { signUpActions, signUpReducer } from '../../model/slice/signUpSlice';
+import { signUpReducer } from '../../model/slice/signUpSlice';
 
 export interface SignUpFormProps {
     className?: string;
@@ -26,75 +28,113 @@ const initialReducers: ReducersList = {
     signUpForm: signUpReducer,
     user: userReducer,
 };
+interface FormData {
+    name: string,
+    email: string,
+    password: string
+}
 const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const email = useSelector(getSignUpEmail);
-    const userName = useSelector(getSignUpName);
-    const password = useSelector(getSignUpPassword);
     const isLoading = useSelector(getSignUpIsLoading);
     const error = useSelector(getSignUpError);
 
-    const onChangeUsername = useCallback((value: string) => {
-        dispatch(signUpActions.setUsername(value));
-    }, [dispatch]);
+    const validationSchema = yup.object({
+        name: yup.string()
+            .required(t('This field is required')),
+        email: yup.string().required(t('This field is required')).email(t('Enter valid email')),
+        password: yup.string()
+            .required(t('This field is required'))
+            .min(8, t('Minimum 8 symbols')),
+    });
 
-    const onChangeEmail = useCallback((value: string) => {
-        dispatch(signUpActions.setEmail(value));
-    }, [dispatch]);
-
-    const onChangePassword = useCallback((value: string) => {
-        dispatch(signUpActions.setPassword(value));
-    }, [dispatch]);
-
-    const onLoginClick = useCallback(async () => {
-        const result = await dispatch(signUpByEmail({ name: userName, email, password }));
+    const {
+        register, control, handleSubmit, formState: { errors }, reset,
+    } = useForm<FormData>({
+        resolver: useYupValidationResolver(validationSchema),
+    });
+    const onSubmit = useCallback(async (data: FormData) => {
+        const result = await dispatch(signUpByEmail(data));
         if (result.meta.requestStatus === 'fulfilled') {
             onSuccess();
         }
-    }, [dispatch, password, userName, email, onSuccess]);
+        reset();
+    }, [dispatch, reset, onSuccess]);
     return (
         <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
-            <div className={classNames(cls.SignUpForm, {}, [className])}>
+            <form
+                className={classNames(cls.SignUpForm, {}, [className])}
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <Text title={t('Sign up form')} align={TextAlign.CENTER} />
                 {error && (
-                    <Text text={t('Incorrect password or username')} theme={TextTheme.ERROR} />
+                    <Text text={t('Something went wrong')} theme={TextTheme.ERROR} />
 
                 )}
-                <Input
-                    type="text"
-                    className={cls.input}
-                    customPlaceholder={t('Name')}
-                    placeholder={t('Name')}
-                    autoFocus
-                    onChange={onChangeUsername}
-                    value={userName}
+                <Controller
+                    name="name"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <>
+                            <Text text={errors.name?.message} theme={TextTheme.ERROR} align={TextAlign.CENTER} />
+                            <Input
+                                {...field}
+                                customPlaceholder={t('Name')}
+                                autofocus
+                                placeholder={t('Name')}
+                                onChange={(value) => field.onChange(value)}
+                                className={cls.input}
+                                type="text"
+                            />
+                        </>
+                    )}
                 />
-                <Input
-                    type="email"
-                    className={cls.input}
-                    customPlaceholder={t('Email')}
-                    placeholder={t('Email')}
-                    onChange={onChangeEmail}
-                    value={email}
+                <Controller
+                    name="email"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <>
+                            <Text text={errors.email?.message} theme={TextTheme.ERROR} align={TextAlign.CENTER} />
+                            <Input
+                                {...field}
+                                customPlaceholder={t('Email')}
+                                placeholder={t('Email')}
+                                onChange={(value) => field.onChange(value)}
+                                className={cls.input}
+                                type="text"
+                            />
+                        </>
+                    )}
                 />
-                <Input
-                    type="password"
-                    className={cls.input}
-                    customPlaceholder={t('Password')}
-                    placeholder={t('Password')}
-                    onChange={onChangePassword}
-                    value={password}
+                <Controller
+                    name="password"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                        <>
+                            <Text text={errors.password?.message} theme={TextTheme.ERROR} align={TextAlign.CENTER} />
+                            <Input
+                                {...field}
+                                customPlaceholder={t('Password')}
+                                placeholder={t('Password')}
+                                onChange={(value) => field.onChange(value)}
+                                className={cls.input}
+                                type="password"
+                            />
+                        </>
+                    )}
                 />
                 <Button
                     disabled={isLoading}
                     theme={ButtonTheme.OUTLINE}
                     className={cls.loginBtn}
-                    onClick={onLoginClick}
+                    type="submit"
                 >
                     {t('Sign up')}
                 </Button>
-            </div>
+            </form>
         </DynamicModuleLoader>
     );
 });

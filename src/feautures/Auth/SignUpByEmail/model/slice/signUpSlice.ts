@@ -1,27 +1,15 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { SignUpSchema } from '../types/signUpSchema';
 import { signUpByEmail } from '../services/signUpByEmail/signUpByEmail';
 
 const initialState:SignUpSchema = {
-    name: '',
-    email: '',
-    password: '',
     isLoading: false,
+    error: undefined,
 };
 export const signUpSlice = createSlice({
     name: 'signUp',
     initialState,
-    reducers: {
-        setUsername: (state, action: PayloadAction<string>) => {
-            state.name = action.payload;
-        },
-        setEmail: (state, action: PayloadAction<string>) => {
-            state.email = action.payload;
-        },
-        setPassword: (state, action: PayloadAction<string>) => {
-            state.password = action.payload;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(signUpByEmail.pending, (state) => {
@@ -38,6 +26,5 @@ export const signUpSlice = createSlice({
     },
 });
 
-// Action creators are generated for each case reducer function
 export const { actions: signUpActions } = signUpSlice;
 export const { reducer: signUpReducer } = signUpSlice;

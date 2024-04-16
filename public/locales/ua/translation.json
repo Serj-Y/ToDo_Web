@@ -64,5 +64,6 @@
   "Maximum 15 symbols": "Максимум 15 символів",
   "This field is required": "Це поле є обов'язковим",
   "Minimum 8 symbols": "Мінімум 8 символів",
-  "Confirm password field does not match with new password": "Поле підтвердження пароля не збігається з новим паролем"
+  "Confirm password field does not match with new password": "Поле підтвердження пароля не збігається з новим паролем",
+  "Enter valid email": "Введіть дійсну адресу електронної пошти"
 }
