@@ -10,7 +10,6 @@ type EditUserNameResponse = {
     name: string,
     email: string
     emailActivate: boolean,
-    updatedAt: string
 }
 export const changeUserName = createAsyncThunk<
     EditUserNameResponse,

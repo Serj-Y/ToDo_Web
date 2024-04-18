@@ -39,7 +39,7 @@ const ToDoPage = ({ className }: ToDoPageProps) => {
         dispatch(initToDoPage());
     });
     return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
+        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <PageWrapper
                 className={classNames(cls.ToDoPage, {}, [className])}
             >

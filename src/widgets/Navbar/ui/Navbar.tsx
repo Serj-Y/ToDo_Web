@@ -42,7 +42,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
         return (
             <div className={classNames(cls.Navbar, {}, [className])}>
                 <Text title={t('Todo')} theme={TextTheme.SECONDARY} />
-                <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
+                <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
                     <div className={cls.buttonsWrapper}>
                         <Button
                             theme={ButtonTheme.CLEAR_INVERTED}
@@ -61,7 +61,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                                     {t('Active email')}
                                 </Button>
                             )}
-                        <Button onDoubleClick={() => openCloseModalHandler(setIsEditUserModal)}>
+                        <Button onClick={() => openCloseModalHandler(setIsEditUserModal)}>
                             <Text
                                 title={authData.name}
                                 theme={TextTheme.SECONDARY}
@@ -90,7 +90,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
     return (
         <div className={classNames(cls.Navbar, {}, [className])}>
             <Text title={t('Todo')} theme={TextTheme.SECONDARY} />
-            <DynamicModuleLoader reducers={reducers}>
+            <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
                 <div className={cls.buttonsWrapper}>
                     <Button
                         theme={ButtonTheme.CLEAR_INVERTED}

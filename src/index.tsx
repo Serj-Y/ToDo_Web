@@ -7,7 +7,6 @@ import './shared/config/i18n/i18n';
 import { ThemeProvider } from './app/providers/ThemeProvider';
 import { ErrorPage } from './widgets/ErrorPage/ui/ErrorPage';
 import { StoreProvider } from './app/providers/StoreProvider';
-
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(

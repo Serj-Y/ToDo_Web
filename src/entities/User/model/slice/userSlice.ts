@@ -2,11 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { signInByEmail } from 'feautures/Auth/SignInByEmail/model/services/signInByEmail/signInByEmail';
 import { signUpByEmail } from 'feautures/Auth/SignUpByEmail/model/services/signUpByEmail/signUpByEmail';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from 'shared/consts/localStorage';
+import { changePassword } from 'feautures/EditUser/model/services/changePassword/changePassword';
+import { changeUserName } from 'feautures/EditUser/model/services/changeUserName/changeUserName';
 import { UserSchema } from '../types/user';
 import { fetchUserData } from '../services/fetchUserData';
-import { changePassword } from '../../../../feautures/EditUser/model/services/changePassword/changePassword';
-import { changeUserName } from '../../../../feautures/EditUser/model/services/changeUserName/changeUserName';
-import { initUser } from '../services/initUser';
 
 const initialState: UserSchema = {
     error: '',

@@ -61,7 +61,7 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
         reset();
     }, [dispatch, reset, onSuccess]);
     return (
-        <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
+        <DynamicModuleLoader removeAfterUnmount={false} reducers={initialReducers}>
             <form
                 className={classNames(cls.SignUpForm, {}, [className])}
                 onSubmit={handleSubmit(onSubmit)}

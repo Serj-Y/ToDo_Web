@@ -58,7 +58,7 @@ const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
         setIsForgotPassword((prev) => !prev);
     }, [dispatch]);
     return (
-        <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
+        <DynamicModuleLoader removeAfterUnmount={false} reducers={initialReducers}>
             {isForgotPassword && <ForgotPasswordForm setIsForgotPassword={setIsForgotPassword} email={email} />}
             {!isForgotPassword
                 && (

@@ -3,7 +3,6 @@ import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from 'shared/consts/localStorage';
 import { baseApi } from 'shared/api/api';
 import { UserResponse } from 'entities/User/model/types/user';
-import { initUser } from '../../../../../../entities/User/model/services/initUser';
 
 interface LoginByUsernameProps {
     email: string
@@ -15,7 +14,7 @@ export const signInByEmail = createAsyncThunk<
     LoginByUsernameProps,
     ThunkConfig<string>
 >(
-    'login/changeUserName',
+    'signIn/signInByEmail',
     async (authData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         try {

@@ -3,7 +3,6 @@ export interface User{
         name: string
         email: string
         emailActivate: boolean
-        updatedAt: string
 }
 
 export type UserResponse = {
