@@ -23,8 +23,8 @@ export const StoreProvider = (props : StoreProviderProps) => {
         initialState as StateSchema,
         asyncReducers as ReducersMapObject<StateSchema>,
     );
-    const persistor = persistStore(store);
 
+    const persistor = persistStore(store);
     return (
         <Provider store={store}>
             <PersistGate loading={<Loader />} persistor={persistor}>

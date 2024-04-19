@@ -16,16 +16,17 @@ import {
 } from 'redux-persist';
 import { StateSchema, ThunkExtraArg } from './StateSchema';
 import { createReducerManager } from './reducerManager';
+import { todosPageReducer } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
 
 const rootMigrations = {
-    5: (state: any) => ({
+    6: (state: any) => ({
         ...state,
     }),
 };
 
 const persistConfig = {
     key: 'app',
-    version: 5,
+    version: 6,
     storage: localStorage,
     migrate: createMigrate(rootMigrations),
     blacklist: ['scrollSave', 'signInForm', 'signUpForm'],
@@ -41,6 +42,7 @@ export function createReduxStore(
 ) {
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
+        toDoList: todosPageReducer,
         scrollSave: scrollSaveReducer,
     };
 

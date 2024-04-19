@@ -11,11 +11,11 @@ import { ToDoSchema } from 'entities/ToDoList';
 
 export interface StateSchema {
     scrollSave: ScrollSaveSchema
+    toDoList: ToDoSchema;
     // async reducers
     user?: UserSchema;
     signInForm?: SignInSchema;
     signUpForm?: SignUpSchema;
-    toDoList?: ToDoSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

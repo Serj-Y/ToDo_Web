@@ -18,7 +18,6 @@ import {
 import { userReducer } from 'entities/User';
 import cls from './ToDoPage.module.scss';
 import { initToDoPage } from '../../model/services/initToDoPage/initToDoPage';
-import { ACCESS_TOKEN } from '../../../../shared/consts/localStorage';
 
 interface ToDoPageProps {
     className?: string;
