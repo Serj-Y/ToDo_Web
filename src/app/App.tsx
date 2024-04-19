@@ -8,6 +8,8 @@ import { getUserInited } from '../entities/User';
 import { ToDoPage } from '../pages/ToDoPage';
 import { initUser } from '../entities/User/model/services/initUser';
 import { Footer } from '../widgets/Footer';
+import { ACCESS_TOKEN } from '../shared/consts/localStorage';
+import { fetchToDoList } from '../entities/ToDoList/model/services/fetchToDoLists/fetchToDoList';
 
 function App() {
     const { theme } = useTheme();
@@ -15,8 +17,10 @@ function App() {
     const inited = useSelector(getUserInited);
 
     useEffect(() => {
-        dispatch(initUser());
-    });
+        if (!ACCESS_TOKEN) {
+            dispatch(initUser());
+        }
+    }, [dispatch]);
     return (
         <div className={classNames('app', {}, [theme])}>
             <Suspense fallback="">

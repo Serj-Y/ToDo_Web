@@ -9,10 +9,10 @@ import { createTask } from 'feautures/CreateTask/model/services/createTask';
 import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
 import { deleteTaskById } from 'feautures/DeleteTaskById/model/services/deleteTaskById';
 import { updateToDoOrder } from 'feautures/UpdateToDoList/model/services/updateToDoOrder';
+import { updateTaskOrder } from 'feautures/UpdateTask/model/services/updateTaskOrder';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
-import { updateTaskOrder } from '../../../../feautures/UpdateTask/model/services/updateTaskOrder';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,

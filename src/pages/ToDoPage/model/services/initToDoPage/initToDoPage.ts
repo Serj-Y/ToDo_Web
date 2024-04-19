@@ -12,6 +12,7 @@ export const initToDoPage = createAsyncThunk<void, void, ThunkConfig<string>>(
             dispatch,
         } = thunkAPI;
         const inited = getToDoPageHasInited(getState());
+
         if (!inited) {
             dispatch(todosPageActions.initState());
             dispatch(fetchToDoList({}));
