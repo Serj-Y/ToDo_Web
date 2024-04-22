@@ -21,7 +21,7 @@ export const errorCatch = (error: any) => (error.response && error.response.data
 export const getNewToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
-    const response = await axios.post<TokenResponse>(
+    const response = await axios.put<TokenResponse>(
         `${BaseUrl}auth/access-token`,
         { refreshToken },
     );
