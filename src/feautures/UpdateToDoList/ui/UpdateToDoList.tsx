@@ -4,9 +4,8 @@ import { Controller, useForm } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Button } from 'shared/ui/Button/Button';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { useUpdateToDoMutation } from 'entities/ToDoList/model/services/toDoApiServices';
 import cls from './UpdateToDoList.module.scss';
-import { updateToDoName } from '../model/services/updateToDoName';
 
 type CreateToDoListProps = {
     setIsEditToDoList: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,12 +21,12 @@ export const UpdateToDoList = ({
 }: CreateToDoListProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit } = useForm<FormData>();
-    const dispatch = useAppDispatch();
+    const [updateTodo] = useUpdateToDoMutation();
 
     const onSubmit = useCallback((data: FormData) => {
-        dispatch(updateToDoName({ name: data.name, todoId: toDoId }));
+        updateTodo({ name: data.name, todoId: toDoId }).unwrap(); // To access sucess and error use .unwrap()
         setIsEditToDoList(false);
-    }, [dispatch, setIsEditToDoList, toDoId]);
+    }, [setIsEditToDoList, toDoId, updateTodo]);
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}

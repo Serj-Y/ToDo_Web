@@ -2,7 +2,6 @@ import {
     configureStore, Reducer, ReducersMapObject, CombinedState,
 } from '@reduxjs/toolkit';
 import { scrollSaveReducer } from 'widgets/ScrollSave';
-import { $api } from 'shared/api/api';
 import localStorage from 'redux-persist/lib/storage';
 import {
     createMigrate,
@@ -14,25 +13,27 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { toDoApiServices } from 'entities/ToDoList/model/services/toDoApiServices';
+import { $api } from 'shared/api/api';
 import { StateSchema, ThunkExtraArg } from './StateSchema';
 import { createReducerManager } from './reducerManager';
-import { todosPageReducer } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
 
 const rootMigrations = {
-    6: (state: any) => ({
+    9: (state: any) => ({
         ...state,
     }),
 };
 
 const persistConfig = {
     key: 'app',
-    version: 6,
+    version: 9,
     storage: localStorage,
     migrate: createMigrate(rootMigrations),
     blacklist: ['scrollSave', 'signInForm', 'signUpForm'],
     whitelist: [
         'user',
-        'toDoList',
+        'toDoApiServices',
     ],
 };
 
@@ -42,7 +43,7 @@ export function createReduxStore(
 ) {
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
-        toDoList: todosPageReducer,
+        [toDoApiServices.reducerPath]: toDoApiServices.reducer,
         scrollSave: scrollSaveReducer,
     };
 
@@ -66,10 +67,13 @@ export function createReduxStore(
             thunk: {
                 extraArgument: extraArg,
             },
-        }),
+        }).concat(
+            toDoApiServices.middleware,
+        ),
     });
     // @ts-ignore
     store.reducerManager = reducerManager;
+    setupListeners(store.dispatch);
     return store;
 }
 export type AppDispatch = ReturnType<typeof createReduxStore>['dispatch']

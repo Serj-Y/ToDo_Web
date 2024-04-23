@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { BaseUrl } from '../consts/baseUrl';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../consts/localStorage';
+import { BaseUrl } from '../consts/baseUrl';
 
 export const baseApi = axios.create({
     baseURL: BaseUrl,
@@ -44,7 +45,6 @@ export const $api = axios.create({
     timeout: INSTANCE_TIMEOUT,
     headers: INSTANCE_HEADER,
 });
-
 $api.interceptors.request.use(async (config) => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
 

@@ -4,9 +4,8 @@ import { useForm, Controller } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Button } from 'shared/ui/Button/Button';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import cls from './CreateToDoList.module.scss';
-import { createToDoList } from '../model/services/createToDoList';
+import { useCreateToDoMutation } from '../../../entities/ToDoList/model/services/toDoApiServices';
 
 type CreateToDoListProps = {
     className?: string
@@ -17,12 +16,12 @@ interface FormData {
 export const CreateToDoList = ({ className }: CreateToDoListProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit, reset } = useForm<FormData>();
-    const dispatch = useAppDispatch();
+    const [createToDo] = useCreateToDoMutation();
 
     const onSubmit = useCallback((data: FormData) => {
-        dispatch(createToDoList(data));
+        createToDo(data).unwrap();
         reset();
-    }, [dispatch, reset]);
+    }, [createToDo, reset]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={classNames(cls.CreateToDoList, {}, [className])}>
             <Controller
