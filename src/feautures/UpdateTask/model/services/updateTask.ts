@@ -1,7 +1,6 @@
-import { createAsyncThunk, Update } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { Task, TaskStatus } from 'entities/Task';
-import { ToDo } from '../../../../entities/ToDoList';
 
 interface UpdateTaskProps {
     taskId: string

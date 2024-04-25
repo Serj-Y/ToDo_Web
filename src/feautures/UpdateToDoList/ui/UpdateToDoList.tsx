@@ -24,7 +24,7 @@ export const UpdateToDoList = ({
     const [updateTodo] = useUpdateToDoMutation();
 
     const onSubmit = useCallback((data: FormData) => {
-        updateTodo({ name: data.name, todoId: toDoId }).unwrap(); // To access sucess and error use .unwrap()
+        updateTodo({ name: data.name, todoId: toDoId });
         setIsEditToDoList(false);
     }, [setIsEditToDoList, toDoId, updateTodo]);
     return (

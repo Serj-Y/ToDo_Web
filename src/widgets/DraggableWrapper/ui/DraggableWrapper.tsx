@@ -34,7 +34,7 @@ export const DraggableWrapper = memo(({
         const secondId = draggableElementId;
         if (firstId && secondId) {
             e.currentTarget.style.opacity = '1';
-            dispatch(updateRequest({ firstId, secondId }));
+            updateRequest({ firstId, secondId });
         }
         e.currentTarget.style.opacity = '1';
     };

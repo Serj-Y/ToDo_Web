@@ -1,13 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { useCreateTaskMutation } from 'entities/ToDoList';
 import cls from './CreateTask.module.scss';
-import { createTask } from '../model/services/createTask';
-import { Text, TextAlign, TextSize } from '../../../shared/ui/Text/Text';
 
 type CreateTaskProps = {
     toDoListId: string
@@ -20,12 +18,12 @@ interface FormData {
 export const CreateTask = ({ className, toDoListId }: CreateTaskProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit, reset } = useForm<FormData>();
-    const dispatch = useAppDispatch();
+    const [createTask] = useCreateTaskMutation();
 
     const onSubmit = useCallback((data: FormData) => {
-        dispatch(createTask({ taskName: data.taskName, toDoListId }));
+        createTask({ name: data.taskName, todoId: toDoListId });
         reset();
-    }, [dispatch, reset, toDoListId]);
+    }, [createTask, reset, toDoListId]);
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}

@@ -2,7 +2,7 @@ import React, { memo, useCallback, useState } from 'react';
 import { Text, TextSize } from 'shared/ui/Text/Text';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Card } from 'shared/ui/Card/Card';
-import { DeleteToDoListById } from 'feautures/DeleteToDoListById';
+import { DeleteToDoList } from 'feautures/DeleteToDoList';
 import { CreateTask } from 'feautures/CreateTask';
 import { UpdateToDoList } from 'feautures/UpdateToDoList';
 import { DraggableWrapper } from 'widgets/DraggableWrapper';
@@ -52,7 +52,7 @@ export const ToDoListItem = memo(({
                         ) : (
                             <>
                                 <Text title={toDo.name} size={TextSize.M} />
-                                <DeleteToDoListById toDoListIdForDelete={toDo._id} />
+                                <DeleteToDoList toDoListIdForDelete={toDo._id} />
                             </>
                         )}
 

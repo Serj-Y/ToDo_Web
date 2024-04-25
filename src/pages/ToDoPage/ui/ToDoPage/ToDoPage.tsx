@@ -11,8 +11,7 @@ interface ToDoPageProps {
 }
 
 const ToDoPage = ({ className }: ToDoPageProps) => {
-    const { isLoading, data } = useFetchToDoQuery({}); // Automatically fetch and we will get data
-
+    const { isLoading, data } = useFetchToDoQuery(); // Automatically fetch and we will get data
     return (
         <PageWrapper
             className={classNames(cls.ToDoPage, {}, [className])}

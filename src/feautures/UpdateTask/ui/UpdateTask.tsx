@@ -1,13 +1,11 @@
-import { useTranslation } from 'react-i18next';
 import React, { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { TaskStatus, TaskStatusSelect } from 'entities/Task';
 import { FaCheck } from 'react-icons/fa';
+import { useUpdateTaskMutation } from 'entities/ToDoList';
 import cls from './UpdateTask.module.scss';
-import { updateTask } from '../model/services/updateTask';
 
 type CreateTaskProps = {
     setIsEditTask: (value: boolean) => void
@@ -25,16 +23,13 @@ interface FormData {
 export const UpdateTask = ({
     className, taskId, currentTaskName, setIsEditTask, toDoId, taskStatus,
 }: CreateTaskProps) => {
-    const { t } = useTranslation();
     const { control, handleSubmit } = useForm<FormData>();
-    const dispatch = useAppDispatch();
+    const [updateTask] = useUpdateTaskMutation();
 
     const onSubmit = useCallback((data: FormData) => {
-        dispatch(updateTask({
-            taskStatus: data.taskStatus, taskName: data.taskName, taskId, toDoId,
-        }));
+        updateTask({ name: data.taskName, taskId, status: data.taskStatus });
         setIsEditTask(false);
-    }, [dispatch, setIsEditTask, taskId, toDoId]);
+    }, [setIsEditTask, taskId, updateTask]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={cls.UpdateTask}>
             <Controller

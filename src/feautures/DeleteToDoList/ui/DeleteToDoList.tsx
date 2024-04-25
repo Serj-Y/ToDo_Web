@@ -8,7 +8,7 @@ type DeleteToDoListProps = {
     toDoListIdForDelete: string
 }
 
-export const DeleteToDoListById = ({ toDoListIdForDelete }: DeleteToDoListProps) => {
+export const DeleteToDoList = ({ toDoListIdForDelete }: DeleteToDoListProps) => {
     const { t } = useTranslation();
     const [deleteToDo] = useDeleteToDoMutation();
 

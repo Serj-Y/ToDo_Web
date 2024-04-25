@@ -14,11 +14,6 @@ interface ToDoListProps {
     isLoading?: boolean;
 }
 
-type HandlerType = {
-    e: React.DragEvent<HTMLDivElement>
-    toDo: ToDo
-}
-
 const getSkeletons = () => (
     new Array(12)
         .fill(0)

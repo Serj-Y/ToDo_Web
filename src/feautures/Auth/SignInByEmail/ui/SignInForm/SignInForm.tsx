@@ -7,9 +7,7 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { initUser } from 'entities/User/model/services/initUser';
 import { userReducer } from 'entities/User';
-import { Simulate } from 'react-dom/test-utils';
 import { getLoginPassword } from '../../model/selectors/getLoginPassword/getLoginPassword';
 import { getLoginIsLoading } from '../../model/selectors/getLoginIsLoading/getLoginIsLoading';
 import { getLoginError } from '../../model/selectors/getLoginError/getLoginError';
@@ -18,7 +16,6 @@ import { signInActions, signInReducer } from '../../model/slice/signInSlice';
 import cls from './SignInForm.module.scss';
 import { getLoginEmail } from '../../model/selectors/getLoginEmail/getLoginEmail';
 import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
-import reset = Simulate.reset;
 
 export interface SignInFormProps {
     className?: string;
