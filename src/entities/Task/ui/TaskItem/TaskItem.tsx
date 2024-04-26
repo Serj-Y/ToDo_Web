@@ -26,9 +26,9 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
 
     const onSubmit = useCallback((data: FormData) => {
         updateTask({
-            taskId: task._id, status: data.taskStatus,
+            taskId: task._id, status: data.taskStatus, todoId: toDo._id,
         });
-    }, [task._id, updateTask]);
+    }, [task._id, toDo._id, updateTask]);
 
     const updateTaskOrder = useCallback((
         data: {

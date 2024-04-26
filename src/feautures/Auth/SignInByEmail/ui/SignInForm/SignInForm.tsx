@@ -7,7 +7,6 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { userReducer } from 'entities/User';
 import { getLoginPassword } from '../../model/selectors/getLoginPassword/getLoginPassword';
 import { getLoginIsLoading } from '../../model/selectors/getLoginIsLoading/getLoginIsLoading';
 import { getLoginError } from '../../model/selectors/getLoginError/getLoginError';
@@ -24,7 +23,6 @@ export interface SignInFormProps {
 
 const initialReducers: ReducersList = {
     signInForm: signInReducer,
-    user: userReducer,
 };
 const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
     const { t } = useTranslation();
@@ -55,7 +53,7 @@ const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
         setIsForgotPassword((prev) => !prev);
     }, [dispatch]);
     return (
-        <DynamicModuleLoader removeAfterUnmount={false} reducers={initialReducers}>
+        <DynamicModuleLoader removeAfterUnmount reducers={initialReducers}>
             {isForgotPassword && <ForgotPasswordForm setIsForgotPassword={setIsForgotPassword} email={email} />}
             {!isForgotPassword
                 && (

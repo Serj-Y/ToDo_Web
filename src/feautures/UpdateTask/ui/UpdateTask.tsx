@@ -27,9 +27,11 @@ export const UpdateTask = ({
     const [updateTask] = useUpdateTaskMutation();
 
     const onSubmit = useCallback((data: FormData) => {
-        updateTask({ name: data.taskName, taskId, status: data.taskStatus });
+        updateTask({
+            name: data.taskName, taskId, status: data.taskStatus, todoId: toDoId,
+        });
         setIsEditTask(false);
-    }, [setIsEditTask, taskId, updateTask]);
+    }, [setIsEditTask, taskId, toDoId, updateTask]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={cls.UpdateTask}>
             <Controller

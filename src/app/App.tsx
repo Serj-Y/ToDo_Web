@@ -9,7 +9,6 @@ import { ToDoPage } from '../pages/ToDoPage';
 import { initUser } from '../entities/User/model/services/initUser';
 import { Footer } from '../widgets/Footer';
 import { ACCESS_TOKEN } from '../shared/consts/localStorage';
-import { DynamicModuleLoader } from '../shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 
 function App() {
     const { theme } = useTheme();

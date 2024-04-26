@@ -4,8 +4,8 @@ import { Controller, useForm } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Button } from 'shared/ui/Button/Button';
+import { useCreateToDoMutation } from 'entities/ToDoList/model/services/toDoApiServices';
 import cls from './CreateToDoList.module.scss';
-import { useCreateToDoMutation } from '../../../entities/ToDoList/model/services/toDoApiServices';
 import { Text, TextAlign, TextTheme } from '../../../shared/ui/Text/Text';
 
 type CreateToDoListProps = {

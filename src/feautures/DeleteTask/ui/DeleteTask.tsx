@@ -12,8 +12,8 @@ export const DeleteTask = ({ taskIdForDelete, toDoListId }: DeleteTaskProps) => 
     const [deleteTask] = useDeleteTaskMutation();
 
     const onDeleteTask = useCallback(async () => {
-        deleteTask({ taskId: taskIdForDelete });
-    }, [deleteTask, taskIdForDelete]);
+        deleteTask({ taskId: taskIdForDelete, todoId: toDoListId });
+    }, [deleteTask, taskIdForDelete, toDoListId]);
 
     return (
         <Button theme={ButtonTheme.CLEAR_RED} onClick={onDeleteTask} size={ButtonSize.M}><FaTrash /></Button>
