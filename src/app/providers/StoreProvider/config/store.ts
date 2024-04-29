@@ -18,17 +18,16 @@ import { toDoApiServices } from 'entities/ToDoList/model/services/toDoApiService
 import { $api } from 'shared/api/api';
 import { StateSchema, ThunkExtraArg } from './StateSchema';
 import { createReducerManager } from './reducerManager';
-import { rtkQueryErrorLogger } from '../../../../shared/lib/rtkErrorLoger/rtkErrorLoger';
 
 const rootMigrations = {
-    9: (state: any) => ({
+    3: (state: any) => ({
         ...state,
     }),
 };
 
 const persistConfig = {
     key: 'app',
-    version: 9,
+    version: 3,
     storage: localStorage,
     migrate: createMigrate(rootMigrations),
     blacklist: ['scrollSave', 'signInForm', 'signUpForm'],

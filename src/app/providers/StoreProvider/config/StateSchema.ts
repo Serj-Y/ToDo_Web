@@ -2,12 +2,11 @@ import {
     AnyAction, EnhancedStore, Reducer, ReducersMapObject,
 } from '@reduxjs/toolkit';
 import { CombinedState } from 'redux';
-import { AxiosInstance, AxiosResponse } from 'axios';
+import { AxiosInstance } from 'axios';
 import { UserSchema } from 'entities/User';
 import { ScrollSaveSchema } from 'widgets/ScrollSave';
 import { SignInSchema } from 'feautures/Auth/SignInByEmail';
 import { SignUpSchema } from 'feautures/Auth/SignUpByEmail';
-import { ToDoSchema } from 'entities/ToDoList';
 import { toDoApiServices } from '../../../../entities/ToDoList/model/services/toDoApiServices';
 
 export interface StateSchema {
@@ -39,10 +38,6 @@ export interface ReduxStoreWithManager extends EnhancedStore<StateSchema> {
 
 export interface ThunkExtraArg {
     api: AxiosInstance;
-    // api: ({ baseUrl }?: { baseUrl: string; }) => ({
-    //     url, method, data, params, headers, body,
-    // }: any) => Promise<AxiosResponse<any, any>>
-
 }
 
 export interface ThunkConfig<T> {
