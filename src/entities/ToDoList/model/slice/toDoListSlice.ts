@@ -35,6 +35,10 @@ const toDoListSlice = createSlice({
         initState: (state) => {
             state._inited = true;
         },
+        // for offline
+        deleteToDo: (state, action) => {
+            toDoAdapter.removeOne(state, action.payload.todoId);
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -48,12 +52,12 @@ const toDoListSlice = createSlice({
             })
             .addCase(fetchToDoList.fulfilled, (state, action) => {
                 state.isLoading = false;
-
-                if (action.meta.arg.replace) {
-                    toDoAdapter.setAll(state, action.payload);
-                } else {
-                    toDoAdapter.addMany(state, action.payload);
-                }
+                // if (action.meta.arg.replace) {
+                //     toDoAdapter.setAll(state, action.payload);
+                // } else {
+                //     toDoAdapter.addMany(state, action.payload);
+                // }
+                toDoAdapter.addMany(state, action.payload);
             })
             .addCase(fetchToDoList.rejected, (state, action) => {
                 state.isLoading = false;

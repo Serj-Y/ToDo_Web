@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {
     DynamicModuleLoader,
@@ -18,6 +18,7 @@ import {
 import { userReducer } from 'entities/User';
 import cls from './ToDoPage.module.scss';
 import { initToDoPage } from '../../model/services/initToDoPage/initToDoPage';
+import { fetchToDoList } from '../../../../entities/ToDoList/model/services/fetchToDoLists/fetchToDoList';
 
 interface ToDoPageProps {
     className?: string;
@@ -34,6 +35,25 @@ const ToDoPage = ({ className }: ToDoPageProps) => {
     const error = useSelector(getToDoPageError);
     const inited = useSelector(getToDoPageHasInited);
     const toDo = useSelector(getToDo.selectAll);
+    const [status, setStatus] = useState(true);
+
+    useEffect(() => {
+        function changeStatus() {
+            setStatus(navigator.onLine);
+        }
+        window.addEventListener('online', changeStatus);
+        window.addEventListener('offline', changeStatus);
+        return () => {
+            window.removeEventListener('online', changeStatus);
+            window.removeEventListener('offline', changeStatus);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (status) {
+            setTimeout(() => { dispatch(fetchToDoList({})); }, 15000);
+        }
+    }, [status, dispatch]);
 
     useEffect(() => {
         dispatch(initToDoPage());
