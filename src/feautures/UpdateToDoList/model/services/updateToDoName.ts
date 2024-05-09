@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ToDo } from 'entities/ToDoList';
+import { todosPageActions } from 'entities/ToDoList/model/slice/toDoListSlice';
 
 interface UpdateToDoListNameProps {
     todoId: string
@@ -23,9 +24,13 @@ export const updateToDoName = createAsyncThunk<
                 rejectWithValue(response.statusText);
             }
             return response.data;
-        } catch (e) {
+        } catch (e: any) {
+            if (!e) {
+                dispatch(todosPageActions.updateToDo(toDoName));
+                console.log(e);
+            }
             console.log(e);
-            return rejectWithValue('error');
+            return rejectWithValue(e);
         }
     },
 );

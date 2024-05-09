@@ -1,5 +1,5 @@
 import {
-    createEntityAdapter, createSlice, Update,
+    createEntityAdapter, createSlice, IdSelector, Update,
 } from '@reduxjs/toolkit';
 import { StateSchema } from 'app/providers/StoreProvider';
 import { createToDoList } from 'feautures/CreateToDoList/model/services/createToDoList';
@@ -10,9 +10,11 @@ import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
 import { deleteTaskById } from 'feautures/DeleteTaskById/model/services/deleteTaskById';
 import { updateToDoOrder } from 'feautures/UpdateToDoList/model/services/updateToDoOrder';
 import { updateTaskOrder } from 'feautures/UpdateTask/model/services/updateTaskOrder';
+import { Simulate } from 'react-dom/test-utils';
 import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
+import change = Simulate.change;
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -36,8 +38,22 @@ const toDoListSlice = createSlice({
             state._inited = true;
         },
         // for offline
+        updateToDo: (state, action) => {
+            const { todoId, name } = action.payload;
+            toDoAdapter.updateOne(state, { id: todoId, changes: { name } });
+        },
         deleteToDo: (state, action) => {
             toDoAdapter.removeOne(state, action.payload.todoId);
+        },
+        changeToDoOrder: (state, action) => {
+            const firstToDo = toDoAdapter.getSelectors().selectById(state, action.payload.firstTodoId);
+            const secondToDo = toDoAdapter.getSelectors().selectById(state, action.payload.secondTodoId);
+            const orderFirst = firstToDo?.order;
+            const orderSecond = secondToDo?.order;
+            if (orderFirst && orderSecond && firstToDo && secondToDo) {
+                toDoAdapter.updateOne(state, { id: firstToDo._id, changes: { order: secondToDo.order } });
+                toDoAdapter.updateOne(state, { id: secondToDo._id, changes: { order: firstToDo.order } });
+            }
         },
     },
     extraReducers: (builder) => {
