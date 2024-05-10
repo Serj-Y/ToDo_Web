@@ -5,10 +5,11 @@ interface DraggableWrapperProps {
     draggableElementId: string
     updateRequest:any
     children: ReactNode
+    toDoId?: string
     draggable?: boolean
 }
 export const DraggableWrapper = memo(({
-    draggableElementId, updateRequest, children, draggable = true,
+    draggableElementId, updateRequest, children, draggable = true, toDoId,
 }: DraggableWrapperProps) => {
     const dispatch = useAppDispatch();
 
@@ -33,7 +34,7 @@ export const DraggableWrapper = memo(({
         const firstId = e.dataTransfer.getData('text/plain');
         const secondId = draggableElementId;
         if (firstId && secondId) {
-            dispatch(updateRequest({ firstId, secondId }));
+            dispatch(updateRequest({ firstId, secondId, toDoId }));
         }
         e.currentTarget.style.opacity = '1';
     };

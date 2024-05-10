@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { Task } from 'entities/Task';
+import { todosPageActions } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
 
 interface UpdateTaskOrderProps {
     firstId: string
     secondId: string
+    toDoId?: string
     replace?: boolean;
 }
 
@@ -26,7 +28,10 @@ export const updateTaskOrder = createAsyncThunk<
                 rejectWithValue(response.statusText);
             }
             return response.data;
-        } catch (e) {
+        } catch (e: any) {
+            if (!e) {
+                dispatch(todosPageActions.changeOrderTask(taskSwap));
+            }
             console.log(e);
             return rejectWithValue('error');
         }

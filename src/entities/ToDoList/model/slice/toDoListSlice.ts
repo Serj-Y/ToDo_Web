@@ -47,13 +47,18 @@ const toDoListSlice = createSlice({
             toDoAdapter.removeOne(state, action.payload.todoId);
         },
         changeToDoOrder: (state, action) => {
-            const firstToDo = toDoAdapter.getSelectors().selectById(state, action.payload.firstTodoId);
-            const secondToDo = toDoAdapter.getSelectors().selectById(state, action.payload.secondTodoId);
-            const orderFirst = firstToDo?.order;
-            const orderSecond = secondToDo?.order;
-            if (orderFirst && orderSecond && firstToDo && secondToDo) {
-                toDoAdapter.updateOne(state, { id: firstToDo._id, changes: { order: secondToDo.order } });
-                toDoAdapter.updateOne(state, { id: secondToDo._id, changes: { order: firstToDo.order } });
+            const { firstId, secondId } = action.payload;
+            const firstToDo = state.entities[firstId];
+            const secondToDo = state.entities[secondId];
+            if (firstToDo && secondToDo) {
+                const orderFirst = firstToDo.order;
+                const orderSecond = secondToDo.order;
+                if (orderFirst && orderSecond) {
+                    toDoAdapter.updateMany(state, [
+                        { id: firstToDo._id, changes: { order: secondToDo.order } },
+                        { id: secondToDo._id, changes: { order: firstToDo.order } },
+                    ]);
+                }
             }
         },
         updateTask: (state, action) => {
@@ -74,23 +79,28 @@ const toDoListSlice = createSlice({
                 toDoAdapter.updateOne(state, { id: todoId, changes: updatedTodo });
             }
         },
-        // changeOrderTask: (state, action) => {
-        //     const updates = action.payload.map((task: Task) => {
-        //         const todoId = task.todo;
-        //         const todo = state.entities[todoId];
-        //         if (todo) {
-        //             return {
-        //                 id: todoId,
-        //                 changes: {
-        //                     ...todo,
-        //                     tasks: todo.tasks.map((t) => (t._id === task._id ? task : t)),
-        //                 },
-        //             };
-        //         }
-        //         return null;
-        //     }).filter((update: ToDo) => update !== null) as Update<ToDo>[];
-        //     toDoAdapter.updateMany(state, updates);
-        // },
+        changeOrderTask: (state, action) => {
+            const { firstId, secondId, toDoId } = action.payload;
+            const toDo = toDoAdapter.getSelectors().selectById(state, toDoId);
+            if (toDo) {
+                const { tasks } = toDo;
+                const firstTask = tasks.find((task) => task._id === firstId);
+                const secondTask = tasks.find((task) => task._id === secondId);
+
+                if (firstTask && secondTask) {
+                    const updatedTasks = tasks.map((task) => {
+                        if (task._id === firstId) {
+                            return { ...task, order: secondTask.order };
+                        } if (task._id === secondId) {
+                            return { ...task, order: firstTask.order };
+                        }
+                        return task;
+                    });
+                    toDoAdapter.updateOne(state, { id: toDoId, changes: { tasks: updatedTasks } });
+                }
+            }
+        },
+
     },
     extraReducers: (builder) => {
         builder
@@ -109,7 +119,7 @@ const toDoListSlice = createSlice({
                 // } else {
                 //     toDoAdapter.addMany(state, action.payload);
                 // }
-                toDoAdapter.addMany(state, action.payload);
+                toDoAdapter.upsertMany(state, action.payload);
             })
             .addCase(fetchToDoList.rejected, (state, action) => {
                 state.isLoading = false;

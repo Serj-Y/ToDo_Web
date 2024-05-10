@@ -36,6 +36,7 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
             draggableElementId={task._id}
             updateRequest={updateTaskOrder}
             key={task._id}
+            toDoId={toDo._id}
         >
             <div
                 className={cls.TaskWrapper}

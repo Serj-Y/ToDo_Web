@@ -29,7 +29,7 @@ export const updateToDoOrder = createAsyncThunk<
             return response.data;
         } catch (e: any) {
             if (!e) {
-                dispatch(todosPageActions.changeToDoOrder(forSwap));
+                dispatch(todosPageActions.changeToDoOrder(toDoSwap));
                 console.log(e);
             }
             console.log(e);
