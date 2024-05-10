@@ -15,6 +15,7 @@ import { fetchToDoList } from '../services/fetchToDoLists/fetchToDoList';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
 import change = Simulate.change;
+import { Task } from '../../../Task';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -55,6 +56,41 @@ const toDoListSlice = createSlice({
                 toDoAdapter.updateOne(state, { id: secondToDo._id, changes: { order: firstToDo.order } });
             }
         },
+        updateTask: (state, action) => {
+            const { toDoId, taskId, updatedTask } = action.payload;
+            const todo = state.entities[toDoId];
+            if (todo) {
+                const updatedTasks = todo.tasks.map((task) => (task._id === taskId ? updatedTask : task));
+                const updatedTodo = { ...todo, tasks: updatedTasks };
+                toDoAdapter.updateOne(state, { id: toDoId, changes: updatedTodo });
+            }
+        },
+        deleteTask: (state, action) => {
+            const { todoId, taskId } = action.payload;
+            const todo = state.entities[todoId];
+            if (todo) {
+                const updatedTasks = todo.tasks.filter((task) => task._id !== taskId);
+                const updatedTodo = { ...todo, tasks: updatedTasks };
+                toDoAdapter.updateOne(state, { id: todoId, changes: updatedTodo });
+            }
+        },
+        // changeOrderTask: (state, action) => {
+        //     const updates = action.payload.map((task: Task) => {
+        //         const todoId = task.todo;
+        //         const todo = state.entities[todoId];
+        //         if (todo) {
+        //             return {
+        //                 id: todoId,
+        //                 changes: {
+        //                     ...todo,
+        //                     tasks: todo.tasks.map((t) => (t._id === task._id ? task : t)),
+        //                 },
+        //             };
+        //         }
+        //         return null;
+        //     }).filter((update: ToDo) => update !== null) as Update<ToDo>[];
+        //     toDoAdapter.updateMany(state, updates);
+        // },
     },
     extraReducers: (builder) => {
         builder

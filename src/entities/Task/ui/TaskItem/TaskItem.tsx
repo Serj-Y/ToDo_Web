@@ -28,9 +28,9 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
 
     const onSubmit = useCallback((data: FormData) => {
         dispatch(updateTask({
-            taskStatus: data.taskStatus, taskId: task._id, toDoId: toDo._id,
+            taskStatus: data.taskStatus, taskId: task._id, toDoId: toDo._id, task,
         }));
-    }, [dispatch, task._id, toDo._id]);
+    }, [dispatch, task, toDo._id]);
     return (
         <DraggableWrapper
             draggableElementId={task._id}
@@ -51,6 +51,7 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
                             taskId={task._id}
                             taskStatus={task.status}
                             toDoId={toDo._id}
+                            task={task}
                         />
                     )
                         : (

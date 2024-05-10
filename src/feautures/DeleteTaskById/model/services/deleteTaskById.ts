@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { Task } from 'entities/Task/module/types/task';
+import { todosPageActions } from '../../../../entities/ToDoList/model/slice/toDoListSlice';
 
 interface DeleteTaskByIdProps {
     toDoId: string
@@ -28,9 +29,12 @@ export const deleteTaskById = createAsyncThunk<
                 rejectWithValue(response.statusText);
             }
             return { toDoId: taskForDelete.toDoId, taskId: taskForDelete.taskId };
-        } catch (e) {
+        } catch (e: any) {
+            if (!e) {
+                dispatch(todosPageActions.deleteTask(forDeleteData));
+            }
             console.log(e);
-            return rejectWithValue('error');
+            return rejectWithValue(e);
         }
     },
 );

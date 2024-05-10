@@ -11,7 +11,7 @@ interface currencySelectProps {
   readonly?: boolean
 }
 
-export const TaskStatusSelect = memo(({
+export const TaskStatusSelect = ({
     className, value, onChange, readonly,
 }: currencySelectProps) => {
     const { t } = useTranslation();
@@ -30,4 +30,4 @@ export const TaskStatusSelect = memo(({
             readonly={readonly}
         />
     );
-});
+};
