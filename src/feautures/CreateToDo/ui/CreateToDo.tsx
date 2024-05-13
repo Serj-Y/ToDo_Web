@@ -1,50 +1,46 @@
 import { useTranslation } from 'react-i18next';
 import React, { useCallback } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
-import { Button, ButtonSize } from 'shared/ui/Button/Button';
+import { Button } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import cls from './CreateTask.module.scss';
-import { createTask } from '../model/services/createTask';
+import cls from './CreateToDo.module.scss';
+import { createToDo } from '../model/services/createToDo';
 
-type CreateTaskProps = {
-    toDoId: string
+type CreateToDoProps = {
     className?: string
 }
 interface FormData {
-    taskName: string
+    name: string;
 }
-
-export const CreateTask = ({ className, toDoId }: CreateTaskProps) => {
+export const CreateToDo = ({ className }: CreateToDoProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit, reset } = useForm<FormData>();
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback((data: FormData) => {
-        dispatch(createTask({ taskName: data.taskName, toDoId }));
+        dispatch(createToDo(data));
         reset();
-    }, [dispatch, reset, toDoId]);
+    }, [dispatch, reset]);
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={classNames(cls.CreateTask, {}, [className])}
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className={classNames(cls.CreateToDoList, {}, [className])}>
             <Controller
-                name="taskName"
+                name="name"
                 control={control}
                 defaultValue=""
                 rules={{ minLength: 2, maxLength: 50 }}
                 render={({ field }) => (
                     <Input
                         {...field}
-                        placeholder={t('Enter task name')}
+                        placeholder={t('Enter ToDo list name')}
                         onChange={(value) => field.onChange(value)}
+                        className={cls.input}
                     />
                 )}
             />
-            <Button type="submit" size={ButtonSize.M}>
-                {t('Add Task')}
+            <Button type="submit">
+                {t('Create To-Do')}
             </Button>
         </form>
     );

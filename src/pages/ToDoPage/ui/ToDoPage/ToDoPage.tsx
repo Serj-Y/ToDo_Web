@@ -5,27 +5,27 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { ToDoList } from 'entities/ToDoList';
+import { ToDoList } from 'entities/ToDo';
 import { PageWrapper } from 'widgets/PageWrapper/PageWrapper';
 import { classNames } from 'shared/lib/classNames/classNames';
-import { CreateToDoList } from 'feautures/CreateToDoList/ui/CreateToDoList';
-import { getToDo, todosPageReducer } from 'entities/ToDoList/model/slice/toDoListSlice';
+import { CreateToDo } from 'feautures/CreateToDo/ui/CreateToDo';
+import { getToDo, toDoReducers } from 'entities/ToDo/model/slice/toDoSlice';
 import {
     getToDoPageError,
     getToDoPageHasInited,
     getToDoPageIsLoading,
-} from 'entities/ToDoList/model/selectors/toDoPageSelectors';
+} from 'entities/ToDo/model/selectors/toDoSelectors';
 import { userReducer } from 'entities/User';
 import cls from './ToDoPage.module.scss';
 import { initToDoPage } from '../../model/services/initToDoPage/initToDoPage';
-import { fetchToDoList } from '../../../../entities/ToDoList/model/services/fetchToDoLists/fetchToDoList';
+import { fetchToDo } from '../../../../entities/ToDo/model/services/fetchToDo/fetchToDo';
 
 interface ToDoPageProps {
     className?: string;
 }
 
 const reducers: ReducersList = {
-    toDoList: todosPageReducer,
+    toDo: toDoReducers,
     user: userReducer,
 };
 
@@ -51,7 +51,7 @@ const ToDoPage = ({ className }: ToDoPageProps) => {
 
     useEffect(() => {
         if (status) {
-            setTimeout(() => { dispatch(fetchToDoList({})); }, 15000);
+            setTimeout(() => { dispatch(fetchToDo({})); }, 15000);
         }
     }, [status, dispatch]);
 
@@ -66,7 +66,7 @@ const ToDoPage = ({ className }: ToDoPageProps) => {
                 {inited
                     && (
                         <>
-                            <CreateToDoList />
+                            <CreateToDo />
                             <ToDoList
                                 isLoading={isLoading}
                                 className={cls.list}

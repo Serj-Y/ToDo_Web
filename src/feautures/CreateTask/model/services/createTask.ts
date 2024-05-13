@@ -4,11 +4,11 @@ import { Task } from 'entities/Task/module/types/task';
 
 interface CreateTaskProps {
     taskName: string
-    toDoListId: string
+    toDoId: string
 }
 
 type TaskResponse ={
-   task:Task,
+    task:Task,
     toDoId: string
 }
 
@@ -17,22 +17,22 @@ export const createTask = createAsyncThunk<
     CreateTaskProps,
     ThunkConfig<string>
 >(
-    'todo/createTask',
+    'toDo/task/createTask',
     async (newTaskData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         const newTask = {
             name: newTaskData.taskName,
-            todoId: newTaskData.toDoListId,
+            todoId: newTaskData.toDoId,
         };
         try {
             const response = await extra.api.post<Task>('task/', newTask);
             if (!response.data) {
                 rejectWithValue(response.statusText);
             }
-            return { task: response.data, toDoId: newTaskData.toDoListId };
-        } catch (e) {
+            return { task: response.data, toDoId: newTaskData.toDoId };
+        } catch (e: any) {
             console.log(e);
-            return rejectWithValue('error');
+            return rejectWithValue(e);
         }
     },
 );

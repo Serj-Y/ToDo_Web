@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getToDoPageHasInited } from 'entities/ToDoList/model/selectors/toDoPageSelectors';
-import { todosPageActions } from 'entities/ToDoList/model/slice/toDoListSlice';
-import { fetchToDoList } from 'entities/ToDoList/model/services/fetchToDoLists/fetchToDoList';
+import { getToDoPageHasInited } from 'entities/ToDo/model/selectors/toDoSelectors';
+import { toDoActions } from 'entities/ToDo/model/slice/toDoSlice';
+import { fetchToDo } from 'entities/ToDo/model/services/fetchToDo/fetchToDo';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 
 export const initToDoPage = createAsyncThunk<void, void, ThunkConfig<string>>(
@@ -14,8 +14,8 @@ export const initToDoPage = createAsyncThunk<void, void, ThunkConfig<string>>(
         const inited = getToDoPageHasInited(getState());
 
         if (!inited) {
-            dispatch(todosPageActions.initState());
-            dispatch(fetchToDoList({}));
+            dispatch(toDoActions.initState());
+            dispatch(fetchToDo({}));
         }
     },
 );

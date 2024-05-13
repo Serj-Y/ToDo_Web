@@ -1,14 +1,14 @@
 import React, { memo, useCallback, useState } from 'react';
 import { Text } from 'shared/ui/Text/Text';
 import { UpdateTask } from 'feautures/UpdateTask';
-import { DeleteTaskById } from 'feautures/DeleteTaskById';
+import { DeleteTask } from 'feautures/DeleteTask';
 import { Controller, useForm } from 'react-hook-form';
 import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { DraggableWrapper } from 'widgets/DraggableWrapper';
-import { updateTaskOrder } from 'feautures/UpdateTask/model/services/updateTaskOrder';
+import { changeTaskOrder } from 'feautures/UpdateTask/model/services/changeTaskOrder';
 import cls from './TaskItem.module.scss';
-import { ToDo } from '../../../ToDoList';
+import { ToDo } from '../../../ToDo';
 import { TaskStatusSelect } from '../TaskStatusSelect/TaskStatusSelect';
 import { Task } from '../../module/types/task';
 import { TaskStatus } from '../../module/types/taskStatus';
@@ -34,7 +34,7 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
     return (
         <DraggableWrapper
             draggableElementId={task._id}
-            updateRequest={updateTaskOrder}
+            updateRequest={changeTaskOrder}
             key={task._id}
             toDoId={toDo._id}
         >
@@ -69,7 +69,7 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
                                         )}
                                     />
                                 </form>
-                                <DeleteTaskById taskIdForDelete={task._id} toDoListId={toDo._id} />
+                                <DeleteTask taskIdForDelete={task._id} toDoListId={toDo._id} />
                             </>
                         )}
                 </div>

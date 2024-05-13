@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { Task, TaskStatus } from 'entities/Task';
-import { todosPageActions } from 'entities/ToDoList/model/slice/toDoListSlice';
+import { toDoActions } from 'entities/ToDo/model/slice/toDoSlice';
 
 interface UpdateTaskProps {
     taskId: string
@@ -22,7 +22,7 @@ export const updateTask = createAsyncThunk<
     UpdateTaskProps,
     ThunkConfig<string>
 >(
-    'todo/updateTask',
+    'toDo/task/updateTask',
     async (newTaskData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         const newTask = {
@@ -38,7 +38,7 @@ export const updateTask = createAsyncThunk<
             return { toDoId: newTaskData.toDoId, taskId: newTaskData.taskId, updatedTask: response.data };
         } catch (e: any) {
             if (!e) {
-                dispatch(todosPageActions.updateTask({
+                dispatch(toDoActions.updateTask({
                     toDoId: newTaskData.toDoId,
                     taskId: newTaskData.taskId,
                     updatedTask: {

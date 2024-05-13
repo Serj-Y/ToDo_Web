@@ -2,30 +2,31 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ToDo } from 'entities/ToDo';
 import { toDoActions } from 'entities/ToDo/model/slice/toDoSlice';
+import { AxiosResponse } from 'axios';
 
-interface UpdateToDoNameProps {
-    todoId: string
-    name: string
+interface DeleteToDoProps {
+    toDoId: string
     replace?: boolean;
 }
 
-export const updateToDoName = createAsyncThunk<
+export const deleteToDo = createAsyncThunk<
     ToDo,
-    UpdateToDoNameProps,
+    DeleteToDoProps,
     ThunkConfig<string>
 >(
-    'toDo/updateToDoName',
-    async (toDoName, thunkAPI) => {
+    'toDo/deleteToDo',
+    async (toDoListIdForDelete, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
+        const forDeleteData = { todoId: toDoListIdForDelete.toDoId };
         try {
-            const response = await extra.api.patch<ToDo>('todo/', toDoName);
+            const response = await extra.api.delete<ToDo>('todo/', { data: forDeleteData });
             if (!response.data) {
                 rejectWithValue(response.statusText);
             }
             return response.data;
         } catch (e: any) {
             if (!e) {
-                dispatch(toDoActions.updateToDoName(toDoName));
+                dispatch(toDoActions.deleteToDo(forDeleteData));
                 console.log(e);
             }
             console.log(e);

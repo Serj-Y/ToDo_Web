@@ -1,6 +1,6 @@
 import { Update } from '@reduxjs/toolkit';
 import { TaskStatus } from './taskStatus';
-import { ToDo } from '../../../ToDoList';
+import { ToDo } from '../../../ToDo';
 
 export interface Task {
     _id: string
