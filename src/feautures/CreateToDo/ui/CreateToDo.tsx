@@ -5,6 +5,7 @@ import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Button } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { ObjectId } from 'bson';
 import cls from './CreateToDo.module.scss';
 import { createToDo } from '../model/services/createToDo';
 
@@ -20,6 +21,14 @@ export const CreateToDo = ({ className }: CreateToDoProps) => {
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback((data: FormData) => {
+        // if (!navigator.onLine) {
+        //     const offlineId = new ObjectId();
+        //     dispatch(createToDo({ _id: offlineId.toString(), name: data.name }));
+        //     reset();
+        // } else {
+        //     dispatch(createToDo(data));
+        //     reset();
+        // }
         dispatch(createToDo(data));
         reset();
     }, [dispatch, reset]);

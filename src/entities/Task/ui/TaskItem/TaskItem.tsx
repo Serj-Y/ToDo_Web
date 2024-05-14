@@ -20,7 +20,7 @@ type TaskProps = {
 interface FormData {
     taskStatus: TaskStatus
 }
-export const TaskItem = memo(({ task, toDo }: TaskProps) => {
+export const TaskItem = ({ task, toDo }: TaskProps) => {
     const [isEditTask, setIsEditTask] = useState<boolean>(false);
     const setEditTaskHandler = () => setIsEditTask((prev) => !prev);
     const { control, handleSubmit } = useForm<FormData>();
@@ -64,7 +64,7 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
                                         defaultValue={task.status}
                                         render={({ field }) => (
                                             <div className={cls.taskStatusAnDelete}>
-                                                <TaskStatusSelect value={field.value} onChange={field.onChange} />
+                                                <TaskStatusSelect value={task.status} onChange={field.onChange} />
                                             </div>
                                         )}
                                     />
@@ -76,4 +76,4 @@ export const TaskItem = memo(({ task, toDo }: TaskProps) => {
             </div>
         </DraggableWrapper>
     );
-});
+};

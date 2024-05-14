@@ -7,5 +7,5 @@ export interface ToDo {
     order:number
     tasks: Task[],
 
-    map(param: (todo: ToDo) => { changes: any; id: string }): Update<ToDo>[];
+    map?(param: (todo: ToDo) => { changes: any; id: string }): Update<ToDo>[];
 }

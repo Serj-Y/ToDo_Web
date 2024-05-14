@@ -2,13 +2,8 @@ import axios from 'axios';
 import { BaseUrl } from '../consts/baseUrl';
 import { ACCESS_TOKEN, REFRESH_TOKEN, REQUEST_QUEUE } from '../consts/localStorage';
 
-let isOffline = false;
-const requestQueue: any[] = [];
-if (!requestQueue.length) {
-    if (JSON.parse(localStorage.getItem(REQUEST_QUEUE)as string)) {
-        requestQueue.push(...JSON.parse(localStorage.getItem(REQUEST_QUEUE)as string));
-    }
-}
+const requestQueue: any[] = JSON.parse(localStorage.getItem(REQUEST_QUEUE) || '[]');
+
 export const baseApi = axios.create({
     baseURL: BaseUrl,
 });
@@ -59,9 +54,12 @@ $api.interceptors.request.use(async (config) => {
         config.headers.Authorization = `Bearer ${accessToken}`;
     }
     if (!navigator.onLine) {
-        isOffline = true;
-        // Store the failed request in the queue
-        requestQueue.push(config);
+        requestQueue.push({
+            url: config.url,
+            method: config.method,
+            data: config.data,
+            headers: config.headers,
+        });
         localStorage.setItem(REQUEST_QUEUE, JSON.stringify(requestQueue));
     }
     return config;
@@ -71,12 +69,6 @@ $api.interceptors.response.use(
     (config) => config,
     async (error) => {
         const originalRequest = error.config;
-        // if (!navigator.onLine) {
-        //     isOffline = true;
-        //     // Store the failed request in the queue
-        //     requestQueue.push(originalRequest);
-        //     localStorage.setItem(REQUEST_QUEUE, JSON.stringify(requestQueue));
-        // }
         if (
             (error.response?.status === 401
                 || errorCatch(error) === 'jwt expired'
@@ -102,15 +94,13 @@ $api.interceptors.response.use(
 );
 // Function to retry failed requests
 const retryRequests = async () => {
-    if (isOffline && navigator.onLine) {
-        isOffline = false;
+    if (navigator.onLine && requestQueue.length > 0) {
         // Retry all requests in the queue
         while (requestQueue.length > 0) {
-            const request = requestQueue.shift();
+            const requestData = requestQueue.shift();
             try {
-                console.log(request);
                 // eslint-disable-next-line no-await-in-loop
-                await $api.request(request).then(() => {
+                await $api.request(requestData).then(() => {
                     localStorage.setItem(REQUEST_QUEUE, JSON.stringify(requestQueue));
                 });
             } catch (error) {
@@ -124,5 +114,6 @@ const retryRequests = async () => {
 // Listen for online/offline events to retry requests
 window.addEventListener('online', retryRequests);
 window.addEventListener('offline', () => {
-    isOffline = true;
+    // Handle offline mode
+    console.log('Application is offline');
 });

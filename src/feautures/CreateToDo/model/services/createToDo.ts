@@ -1,15 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ToDo } from 'entities/ToDo';
+import { toDoActions } from 'entities/ToDo/model/slice/toDoSlice';
 
-interface CreateToDoListProps {
+interface CreateToDoProps {
     name: string
+    _id?: string
     replace?: boolean;
 }
 
 export const createToDo = createAsyncThunk<
     ToDo,
-    CreateToDoListProps,
+    CreateToDoProps,
     ThunkConfig<string>
 >(
     'toDo/createToDo',
@@ -22,6 +24,9 @@ export const createToDo = createAsyncThunk<
             }
             return response.data;
         } catch (e: any) {
+            // if (!e) {
+            //     dispatch(toDoActions.createToDo({ name: toDoName.name, _id: toDoName._id }));
+            // }
             console.log(e);
             return rejectWithValue(e);
         }

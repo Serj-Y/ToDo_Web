@@ -1,5 +1,5 @@
 import {
-    createEntityAdapter, createSlice, IdSelector, Update,
+    createEntityAdapter, createSlice, Update,
 } from '@reduxjs/toolkit';
 import { StateSchema } from 'app/providers/StoreProvider';
 import { createToDo } from 'feautures/CreateToDo/model/services/createToDo';
@@ -10,12 +10,10 @@ import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
 import { deleteTask } from 'feautures/DeleteTask/model/services/deleteTask';
 import { changeToDoOrder } from 'feautures/UpdateToDoList/model/services/changeToDoOrder';
 import { changeTaskOrder } from 'feautures/UpdateTask/model/services/changeTaskOrder';
-import { Simulate } from 'react-dom/test-utils';
+import { ObjectId } from 'bson';
 import { fetchToDo } from '../services/fetchToDo/fetchToDo';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
-import change = Simulate.change;
-import { Task } from '../../../Task';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -39,6 +37,14 @@ const toDoSlice = createSlice({
             state._inited = true;
         },
         // for offline
+        // createToDo: (state, action) => {
+        //     const order = state.ids.length + 1;
+        //     const tasks: never[] = [];
+        //     const { _id, name } = action.payload;
+        //     toDoAdapter.addOne(state, {
+        //         _id, tasks, name, order,
+        //     });
+        // },
         updateToDoName: (state, action) => {
             const { todoId, name } = action.payload;
             toDoAdapter.updateOne(state, { id: todoId, changes: { name } });
@@ -172,11 +178,13 @@ const toDoSlice = createSlice({
             .addCase(changeToDoOrder.fulfilled, (state, action) => {
                 state.isLoading = false;
                 const { payload } = action;
-                const updates: Update<ToDo>[] = payload.map((toDo) => ({
-                    id: toDo._id,
-                    changes: toDo,
-                }));
-                toDoAdapter.updateMany(state, updates);
+                if (payload.map) {
+                    const updates: Update<ToDo>[] = payload.map((toDo) => ({
+                        id: toDo._id,
+                        changes: toDo,
+                    }));
+                    toDoAdapter.updateMany(state, updates);
+                }
             })
             .addCase(changeToDoOrder.rejected, (state, action) => {
                 state.isLoading = false;
