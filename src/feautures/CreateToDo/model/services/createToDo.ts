@@ -24,9 +24,9 @@ export const createToDo = createAsyncThunk<
             }
             return response.data;
         } catch (e: any) {
-            // if (!e) {
-            //     dispatch(toDoActions.createToDo({ name: toDoName.name, _id: toDoName._id }));
-            // }
+            if (!e) {
+                dispatch(toDoActions.createToDo({ name: toDoName.name, _id: toDoName._id }));
+            }
             console.log(e);
             return rejectWithValue(e);
         }

@@ -9,5 +9,5 @@ export interface Task {
     todo: string
     order: number
 
-    map(param: (task: Task) => ({ changes: any; id: string } | null)): Update<ToDo>[];
+    map?(param: (task: Task) => ({ changes: any; id: string } | null)): Update<ToDo>[];
 }

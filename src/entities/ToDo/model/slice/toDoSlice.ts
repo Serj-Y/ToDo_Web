@@ -10,10 +10,10 @@ import { updateTask } from 'feautures/UpdateTask/model/services/updateTask';
 import { deleteTask } from 'feautures/DeleteTask/model/services/deleteTask';
 import { changeToDoOrder } from 'feautures/UpdateToDoList/model/services/changeToDoOrder';
 import { changeTaskOrder } from 'feautures/UpdateTask/model/services/changeTaskOrder';
-import { ObjectId } from 'bson';
 import { fetchToDo } from '../services/fetchToDo/fetchToDo';
 import { ToDo } from '../types/toDo';
 import { ToDoSchema } from '../types/toDoSchema';
+import { TaskStatus } from '../../../Task';
 
 const toDoAdapter = createEntityAdapter<ToDo>({
     selectId: (toDo) => toDo._id,
@@ -37,14 +37,14 @@ const toDoSlice = createSlice({
             state._inited = true;
         },
         // for offline
-        // createToDo: (state, action) => {
-        //     const order = state.ids.length + 1;
-        //     const tasks: never[] = [];
-        //     const { _id, name } = action.payload;
-        //     toDoAdapter.addOne(state, {
-        //         _id, tasks, name, order,
-        //     });
-        // },
+        createToDo: (state, action) => {
+            const order = state.ids.length + 1;
+            const tasks: never[] = [];
+            const { _id, name } = action.payload;
+            toDoAdapter.addOne(state, {
+                _id, tasks, name, order,
+            });
+        },
         updateToDoName: (state, action) => {
             const { todoId, name } = action.payload;
             toDoAdapter.updateOne(state, { id: todoId, changes: { name } });
@@ -67,12 +67,30 @@ const toDoSlice = createSlice({
                 }
             }
         },
+        createTask: (state, action) => {
+            const { toDoId, taskName, taskId } = action.payload;
+            const toDo = state.entities[toDoId];
+            if (toDo) {
+                const order = toDo.tasks.length + 1;
+                const updatedTodo = {
+                    ...toDo,
+                    tasks: [...toDo.tasks, {
+                        _id: taskId,
+                        name: taskName,
+                        order,
+                        todo: toDoId,
+                        status: 'not done' as TaskStatus.NOT_DONE,
+                    }],
+                };
+                toDoAdapter.updateOne(state, { id: toDoId, changes: updatedTodo });
+            }
+        },
         updateTask: (state, action) => {
             const { toDoId, taskId, updatedTask } = action.payload;
-            const todo = state.entities[toDoId];
-            if (todo) {
-                const updatedTasks = todo.tasks.map((task) => (task._id === taskId ? updatedTask : task));
-                const updatedTodo = { ...todo, tasks: updatedTasks };
+            const toDo = state.entities[toDoId];
+            if (toDo) {
+                const updatedTasks = toDo.tasks.map((task) => (task._id === taskId ? updatedTask : task));
+                const updatedTodo = { ...toDo, tasks: updatedTasks };
                 toDoAdapter.updateOne(state, { id: toDoId, changes: updatedTodo });
             }
         },
@@ -210,6 +228,7 @@ const toDoSlice = createSlice({
 
             .addCase(createTask.pending, (state, action) => {
                 state.error = undefined;
+                console.log(action);
                 state.isLoading = true;
             })
             .addCase(createTask.fulfilled, (state, action) => {
@@ -254,21 +273,23 @@ const toDoSlice = createSlice({
             })
             .addCase(changeTaskOrder.fulfilled, (state, action) => {
                 state.isLoading = false;
-                const updates = action.payload.map((task) => {
-                    const toDoId = task.todo;
-                    const todo = state.entities[toDoId];
-                    if (todo) {
-                        return {
-                            id: toDoId,
-                            changes: {
-                                ...todo,
-                                tasks: todo.tasks.map((t) => (t._id === task._id ? task : t)),
-                            },
-                        };
-                    }
-                    return null;
-                }).filter((update) => update !== null) as Update<ToDo>[];
-                toDoAdapter.updateMany(state, updates);
+                if (action.payload.map) {
+                    const updates = action.payload.map((task) => {
+                        const toDoId = task.todo;
+                        const todo = state.entities[toDoId];
+                        if (todo) {
+                            return {
+                                id: toDoId,
+                                changes: {
+                                    ...todo,
+                                    tasks: todo.tasks.map((t) => (t._id === task._id ? task : t)),
+                                },
+                            };
+                        }
+                        return null;
+                    }).filter((update) => update !== null) as Update<ToDo>[];
+                    toDoAdapter.updateMany(state, updates);
+                }
             })
 
             .addCase(changeTaskOrder.rejected, (state, action) => {

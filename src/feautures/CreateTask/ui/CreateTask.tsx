@@ -5,8 +5,10 @@ import Input from 'shared/ui/Input/Input';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { ObjectId } from 'bson';
 import cls from './CreateTask.module.scss';
 import { createTask } from '../model/services/createTask';
+import { createToDo } from '../../CreateToDo/model/services/createToDo';
 
 type CreateTaskProps = {
     toDoId: string
@@ -22,8 +24,14 @@ export const CreateTask = ({ className, toDoId }: CreateTaskProps) => {
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback((data: FormData) => {
-        dispatch(createTask({ taskName: data.taskName, toDoId }));
-        reset();
+        if (!navigator.onLine) {
+            const offlineId = new ObjectId();
+            dispatch(createTask({ taskName: data.taskName, toDoId, taskId: offlineId.toString() }));
+            reset();
+        } else {
+            dispatch(createTask({ taskName: data.taskName, toDoId }));
+            reset();
+        }
     }, [dispatch, reset, toDoId]);
     return (
         <form

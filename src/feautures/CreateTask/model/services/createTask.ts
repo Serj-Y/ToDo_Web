@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { Task } from 'entities/Task/module/types/task';
+import { toDoActions } from '../../../../entities/ToDo/model/slice/toDoSlice';
 
 interface CreateTaskProps {
     taskName: string
     toDoId: string
+    taskId?: string
 }
 
 type TaskResponse ={
@@ -23,6 +25,7 @@ export const createTask = createAsyncThunk<
         const newTask = {
             name: newTaskData.taskName,
             todoId: newTaskData.toDoId,
+            _id: newTaskData.taskId,
         };
         try {
             const response = await extra.api.post<Task>('task/', newTask);
@@ -31,6 +34,9 @@ export const createTask = createAsyncThunk<
             }
             return { task: response.data, toDoId: newTaskData.toDoId };
         } catch (e: any) {
+            if (!e) {
+                dispatch(toDoActions.createTask(newTaskData));
+            }
             console.log(e);
             return rejectWithValue(e);
         }

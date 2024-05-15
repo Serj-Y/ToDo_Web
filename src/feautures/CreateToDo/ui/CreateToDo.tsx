@@ -21,16 +21,14 @@ export const CreateToDo = ({ className }: CreateToDoProps) => {
     const dispatch = useAppDispatch();
 
     const onSubmit = useCallback((data: FormData) => {
-        // if (!navigator.onLine) {
-        //     const offlineId = new ObjectId();
-        //     dispatch(createToDo({ _id: offlineId.toString(), name: data.name }));
-        //     reset();
-        // } else {
-        //     dispatch(createToDo(data));
-        //     reset();
-        // }
-        dispatch(createToDo(data));
-        reset();
+        if (!navigator.onLine) {
+            const offlineId = new ObjectId();
+            dispatch(createToDo({ _id: offlineId.toString(), name: data.name }));
+            reset();
+        } else {
+            dispatch(createToDo(data));
+            reset();
+        }
     }, [dispatch, reset]);
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={classNames(cls.CreateToDoList, {}, [className])}>

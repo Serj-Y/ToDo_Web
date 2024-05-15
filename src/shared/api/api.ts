@@ -39,6 +39,7 @@ export const getNewToken = async () => {
 const INSTANCE_TIMEOUT = 1500;
 const INSTANCE_HEADER = {
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': true,
 };
 
 export const $api = axios.create({
@@ -54,13 +55,15 @@ $api.interceptors.request.use(async (config) => {
         config.headers.Authorization = `Bearer ${accessToken}`;
     }
     if (!navigator.onLine) {
-        requestQueue.push({
-            url: config.url,
-            method: config.method,
-            data: config.data,
-            headers: config.headers,
-        });
-        localStorage.setItem(REQUEST_QUEUE, JSON.stringify(requestQueue));
+        if (config.method !== 'get') {
+            requestQueue.push({
+                url: config.url,
+                method: config.method,
+                data: config.data,
+                headers: config.headers,
+            });
+            localStorage.setItem(REQUEST_QUEUE, JSON.stringify(requestQueue));
+        }
     }
     return config;
 });
@@ -92,10 +95,8 @@ $api.interceptors.response.use(
     },
 
 );
-// Function to retry failed requests
 const retryRequests = async () => {
     if (navigator.onLine && requestQueue.length > 0) {
-        // Retry all requests in the queue
         while (requestQueue.length > 0) {
             const requestData = requestQueue.shift();
             try {
@@ -104,7 +105,6 @@ const retryRequests = async () => {
                     localStorage.setItem(REQUEST_QUEUE, JSON.stringify(requestQueue));
                 });
             } catch (error) {
-                // Handle retry failure
                 console.error('Failed to retry request:', error);
             }
         }
