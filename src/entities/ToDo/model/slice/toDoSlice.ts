@@ -143,7 +143,7 @@ const toDoSlice = createSlice({
                 // } else {
                 //     toDoAdapter.addMany(state, action.payload);
                 // }
-                toDoAdapter.upsertMany(state, action.payload);
+                toDoAdapter.setAll(state, action.payload);
             })
             .addCase(fetchToDo.rejected, (state, action) => {
                 state.isLoading = false;

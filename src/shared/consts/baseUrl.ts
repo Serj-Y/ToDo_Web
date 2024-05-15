@@ -1,1 +1,1 @@
-export const BaseUrl = 'http://localhost:4221/api/';
+export const BaseUrl = 'https://todo-nestjs-jet.vercel.app/api/';
