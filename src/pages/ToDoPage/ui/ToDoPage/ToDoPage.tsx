@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import {
     DynamicModuleLoader,
@@ -16,9 +16,10 @@ import {
     getToDoPageIsLoading,
 } from 'entities/ToDo/model/selectors/toDoSelectors';
 import { userReducer } from 'entities/User';
+import { fetchToDo } from 'entities/ToDo/model/services/fetchToDo/fetchToDo';
+import useIsWindowFocused from 'shared/lib/hooks/useIsWindowFocused/useIsWindowFocused';
 import cls from './ToDoPage.module.scss';
 import { initToDoPage } from '../../model/services/initToDoPage/initToDoPage';
-import { fetchToDo } from '../../../../entities/ToDo/model/services/fetchToDo/fetchToDo';
 
 interface ToDoPageProps {
     className?: string;
@@ -35,25 +36,13 @@ const ToDoPage = ({ className }: ToDoPageProps) => {
     const error = useSelector(getToDoPageError);
     const inited = useSelector(getToDoPageHasInited);
     const toDo = useSelector(getToDo.selectAll);
-    const [status, setStatus] = useState(true);
+    const isFocus = useIsWindowFocused();
 
     useEffect(() => {
-        function changeStatus() {
-            setStatus(navigator.onLine);
+        if (isFocus && navigator.onLine) {
+            setTimeout(() => { dispatch(fetchToDo({})); }, 2000);
         }
-        window.addEventListener('online', changeStatus);
-        window.addEventListener('offline', changeStatus);
-        return () => {
-            window.removeEventListener('online', changeStatus);
-            window.removeEventListener('offline', changeStatus);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (status) {
-            setTimeout(() => { dispatch(fetchToDo({})); }, 15000);
-        }
-    }, [status, dispatch]);
+    }, [dispatch, isFocus]);
 
     useEffect(() => {
         dispatch(initToDoPage());

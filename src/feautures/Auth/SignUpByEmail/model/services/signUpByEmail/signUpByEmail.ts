@@ -6,6 +6,7 @@ import {
 } from 'shared/consts/localStorage';
 import { baseApi } from 'shared/api/api';
 import { UserResponse } from 'entities/User/model/types/user';
+import { fetchToDo } from 'entities/ToDo/model/services/fetchToDo/fetchToDo';
 
 interface SignUpByEmailProps {
     name: string
@@ -28,6 +29,7 @@ export const signUpByEmail = createAsyncThunk<
             }
             localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
             localStorage.setItem(REFRESH_TOKEN, response.data.refreshToken);
+            dispatch(fetchToDo({}));
             return response.data;
         } catch (e) {
             console.log(e);

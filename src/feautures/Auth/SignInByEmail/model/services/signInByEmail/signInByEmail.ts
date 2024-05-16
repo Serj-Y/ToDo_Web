@@ -3,6 +3,7 @@ import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from 'shared/consts/localStorage';
 import { baseApi } from 'shared/api/api';
 import { UserResponse } from 'entities/User/model/types/user';
+import { fetchToDo } from 'entities/ToDo/model/services/fetchToDo/fetchToDo';
 
 interface LoginByUsernameProps {
     email: string
@@ -24,6 +25,7 @@ export const signInByEmail = createAsyncThunk<
             }
             localStorage.setItem(ACCESS_TOKEN, response.data.accessToken);
             localStorage.setItem(REFRESH_TOKEN, response.data.refreshToken);
+            dispatch(fetchToDo({}));
             return response.data;
         } catch (e) {
             console.log(e);
