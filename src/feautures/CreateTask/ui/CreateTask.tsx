@@ -6,9 +6,11 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import { Button, ButtonSize } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { ObjectId } from 'bson';
+import * as yup from 'yup';
+import { useYupValidationResolver } from 'shared/lib/hooks/useYupValidationResolver/useYupValidationResolver';
+import { Text, TextTheme } from 'shared/ui/Text/Text';
 import cls from './CreateTask.module.scss';
 import { createTask } from '../model/services/createTask';
-import { createToDo } from '../../CreateToDo/model/services/createToDo';
 
 type CreateTaskProps = {
     toDoId: string
@@ -20,8 +22,21 @@ interface FormData {
 
 export const CreateTask = ({ className, toDoId }: CreateTaskProps) => {
     const { t } = useTranslation();
-    const { control, handleSubmit, reset } = useForm<FormData>();
     const dispatch = useAppDispatch();
+
+    const validationSchema = yup.object({
+        taskName: yup.string()
+            .required(t('This field is required')),
+    });
+
+    const {
+        control,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<FormData>({
+        resolver: useYupValidationResolver(validationSchema),
+    });
 
     const onSubmit = useCallback((data: FormData) => {
         if (!navigator.onLine) {
@@ -33,6 +48,7 @@ export const CreateTask = ({ className, toDoId }: CreateTaskProps) => {
             reset();
         }
     }, [dispatch, reset, toDoId]);
+
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
@@ -42,13 +58,15 @@ export const CreateTask = ({ className, toDoId }: CreateTaskProps) => {
                 name="taskName"
                 control={control}
                 defaultValue=""
-                rules={{ minLength: 2, maxLength: 50 }}
                 render={({ field }) => (
-                    <Input
-                        {...field}
-                        placeholder={t('Enter task name')}
-                        onChange={(value) => field.onChange(value)}
-                    />
+                    <div className={cls.InputAndError}>
+                        <Text text={errors.taskName?.message} theme={TextTheme.ERROR} />
+                        <Input
+                            {...field}
+                            placeholder={t('Enter task name')}
+                            onChange={(value) => field.onChange(value)}
+                        />
+                    </div>
                 )}
             />
             <Button type="submit" size={ButtonSize.M}>
