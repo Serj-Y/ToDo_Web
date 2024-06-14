@@ -6,7 +6,7 @@ import { AxiosInstance } from 'axios';
 import { UserSchema } from 'entities/User';
 import { ScrollSaveSchema } from 'widgets/ScrollSave';
 import { SignInSchema } from 'feautures/Auth/SignInByEmail';
-import { SignUpSchema } from 'feautures/Auth/SignUpByEmail';
+import { SignUpSchema } from 'feautures/Auth/SignUp';
 import { ToDoSchema } from 'entities/ToDo';
 
 export interface StateSchema {

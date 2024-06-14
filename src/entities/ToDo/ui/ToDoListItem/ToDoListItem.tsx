@@ -13,12 +13,10 @@ import { ToDo } from '../../model/types/toDo';
 import { Task, TaskItem } from '../../../Task';
 
 interface ToDoListItemProps {
-    className?: string;
     toDo: ToDo;
 }
 
 export const ToDoListItem = memo(({
-    className,
     toDo,
 }: ToDoListItemProps) => {
     const [isEditToDoList, setIsEditToDoList] = useState<boolean>(false);

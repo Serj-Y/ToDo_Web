@@ -12,13 +12,12 @@ type CreateToDoListProps = {
     setIsEditToDoList: React.Dispatch<React.SetStateAction<boolean>>
     toDoId: string
     currentToDoName: string
-    className?: string
 }
 interface FormData {
     name: string;
 }
 export const UpdateToDoList = ({
-    className, toDoId, setIsEditToDoList, currentToDoName,
+    toDoId, setIsEditToDoList, currentToDoName,
 }: CreateToDoListProps) => {
     const { t } = useTranslation();
     const { control, handleSubmit } = useForm<FormData>();

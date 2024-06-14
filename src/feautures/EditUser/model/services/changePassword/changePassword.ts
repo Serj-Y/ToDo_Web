@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { User } from '../../../../../entities/User';
 import { UserResponse } from '../../../../../entities/User/model/types/user';
 
 interface ChangePasswordProps {

@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Text } from 'shared/ui/Text/Text';
 import { UpdateTask } from 'feautures/UpdateTask';
 import { DeleteTask } from 'feautures/DeleteTask';

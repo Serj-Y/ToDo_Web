@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import React, { useCallback } from 'react';
 import { Button, ButtonSize, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -10,7 +9,6 @@ type DeleteToDoProps = {
 }
 
 export const DeleteToDo = ({ toDoIdForDelete }: DeleteToDoProps) => {
-    const { t } = useTranslation();
     const dispatch = useAppDispatch();
 
     const onDeleteToDoListItem = useCallback(() => {

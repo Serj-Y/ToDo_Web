@@ -1,4 +1,4 @@
-import React, { memo, ReactNode, useState } from 'react';
+import React, { memo, ReactNode } from 'react';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 
 interface DraggableWrapperProps {

@@ -12,13 +12,12 @@ import { changeUserName } from '../../model/services/changeUserName/changeUserNa
 
 export interface ChangeUserNameFormProps {
     currentName: string
-    className?: string;
 }
 
 interface FormData {
     userName: string
 }
-const ChangeUserNameForm = memo(({ className, currentName }: ChangeUserNameFormProps) => {
+const ChangeUserNameForm = memo(({ currentName }: ChangeUserNameFormProps) => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const validationSchema = yup.object({

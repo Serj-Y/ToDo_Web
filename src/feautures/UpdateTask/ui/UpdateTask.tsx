@@ -16,7 +16,6 @@ type UpdateTaskProps = {
     toDoId: string
     taskStatus: TaskStatus
     task: Task
-    className?: string
 }
 interface FormData {
     taskStatus: TaskStatus
@@ -24,9 +23,8 @@ interface FormData {
 }
 
 export const UpdateTask = ({
-    className, taskId, currentTaskName, setIsEditTask, toDoId, taskStatus, task,
+    taskId, currentTaskName, setIsEditTask, toDoId, taskStatus, task,
 }: UpdateTaskProps) => {
-    const { t } = useTranslation();
     const { control, handleSubmit } = useForm<FormData>();
     const dispatch = useAppDispatch();
     const onSubmit = useCallback((data: FormData) => {

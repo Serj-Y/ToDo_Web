@@ -1,29 +1,25 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import {
-    ACCESS_TOKEN,
-    REFRESH_TOKEN,
-} from 'shared/consts/localStorage';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from 'shared/consts/localStorage';
 import { baseApi } from 'shared/api/api';
 import { UserResponse } from 'entities/User/model/types/user';
 import { fetchToDo } from 'entities/ToDo/model/services/fetchToDo/fetchToDo';
 
-interface SignUpByEmailProps {
-    name: string
+interface LoginByUsernameProps {
     email: string
     password: string
 }
 
-export const signUpByEmail = createAsyncThunk<
+export const signIn = createAsyncThunk<
     UserResponse,
-    SignUpByEmailProps,
+    LoginByUsernameProps,
     ThunkConfig<string>
 >(
-    'signUp/changeUserName',
+    'signIn/signIn',
     async (authData, thunkAPI) => {
         const { extra, dispatch, rejectWithValue } = thunkAPI;
         try {
-            const response = await baseApi.post<UserResponse>('auth/register', authData);
+            const response = await baseApi.post<UserResponse>('auth/login', authData);
             if (!response.data) {
                 throw new Error();
             }

@@ -14,7 +14,7 @@ import {
     useYupValidationResolver,
 } from 'shared/lib/hooks/useYupValidationResolver/useYupValidationResolver';
 import cls from './ForgotPasswordForm.module.scss';
-import { forgotPasswordByEmail } from '../../model/services/forgotPaswordByEmail/forgotPasswordByEmail';
+import { forgotPassword } from '../../model/services/forgotPasword/forgotPassword';
 import { sendForgotPasswordToken } from '../../model/services/sendForgotPasswordToken/sendForgotPasswordToken';
 
 export interface ForgotPasswordFormProps {
@@ -50,7 +50,7 @@ const ForgotPasswordForm = memo(({ className, setIsForgotPassword, email }: Forg
 
     const onSubmit = useCallback((data: FormData) => {
         if (data.email && !data.emailCode) {
-            dispatch(forgotPasswordByEmail(data));
+            dispatch(forgotPassword(data));
             setIsSendCode(true);
         } else if (data.emailCode && data.newPassword && data.email) {
             dispatch(sendForgotPasswordToken(

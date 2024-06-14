@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SignUpSchema } from '../types/signUpSchema';
-import { signUpByEmail } from '../services/signUpByEmail/signUpByEmail';
+import { signUp } from '../services/signUp/signUp';
 
 const initialState:SignUpSchema = {
     isLoading: false,
@@ -12,14 +12,14 @@ export const signUpSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(signUpByEmail.pending, (state) => {
+            .addCase(signUp.pending, (state) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(signUpByEmail.fulfilled, (state) => {
+            .addCase(signUp.fulfilled, (state) => {
                 state.isLoading = false;
             })
-            .addCase(signUpByEmail.rejected, (state, action) => {
+            .addCase(signUp.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

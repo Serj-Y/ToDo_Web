@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
 import { ToDo } from 'entities/ToDo';
 import { toDoActions } from 'entities/ToDo/model/slice/toDoSlice';
-import { AxiosResponse } from 'axios';
 
 interface DeleteToDoProps {
     toDoId: string

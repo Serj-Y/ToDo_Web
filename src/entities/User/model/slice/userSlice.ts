@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signInByEmail } from 'feautures/Auth/SignInByEmail/model/services/signInByEmail/signInByEmail';
-import { signUpByEmail } from 'feautures/Auth/SignUpByEmail/model/services/signUpByEmail/signUpByEmail';
+import { signIn } from 'feautures/Auth/SignInByEmail/model/services/signIn/signIn';
+import { signUp } from 'feautures/Auth/SignUp/model/services/signUp/signUp';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from 'shared/consts/localStorage';
 import { changePassword } from 'feautures/EditUser/model/services/changePassword/changePassword';
 import { changeUserName } from 'feautures/EditUser/model/services/changeUserName/changeUserName';
@@ -44,29 +44,29 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload;
             })
-            .addCase(signInByEmail.pending, (state, action) => {
+            .addCase(signIn.pending, (state, action) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(signInByEmail.fulfilled, (state, action) => {
+            .addCase(signIn.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state._inited = true;
                 state.authData = action.payload.user;
             })
-            .addCase(signInByEmail.rejected, (state, action) => {
+            .addCase(signIn.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })
-            .addCase(signUpByEmail.pending, (state, action) => {
+            .addCase(signUp.pending, (state, action) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(signUpByEmail.fulfilled, (state, action) => {
+            .addCase(signUp.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state._inited = true;
                 state.authData = action.payload.user;
             })
-            .addCase(signUpByEmail.rejected, (state, action) => {
+            .addCase(signUp.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })

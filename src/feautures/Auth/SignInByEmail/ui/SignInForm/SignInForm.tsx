@@ -7,18 +7,15 @@ import { classNames } from 'shared/lib/classNames/classNames';
 import Input from 'shared/ui/Input/Input';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { initUser } from 'entities/User/model/services/initUser';
 import { userReducer } from 'entities/User';
-import { Simulate } from 'react-dom/test-utils';
 import { getLoginPassword } from '../../model/selectors/getLoginPassword/getLoginPassword';
 import { getLoginIsLoading } from '../../model/selectors/getLoginIsLoading/getLoginIsLoading';
 import { getLoginError } from '../../model/selectors/getLoginError/getLoginError';
-import { signInByEmail } from '../../model/services/signInByEmail/signInByEmail';
+import { signIn } from '../../model/services/signIn/signIn';
 import { signInActions, signInReducer } from '../../model/slice/signInSlice';
 import cls from './SignInForm.module.scss';
 import { getLoginEmail } from '../../model/selectors/getLoginEmail/getLoginEmail';
 import ForgotPasswordForm from '../ForgotPasswordForm/ForgotPasswordForm';
-import reset = Simulate.reset;
 
 export interface SignInFormProps {
     className?: string;
@@ -47,7 +44,7 @@ const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
     }, [dispatch]);
 
     const onSignInClick = useCallback(async () => {
-        const result = await dispatch(signInByEmail({ email, password }));
+        const result = await dispatch(signIn({ email, password }));
         if (result.meta.requestStatus === 'fulfilled') {
             onSuccess();
         }
@@ -85,14 +82,14 @@ const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
                             value={password}
                         />
                         <div className={cls.buttonContainer}>
-                            <Button
-                                disabled={isLoading}
-                                theme={ButtonTheme.OUTLINE}
-                                className={cls.signInBtn}
-                                onClick={onForgotPasswordClick}
-                            >
-                                {t('Forgot password')}
-                            </Button>
+                            {/* <Button */}
+                            {/*    disabled={isLoading} */}
+                            {/*    theme={ButtonTheme.OUTLINE} */}
+                            {/*    className={cls.signInBtn} */}
+                            {/*    onClick={onForgotPasswordClick} */}
+                            {/* > */}
+                            {/*    {t('Forgot password')} */}
+                            {/* </Button> */}
                             <Button
                                 disabled={isLoading}
                                 theme={ButtonTheme.OUTLINE}

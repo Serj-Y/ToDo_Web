@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SignInSchema } from '../types/signInSchema';
-import { signInByEmail } from '../services/signInByEmail/signInByEmail';
+import { signIn } from '../services/signIn/signIn';
 
 const initialState:SignInSchema = {
     email: '',
@@ -20,14 +20,14 @@ export const signInSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(signInByEmail.pending, (state) => {
+            .addCase(signIn.pending, (state) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(signInByEmail.fulfilled, (state) => {
+            .addCase(signIn.fulfilled, (state) => {
                 state.isLoading = false;
             })
-            .addCase(signInByEmail.rejected, (state, action) => {
+            .addCase(signIn.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

@@ -5,7 +5,7 @@ type userEmail = {
     email?: string
 }
 
-export const forgotPasswordByEmail = createAsyncThunk<
+export const forgotPassword = createAsyncThunk<
     undefined,
     userEmail,
     ThunkConfig<string>

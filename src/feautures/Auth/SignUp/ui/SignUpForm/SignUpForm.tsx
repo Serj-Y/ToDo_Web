@@ -14,7 +14,7 @@ import {
     useYupValidationResolver,
 } from 'shared/lib/hooks/useYupValidationResolver/useYupValidationResolver';
 import cls from './SignUpForm.module.scss';
-import { signUpByEmail } from '../../model/services/signUpByEmail/signUpByEmail';
+import { signUp } from '../../model/services/signUp/signUp';
 import { getSignUpError } from '../../model/selectors/getSignUpError/getSignUpError';
 import { getSignUpIsLoading } from '../../model/selectors/getSignUpIsLoading/getSignUpIsLoading';
 import { signUpReducer } from '../../model/slice/signUpSlice';
@@ -54,7 +54,7 @@ const SignUpForm = memo(({ className, onSuccess }: SignUpFormProps) => {
         resolver: useYupValidationResolver(validationSchema),
     });
     const onSubmit = useCallback(async (data: FormData) => {
-        const result = await dispatch(signUpByEmail(data));
+        const result = await dispatch(signUp(data));
         if (result.meta.requestStatus === 'fulfilled') {
             onSuccess();
         }

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ThunkConfig } from 'app/providers/StoreProvider';
-import { fetchUserData } from '../../../../../entities/User/model/services/fetchUserData';
+import { fetchUserData } from 'entities/User/model/services/fetchUserData';
 
 type EmailToken = {
     emailToken: string

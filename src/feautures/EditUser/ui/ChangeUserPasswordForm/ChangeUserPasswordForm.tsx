@@ -10,17 +10,13 @@ import { useYupValidationResolver } from 'shared/lib/hooks/useYupValidationResol
 import cls from './ChangeUserPasswordForm.module.scss';
 import { changePassword } from '../../model/services/changePassword/changePassword';
 
-export interface ChangeUserPasswordFormProps {
-    className?: string;
-}
-
 interface FormData {
     password: string,
     newPassword: string,
     repeatPassword: string
 }
 
-const ChangeUserPasswordForm = memo(({ className }: ChangeUserPasswordFormProps) => {
+const ChangeUserPasswordForm = memo(() => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const validationSchema = yup.object({
