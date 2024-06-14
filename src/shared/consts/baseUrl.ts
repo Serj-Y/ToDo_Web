@@ -1,1 +1,1 @@
-export const BaseUrl = 'https://todo-nestjs-jet.vercel.app/api/';
+export const BaseUrl = 'https://todo-nestjs-delta.vercel.app/api/';

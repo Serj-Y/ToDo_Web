@@ -82,14 +82,14 @@ const SignInForm = memo(({ className, onSuccess }: SignInFormProps) => {
                             value={password}
                         />
                         <div className={cls.buttonContainer}>
-                            {/* <Button */}
-                            {/*    disabled={isLoading} */}
-                            {/*    theme={ButtonTheme.OUTLINE} */}
-                            {/*    className={cls.signInBtn} */}
-                            {/*    onClick={onForgotPasswordClick} */}
-                            {/* > */}
-                            {/*    {t('Forgot password')} */}
-                            {/* </Button> */}
+                            <Button
+                                disabled={isLoading}
+                                theme={ButtonTheme.OUTLINE}
+                                className={cls.signInBtn}
+                                onClick={onForgotPasswordClick}
+                            >
+                                {t('Forgot password')}
+                            </Button>
                             <Button
                                 disabled={isLoading}
                                 theme={ButtonTheme.OUTLINE}
