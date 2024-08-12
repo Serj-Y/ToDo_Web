@@ -7,7 +7,7 @@ import { getUserAuthData, userActions, userReducer } from 'entities/User';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { Text, TextSize, TextTheme } from 'shared/ui/Text/Text';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
-import { SignInModal } from 'feautures/Auth/SignInByEmail';
+import { SignInModal } from 'feautures/Auth/SignIn';
 import { SignUpModal } from 'feautures/Auth/SignUp';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { EditUserModal } from 'feautures/EditUser';
@@ -51,16 +51,16 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                         >
                             {t('Sign Out')}
                         </Button>
-                        { !authData.emailActivate
-                            && (
-                                <Button
-                                    theme={ButtonTheme.CLEAR_INVERTED}
-                                    className={cls.links}
-                                    onClick={() => openCloseModalHandler(setIsActivateEmailModal)}
-                                >
-                                    {t('Active email')}
-                                </Button>
-                            )}
+                        {/* { !authData.emailActivate */}
+                        {/*    && ( */}
+                        {/*        <Button */}
+                        {/*            theme={ButtonTheme.CLEAR_INVERTED} */}
+                        {/*            className={cls.links} */}
+                        {/*            onClick={() => openCloseModalHandler(setIsActivateEmailModal)} */}
+                        {/*        > */}
+                        {/*            {t('Active email')} */}
+                        {/*        </Button> */}
+                        {/*    )} */}
                         <Button onClick={() => openCloseModalHandler(setIsEditUserModal)}>
                             <Text
                                 title={authData.name}

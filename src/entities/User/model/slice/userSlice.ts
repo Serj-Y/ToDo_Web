@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signIn } from 'feautures/Auth/SignInByEmail/model/services/signIn/signIn';
+import { signIn } from 'feautures/Auth/SignIn/model/services/signIn/signIn';
 import { signUp } from 'feautures/Auth/SignUp/model/services/signUp/signUp';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from 'shared/consts/localStorage';
 import { changePassword } from 'feautures/EditUser/model/services/changePassword/changePassword';
