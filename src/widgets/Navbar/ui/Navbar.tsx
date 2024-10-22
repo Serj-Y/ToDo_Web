@@ -51,16 +51,16 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                         >
                             {t('Sign Out')}
                         </Button>
-                        {/* { !authData.emailActivate */}
-                        {/*    && ( */}
-                        {/*        <Button */}
-                        {/*            theme={ButtonTheme.CLEAR_INVERTED} */}
-                        {/*            className={cls.links} */}
-                        {/*            onClick={() => openCloseModalHandler(setIsActivateEmailModal)} */}
-                        {/*        > */}
-                        {/*            {t('Active email')} */}
-                        {/*        </Button> */}
-                        {/*    )} */}
+                        { !authData.emailActivate
+                            && (
+                                <Button
+                                    theme={ButtonTheme.CLEAR_INVERTED}
+                                    className={cls.links}
+                                    onClick={() => openCloseModalHandler(setIsActivateEmailModal)}
+                                >
+                                    {t('Active email')}
+                                </Button>
+                            )}
                         <Button onClick={() => openCloseModalHandler(setIsEditUserModal)}>
                             <Text
                                 title={authData.name}
